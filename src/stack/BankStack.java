@@ -37,7 +37,6 @@ public class BankStack<E> implements InStack<E>{
 
 	@Override
 	public void Ipush(E element) {
-		// TODO Auto-generated method stub
 		NodeStack<E> aux= new NodeStack<>(element);
 		if(first== null) {
 			first= aux;
@@ -69,7 +68,6 @@ public class BankStack<E> implements InStack<E>{
 
 	@Override
 	public E pop() {
-		// TODO Auto-generated method stub
 		E aux= null;
 		if(first.getNext()==null) {
 			aux= first.getElement();
@@ -86,19 +84,11 @@ public class BankStack<E> implements InStack<E>{
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return first==null;
 	}
 
 	@Override
 	public int Isize() {
-		// TODO Auto-generated method stub
 		return size;
 	}
-
-	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-	}
-
 }
