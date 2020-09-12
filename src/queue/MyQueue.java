@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @param <T>
  */
 
-public class MyQueue<T> implements IQueue<T> {
+public class MyQueue<T> implements QueueOperations<T> {
 	
 	private QueueNode<T> front, rear;
 	private int size;

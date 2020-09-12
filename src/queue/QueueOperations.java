@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @param <T>
  */
 
-public interface IQueue<T> {
+public interface QueueOperations<T> {
 	
 	/**
 	 * Adds a new element to the queue.
