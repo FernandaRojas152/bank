@@ -78,6 +78,8 @@ public class MyQueue<T> implements QueueOperations<T> {
 		 
 		QueueNode<T> temp = front;
 	    front = front.next;
+	    size--;
+	    
 	    return temp;
 	}
 	
