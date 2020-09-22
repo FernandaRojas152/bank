@@ -1,15 +1,48 @@
 package heap;
 
+/**
+ * @version September 22th 2020
+ * @author 
+ * Class BankHeap
+ * @param <P>
+ * @param <T>
+ */
 public class BankHeap<P,T> implements IHeap<P, T>{
+	//Attributes
 	private final static int ROOT= 1;
 	private HeapItem<P, T>[] heap;
 	private int size;
 	private int maxSize;
 	
+	//Methods
 	public BankHeap(int maxSize){
 		this.maxSize= maxSize;
 		size=0;
 		heap= new HeapItem[maxSize+1];
+	}
+	
+	public HeapItem<P, T>[] getHeap() {
+		return heap;
+	}
+
+	public void setHeap(HeapItem<P, T>[] heap) {
+		this.heap = heap;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
 	}
 	
 	@Override
@@ -75,12 +108,30 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 
 	@Override
 	public T removeMax() {
-		return null;
+		//se debe de tomar el primer valor, intercambiarlo con el ultimo.
+		//y luego ya borrarlo y llamar al metodo minHeap o maxHeap para volver a tener
+		//un heap balanceado.
+		HeapItem<P, T> aux= heap[ROOT];
+		heap[ROOT]= heap[maxSize];
+		heap[maxSize]= null;
+		setMaxSize(maxSize-1);
+		maxHeapify(ROOT);
+		return aux.getElement();
+	}
+	
+	@Override
+	public T removeMin() {
+		HeapItem<P, T> aux= heap[ROOT];
+		heap[ROOT]= heap[maxSize];
+		heap[maxSize]= null;
+		setMaxSize(maxSize-1);
+		minHeapify(ROOT);
+		return aux.getElement();
 	}
 
 	@Override
 	public T max() {
-		return null;
+		return heap[ROOT].getElement();
 	}
 
 	@Override
@@ -96,29 +147,7 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 		return false;
 	}
 
-	public HeapItem<P, T>[] getHeap() {
-		return heap;
-	}
-
-	public void setHeap(HeapItem<P, T>[] heap) {
-		this.heap = heap;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
-
-	public int getMaxSize() {
-		return maxSize;
-	}
-
-	public void setMaxSize(int maxSize) {
-		this.maxSize = maxSize;
-	}
+	
 	
 	private boolean hasLeftChild(int i) {
 		return leftChild(i) <= maxSize;
@@ -134,4 +163,6 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 		heap[p]= heap[p2];
 		heap[p2]= aux;
 	}
+
+	
 }
