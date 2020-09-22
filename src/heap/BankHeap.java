@@ -68,7 +68,7 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 				l= rightChild(index);			
 			}
 			if(heap[index].getPriority()< heap[l].getPriority()) {
-				swap(l, l);
+				swap(index, l);
 				minHeapify(l);
 			}else break;
 		}
@@ -76,12 +76,25 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 
 	@Override
 	public void maxHeapify(int index) {
-		
+		while(hasLeftChild(index)) {
+			int s= leftChild(index);
+			if(hasRightChild(index) && heap[leftChild(index)].getPriority() > heap[rightChild(index)].getPriority()) {
+				s= rightChild(index);			
+			}
+			if(heap[index].getPriority()> heap[s].getPriority()) {
+				swap(index, s);
+				maxHeapify(s);
+			}else break;
+		}
 	}
 
 	@Override
 	public void maxHeap() {
-		
+		int index= maxSize;
+		while(parent(index)!=0 && heap[parent(index)].getPriority()< heap[index].getPriority()) {
+			swap(index, parent(index));
+			index= parent(index);
+		}
 	}
 
 	@Override
@@ -95,7 +108,10 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 
 	@Override
 	public void insertMax(P priority, T element) {
-		
+		HeapItem<P, T> insert= new HeapItem<>(priority, element);
+		setMaxSize(maxSize+1);
+		heap[maxSize]= insert;
+		maxHeap();
 	}
 
 	@Override
@@ -146,8 +162,6 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 		}
 		return false;
 	}
-
-	
 	
 	private boolean hasLeftChild(int i) {
 		return leftChild(i) <= maxSize;
