@@ -3,7 +3,7 @@ package heap;
 /**
  * @version September 22th 2020
  * @author 
- *
+ * Class HeapItem
  * @param <P>
  * @param <T>
  */
