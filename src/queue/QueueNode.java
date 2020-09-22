@@ -10,20 +10,20 @@ package queue;
 
 public class QueueNode<T> {
 
-	T data;
+	T t;
 	QueueNode<T> next;
     
 	QueueNode(T x) {
-    	data = x;
+    	t = x;
         next = null;
     }
 
-	public T getData() {
-		return data;
+	public T getT() {
+		return t;
 	}
 
-	public void setData(T data) {
-		this.data = data;
+	public void setT(T t) {
+		this.t = t;
 	}
 
 	public QueueNode<T> getNext() {
