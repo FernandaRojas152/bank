@@ -6,6 +6,8 @@ package heap;
  * Class BankHeap
  * @param <P>
  * @param <T>
+ * Code based on: https://java2blog.com/heap-sort-in-java/
+ * and https://www.geeksforgeeks.org
  */
 public class BankHeap<P,T> implements IHeap<P, T>{
 	//Attributes
@@ -177,6 +179,4 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 		heap[p]= heap[p2];
 		heap[p2]= aux;
 	}
-
-	
 }
