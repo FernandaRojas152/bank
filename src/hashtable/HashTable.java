@@ -2,7 +2,7 @@ package hashtable;
 
 public class HashTable<K, V> implements HashTableOperations<K, V> {
 	
-	public final int SIZE = 10000;
+	public final int SIZE = 100000;
 	private GenericArray<HashTableNode<K, V>> genericArray; 
     private int size; 
   
