@@ -16,7 +16,6 @@ public interface BinarySearchTreeOperations<K extends Comparable<K>, V> {
 	 * <b>post:</b> A new node has been added<br>
 	 * @param k Key
 	 * @param v Value
-	 * @throws Exception
 	 */
 	
 	public void addNode(K k, V v) throws Exception;
