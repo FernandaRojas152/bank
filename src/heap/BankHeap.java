@@ -17,6 +17,7 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 	private int maxSize;
 	
 	//Methods
+	@SuppressWarnings("unchecked")
 	public BankHeap(int maxSize){
 		this.maxSize= maxSize;
 		size=0;

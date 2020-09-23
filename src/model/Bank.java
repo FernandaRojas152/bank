@@ -21,7 +21,7 @@ public class Bank {
 	private List<Client> clientsList;
 	private BinarySearchTree<Double, Client> clientsTree;
 	private BankQueue<Client> clientsQueue;
-	private BankHeap<String, Client> priorityQueue;
+	
 	
 	/**
 	 * Builds a bank

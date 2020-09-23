@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
+import heap.BankHeap;
+
 /**
  * Represents a client at the bank
  * @author usuario
@@ -16,6 +18,13 @@ public class Client {
 	private LocalDate paymentDueDate;
 	private LocalDate memberSinceDate;
 	private Account account;
+	private boolean priority;
+	public int priority_Number= 0;
+	public final int BLIND = 1;
+	public final int DISABLED = 2;
+	public final int PREGNANT = 3;
+	public final int ELDER = 4;
+	private BankHeap<Integer, Client> priorityQueue;
 
 	public Client(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
 			Account account) {
@@ -26,6 +35,7 @@ public class Client {
 		this.paymentDueDate = paymentDueDate;
 		this.memberSinceDate = memberSinceDate;
 		this.account = account;
+		priority= false;
 	}
 
 	public String getName() {
@@ -79,5 +89,31 @@ public class Client {
 	@Override
 	public String toString() {
 		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
+	}
+
+	public boolean isPriority() {
+		return priority;
+	}
+	
+	public int getPriority_Number() {
+		return priority_Number;
+	}
+
+	public void setPriority_Number(int priority_Number) {
+		this.priority_Number = priority_Number;
+	}
+
+	public BankHeap<Integer, Client> getPriorityQueue() {
+		return priorityQueue;
+	}
+
+	public void setPriorityQueue(BankHeap<Integer, Client> priorityQueue) {
+		this.priorityQueue = priorityQueue;
+	}
+	
+	public void addPriortyClient(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
+			Account account) {
+		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account);
+		priorityQueue.insertMin(priority_Number, client);
 	}
 }
