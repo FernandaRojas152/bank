@@ -31,6 +31,7 @@ public class Bank {
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
 	
+	
 	/**
 	 * Builds a bank
 	 */
