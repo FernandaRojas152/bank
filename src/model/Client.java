@@ -12,23 +12,21 @@ import heap.BankHeap;
 
 public class Client {
 	
-	public final String BLIND = "Blind";
-	public final String DISABLED = "Disabled";
-	public final String PREGNANT = "Pregnant";
-	public final String ELDER = "Elder";
-	public final String NORMAL = "Normal";
-	
 	private String name;
 	private String iD;
 	private String cardNumber;
 	private LocalDate paymentDueDate;
 	private LocalDate memberSinceDate;
 	private Account account;
-	private String priority;
-	private Double cardAmount;
+	private boolean priority;
+	public int priority_Number= 0;
+	public final int BLIND = 1;
+	public final int DISABLED = 2;
+	public final int PREGNANT = 3;
+	public final int ELDER = 4;
 
 	public Client(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
-			Account account, String priority, Double cardAmount) {
+			Account account) {
 		super();
 		this.name = name;
 		this.iD = iD;
@@ -36,8 +34,7 @@ public class Client {
 		this.paymentDueDate = paymentDueDate;
 		this.memberSinceDate = memberSinceDate;
 		this.account = account;
-		this.priority = priority;
-		this.cardAmount = cardAmount;
+		priority= false;
 	}
 
 	public String getName() {
@@ -88,49 +85,20 @@ public class Client {
 		this.account = account;
 	}
 	
-	public int getPriorityValue() {
-		
-		int priorityValue = 0;
-
-		switch(priority) {
-		
-		case BLIND: 
-			priorityValue = 1;
-		case DISABLED:
-			priorityValue = 2;
-		case PREGNANT:
-			priorityValue = 3;
-		case ELDER:
-			priorityValue = 4;
-		case NORMAL:
-			priorityValue = 5;
-		}
-		return priorityValue;
-	}
-	
-	public String getPriority() {
-		return priority;
-	}
-
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
-
-	public Double getCardAmount() {
-		return cardAmount;
-	}
-
-	public void setCardAmount(Double cardAmount) {
-		this.cardAmount = cardAmount;
-	}
-
 	@Override
 	public String toString() {
 		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
 	}
+
+	public boolean isPriority() {
+		return priority;
+	}
 	
-	public String getClientData() {
-		return name+", "+iD+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
-		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount;
+	public int getPriority_Number() {
+		return priority_Number;
+	}
+
+	public void setPriority_Number(int priority_Number) {
+		this.priority_Number = priority_Number;
 	}
 }

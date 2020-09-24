@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @param <T>
  */
 
-public class IQueue<T> implements InQueue<T> {
+public class BankQueue<T> implements InQueue<T> {
 	
 	private QueueNode<T> front, rear;
 	private int size;
@@ -18,7 +18,7 @@ public class IQueue<T> implements InQueue<T> {
 	 * Builds an empty queue.
 	 */
 	
-	public IQueue() {
+	public BankQueue() {
 		front = rear = null;
 		size = 0;
 	}

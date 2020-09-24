@@ -1,11 +1,11 @@
 package stack;
 
-public class IStack<E> implements InStack<E>{
+public class BankStack<E> implements InStack<E>{
 	private NodeStack<E> first;
 	private NodeStack<E> last;
 	private int size;
 
-	public IStack() {
+	public BankStack() {
 		first= null;
 		last= null;
 		size=0;
