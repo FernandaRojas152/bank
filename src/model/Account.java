@@ -10,12 +10,12 @@ import java.time.LocalDate;
 
 public class Account {
 	
-	private double amount;
+	private Double amount;
 	private String accountNumber;
 	private LocalDate cancelationDate;
 	private String cancelationComments;
 	
-	public Account(double amount, String accountNumber) {
+	public Account(Double amount, String accountNumber) {
 		super();
 		this.amount = amount;
 		this.accountNumber = accountNumber;
@@ -25,7 +25,7 @@ public class Account {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
