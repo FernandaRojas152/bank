@@ -1,6 +1,6 @@
 package hashtable;
 
-public class HashTableNode<K, V> {
+public class HashTableNode<K extends Comparable<K>, V> {
 	
 	private K k;
 	private V v;

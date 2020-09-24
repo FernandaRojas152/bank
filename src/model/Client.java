@@ -2,8 +2,6 @@ package model;
 
 import java.time.LocalDate;
 
-import heap.BankHeap;
-
 /**
  * Represents a client at the bank
  * @author usuario

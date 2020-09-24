@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import binarySearchTree.BinarySearchTree;
 import hashtable.HashTable;
+import heap.BankHeap;
 import queue.IQueue;
 import stack.IStack;
 
@@ -30,7 +31,7 @@ public class Bank {
 	private BinarySearchTree<Double, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
-	
+	private BankHeap<Integer, Client> priorityQueue;
 	
 	/**
 	 * Builds a bank
@@ -42,6 +43,7 @@ public class Bank {
 		clientTree = new BinarySearchTree<Double, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
+		priorityQueue = new BankHeap<Integer, Client>(10000);
 	}
 	
 	/**
@@ -63,8 +65,6 @@ public class Bank {
 		clientTree.addNode(client.getAccount().getAmount(), client);
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
-		 
-			
 	}
 	
 	/**
