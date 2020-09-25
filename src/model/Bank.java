@@ -65,6 +65,23 @@ public class Bank {
 	}
 	
 	/**
+	 * Fills the bank's stack with canceled client data
+	 * @param name
+	 * @param iD
+	 * @param cardNumber
+	 * @param paymentDueDate
+	 * @param memberSinceDate
+	 * @throws Exception 
+	 */
+	
+	public void fillCanceledClientData(String name, String iD, String cardNumber, LocalDate paymentDueDate,
+							   LocalDate memberSinceDate, Account account, String priority, Double cardAmount) throws Exception {
+		
+		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority, cardAmount);
+		clientStack.Ipush(client);
+	}
+	
+	/**
 	 * Increases the amount of a client's savings account<br>
 	 * <b>pre:</b> deposit>0 y cliente!=null<br>
 	 * <b>post:</b> the amount of the client's savings account has increased by the value of amount<br>

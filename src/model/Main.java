@@ -35,8 +35,8 @@ public class Main {
 			while(data2!=null) {
 				String[] dataArray = data2.split(", ");
 				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
-				bank.getClientStack().Ipush(new Client(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
-						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8])));
+				bank.fillCanceledClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]));
 				data2 = br2.readLine();
 			}
 			br.close();
