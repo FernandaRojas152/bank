@@ -1,6 +1,8 @@
 package heap;
 
-import java.util.Comparator;
+import java.util.Arrays;
+
+//import hashtable.GenericArray;
 
 /**
  * @version September 22th 2020
@@ -12,21 +14,29 @@ import java.util.Comparator;
  * and https://www.geeksforgeeks.org
  * and https://www.codesdope.com/blog/article/priority-queue-using-heap/
  */
-public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
+public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 	//Attributes
 	private final static int ROOT= 1;
+	public static int CAPACITY= 10;
 	private P[] heap;
 	private int size;
 	private int heap_Size;
 
 	//Methods
 	@SuppressWarnings("unchecked")
-	public BankHeap(int heap_Size){
-		this.heap_Size= heap_Size;
-		size=0;
-		heap= (P[]) new Object[heap_Size];
+	public BankHeap(P[] a){
+		size=10;
+		heap= (P[]) new Comparable[CAPACITY];
+		heap_Size=0;
+		
 	}
-
+	
+	public BankHeap(P[] a, int heap_Size) {
+		heap= a;
+		size= a.length;
+		this.heap_Size= this.heap_Size;
+	}
+	
 	@Override
 	public void buildMaxHeap() {
 		for (int i = heap_Size/2; i>= 1; i--) {
@@ -47,10 +57,6 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 
 	public int getheap_Size() {
 		return heap_Size;
-	}
-
-	public void setheap_Size(int heap_Size) {
-		this.heap_Size = heap_Size;
 	}
 
 	@Override
@@ -94,22 +100,25 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 		int right= rightChild(index);
 		int largest;
 
-		if(left<=heap_Size && heap[left].compareTo(heap[index])<0) {
+		if(left< heap_Size && heap[left].compareTo(heap[index])>0) {
 			largest= left;
 		}else largest= index;
-		if(right<= heap_Size && heap[left].compareTo(heap[index])<0) {
+		if(right< heap_Size && heap[left].compareTo(heap[index])>0) {
 			largest=right;
 		}
 		if(largest!=index) {
-			P aux= heap[index];
-			heap[index]= heap[largest];
-			heap[largest]= aux;
+			P aux= heap[largest];
+			heap[largest]= heap[index];
+			heap[index]= aux;
 			maxHeapify(largest);
 		}
 	}
 
 	@Override
 	public void increaseMaxHeap(int index, P key) {
+		if(key.compareTo(heap[index])<0) {
+			throw new IndexOutOfBoundsException();
+		}
 		heap[index]= key;
 		while(index>1 && heap[parent(index)].compareTo(heap[index])<0) {
 			P aux= heap[index];
@@ -118,9 +127,25 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 			index= parent(index);
 		}
 	}
+	
+	@Override
+	public void insertMax(P element)  {
+		resize(size*2);
+		heap_Size++;
+		heap[heap_Size-1]= element;
+		
+		for(int i= heap_Size-1; i>=1; i= parent(i)) {
+			maxHeapify(parent(i));
+		}
+		
+		maxHeapify(parent(heap_Size));
+	}
 
 	@Override
 	public void decreaseMinHeap(int index, P key) {
+		if(key.compareTo(heap[index])<0) {
+			throw new IndexOutOfBoundsException();
+		}
 		heap[index]= key;
 		while(parent(index)!=0 && heap[parent(index)].compareTo(heap[index])>0) {
 			P aux= heap[index];
@@ -131,19 +156,16 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 	}
 
 	@Override
-	public void insertMax(P priority, T element) {
-		//HeapItem<P> insert= new HeapItem<>(priority, element);
-		setheap_Size(heap_Size+1);
-		//heap[heap_Size]= insert;
-		increaseMaxHeap(heap_Size, priority);
-	}
-
-	@Override
-	public void insertMin(P priority, T element) {
-		//HeapItem<P> insert= new HeapItem<>(priority, element);
-		setheap_Size(heap_Size+1);
-		heap[heap_Size]= priority;
-		decreaseMinHeap(heap_Size, priority);
+	public void insertMin(P element) {
+		resize(size*2);
+		heap_Size++;
+		heap[heap_Size-1]= element;
+		
+		for(int i= heap_Size-1; i>=1; i= parent(i)) {
+			minHeapify(parent(i));
+		}
+		
+		minHeapify(parent(heap_Size));
 	}
 
 	@Override
@@ -154,7 +176,7 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 		P aux= heap[ROOT];
 		heap[ROOT]= heap[heap_Size];
 		heap[heap_Size]= null;
-		setheap_Size(heap_Size-1);
+		heap_Size--;
 		maxHeapify(ROOT);
 		return aux;
 	}
@@ -164,7 +186,7 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 		P aux= heap[ROOT];
 		heap[ROOT]= heap[heap_Size];
 		heap[heap_Size]= null;
-		setheap_Size(heap_Size-1);
+		heap_Size--;
 		minHeapify(ROOT);
 		return aux;
 	}
@@ -178,18 +200,20 @@ public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 	public int size() {
 		return size;
 	}
-
-	@Override
-	public void swap(int p, int p2) {
-		// TODO Auto-generated method stub
-		
+	
+	public P[] resize(int n) {
+		return Arrays.copyOf(heap, n);
 	}
 
-	/**public static void main(String[] args) {
-		BankHeap<Integer> prueba= new BankHeap<Integer>(10);
-		//prueba.buildMaxHeap();
-		prueba.buildMinHeap();
-		prueba.insertMin(1);
-		System.out.println(prueba);
-	}*/
+	public static void main(String[] args) {
+		Integer[]a= new Integer[8];
+		BankHeap<Integer> prueba= new BankHeap<>(a,3);
+		prueba.insertMax(2);
+		prueba.insertMax(9);
+		prueba.insertMax(12);
+		//prueba.extractMax();
+		System.out.println(prueba.getheap_Size());
+		
+		//size,heapsize funcionan, heapify funciona. POR FIN LPM
+	}
 }

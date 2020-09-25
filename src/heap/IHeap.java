@@ -1,6 +1,6 @@
 package heap;
 
-public interface IHeap<P,T> {
+public interface IHeap<P> {
 	public int parent(int p);
 	public int rightChild(int p);
 	public int leftChild(int p);
@@ -14,7 +14,6 @@ public interface IHeap<P,T> {
 	public int size();
 	public void buildMaxHeap();
 	public void buildMinHeap();	
-	public void insertMax(P priority, T element);
-	public void insertMin(P priority, T element);
-	public void swap(int p, int p2);
+	public void insertMax(P priority);
+	public void insertMin(P priority);
 }
