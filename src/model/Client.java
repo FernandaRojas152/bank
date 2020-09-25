@@ -2,31 +2,32 @@ package model;
 
 import java.time.LocalDate;
 
-import heap.BankHeap;
-
 /**
  * Represents a client at the bank
  * @author usuario
  *
  */
 
-public class Client implements Comparable<Client>{
+public class Client implements Comparable<Client> {
 	
+	public final String BLIND = "Blind";
+	public final String DISABLED = "Disabled";
+	public final String PREGNANT = "Pregnant";
+	public final String ELDER = "Elder";
+	public final String BABYINARMS = "Baby in arms";
+	public final String NORMAL = "Normal";
+
 	private String name;
 	private String iD;
 	private String cardNumber;
 	private LocalDate paymentDueDate;
 	private LocalDate memberSinceDate;
 	private Account account;
-	private int priority_Number;
-	public final int BLIND = 1;
-	public final int DISABLED = 2;
-	public final int PREGNANT = 3;
-	public final int ELDER = 4;
-	public final int BABY= 5;
+	private String priority;
+	private Double cardAmount;
 
 	public Client(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
-			Account account, int priority_Number) {
+			Account account, String priority, Double cardAmount) {
 		super();
 		this.name = name;
 		this.iD = iD;
@@ -34,7 +35,8 @@ public class Client implements Comparable<Client>{
 		this.paymentDueDate = paymentDueDate;
 		this.memberSinceDate = memberSinceDate;
 		this.account = account;
-		this.priority_Number= priority_Number;
+		this.priority = priority;
+		this.cardAmount = cardAmount;
 	}
 
 	public String getName() {
@@ -85,18 +87,58 @@ public class Client implements Comparable<Client>{
 		this.account = account;
 	}
 	
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public Double getCardAmount() {
+		return cardAmount;
+	}
+
+	public void setCardAmount(Double cardAmount) {
+		this.cardAmount = cardAmount;
+	}
+	
+	public String getClientData() {
+		return name+", "+iD+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
+		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount+", "+account.getCancelationDate()
+		+", "+account.getCancelationComments();
+	}
+	
 	@Override
 	public String toString() {
 		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
 	}
-
+	
 	@Override
-	public int compareTo(Client o) {
-		if(priority_Number< o.priority_Number) {
-			return -1;
-		}else if(priority_Number> o.priority_Number) {
-			return 1;
-		}else
-		return 0;
+	public int compareTo(Client client) {
+		// TODO Auto-generated method stub
+		return this.getPriorityValue()-client.getPriorityValue();
+	}
+
+	private int getPriorityValue() {
+		
+		int priorityValue = 0;
+
+		switch(priority) {
+		
+		case BLIND: 
+			priorityValue = 6;
+		case DISABLED:
+			priorityValue = 5;
+		case PREGNANT:
+			priorityValue = 4;
+		case ELDER:
+			priorityValue = 3;
+		case BABYINARMS:
+			priorityValue = 2;
+		case NORMAL:
+			priorityValue = 1;
+		}
+		return priorityValue;
 	}
 }

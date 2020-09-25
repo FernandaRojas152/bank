@@ -1,6 +1,6 @@
 package hashtable;
 
-public class HashTable<K, V> implements HashTableOperations<K, V> {
+public class HashTable<K extends Comparable<K>, V> implements HashTableOperations<K, V> {
 	
 	public final int SIZE = 100000;
 	private GenericArray<HashTableNode<K, V>> genericArray; 
