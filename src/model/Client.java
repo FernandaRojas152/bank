@@ -10,7 +10,7 @@ import heap.BankHeap;
  *
  */
 
-public class Client {
+public class Client implements Comparable<Client>{
 	
 	private String name;
 	private String iD;
@@ -18,15 +18,15 @@ public class Client {
 	private LocalDate paymentDueDate;
 	private LocalDate memberSinceDate;
 	private Account account;
-	private boolean priority;
-	public int priority_Number= 0;
+	private int priority_Number;
 	public final int BLIND = 1;
 	public final int DISABLED = 2;
 	public final int PREGNANT = 3;
 	public final int ELDER = 4;
+	public final int BABY= 5;
 
 	public Client(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
-			Account account) {
+			Account account, int priority_Number) {
 		super();
 		this.name = name;
 		this.iD = iD;
@@ -34,7 +34,7 @@ public class Client {
 		this.paymentDueDate = paymentDueDate;
 		this.memberSinceDate = memberSinceDate;
 		this.account = account;
-		priority= false;
+		this.priority_Number= priority_Number;
 	}
 
 	public String getName() {
@@ -90,15 +90,13 @@ public class Client {
 		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
 	}
 
-	public boolean isPriority() {
-		return priority;
-	}
-	
-	public int getPriority_Number() {
-		return priority_Number;
-	}
-
-	public void setPriority_Number(int priority_Number) {
-		this.priority_Number = priority_Number;
+	@Override
+	public int compareTo(Client o) {
+		if(priority_Number< o.priority_Number) {
+			return -1;
+		}else if(priority_Number> o.priority_Number) {
+			return 1;
+		}else
+		return 0;
 	}
 }

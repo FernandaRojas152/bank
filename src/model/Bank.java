@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import binarySearchTree.BinarySearchTree;
 import hashtable.HashTable;
-import heap.BankHeap;
 import queue.BankQueue;
 
 /**
@@ -44,9 +43,9 @@ public class Bank {
 	 */
 	
 	public void fillClientData(String name, String iD, String cardNumber, LocalDate paymentDueDate,
-														LocalDate memberSinceDate, Account account ) throws Exception {
+														LocalDate memberSinceDate, Account account, int priority ) throws Exception {
 		
-		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account);
+		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority);
 		clientsHashTable.insert(iD, client);
 		clientsList.add(client);
 		clientsTree.addNode(client.getAccount().getAmount(), client);
@@ -137,7 +136,6 @@ public class Bank {
 	}
 
 	protected void quickSort(int a, int b) {
-		
 		if(a<b) { 
 			
 			Client pivot = clientsList.get(b);

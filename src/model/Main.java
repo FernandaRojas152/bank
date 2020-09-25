@@ -26,8 +26,7 @@ public class Main {
 				
 				String[] dataArray = data.split(", ");
 				Account a = new Account(Integer.parseInt(dataArray[6]), dataArray[5]);
-				bank.fillClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3], f), 
-						LocalDate.parse(dataArray[4], f), a);
+				//bank.fillClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3], f), LocalDate.parse(dataArray[4], f), a);
 				data = br.readLine();
 			}
 			br.close();
