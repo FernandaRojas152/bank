@@ -1,6 +1,7 @@
 package heap;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 //import hashtable.GenericArray;
 
@@ -87,9 +88,9 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 			smallest=right;
 		}
 		if(smallest!=index) {
-			P aux= heap[index];
-			heap[index]= heap[smallest];
-			heap[smallest]= aux;
+			P aux= heap[smallest];
+			heap[smallest]= heap[index];
+			heap[index]= aux;
 			minHeapify(smallest);
 		}
 	}
@@ -206,14 +207,26 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 	}
 
 	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int element;
 		Integer[]a= new Integer[8];
 		BankHeap<Integer> prueba= new BankHeap<>(a,3);
-		prueba.insertMax(2);
+		/**prueba.insertMax(2);
 		prueba.insertMax(9);
 		prueba.insertMax(12);
 		//prueba.extractMax();
 		System.out.println(prueba.getheap_Size());
+		*/
+		int n=5;
+		for (int i = 0; i < n; i++) {
+			element= scanner.nextInt();
+			prueba.insertMax(element);
+			
+		}
+		
+		System.out.println(prueba.max());
 		
 		//size,heapsize funcionan, heapify funciona. POR FIN LPM
+		
 	}
 }
