@@ -1,5 +1,7 @@
 package heap;
 
+import java.util.Comparator;
+
 /**
  * @version September 22th 2020
  * @author 
@@ -8,46 +10,49 @@ package heap;
  * @param <T>
  * Code based on: https://java2blog.com/heap-sort-in-java/
  * and https://www.geeksforgeeks.org
+ * and https://www.codesdope.com/blog/article/priority-queue-using-heap/
  */
-public class BankHeap<P,T> implements IHeap<P, T>{
+public class BankHeap<P extends Comparable<P>,T> implements IHeap<P,T> {
 	//Attributes
 	private final static int ROOT= 1;
-	private HeapItem<P, T>[] heap;
+	private P[] heap;
 	private int size;
-	private int maxSize;
-	
+	private int heap_Size;
+
 	//Methods
 	@SuppressWarnings("unchecked")
-	public BankHeap(int maxSize){
-		this.maxSize= maxSize;
+	public BankHeap(int heap_Size){
+		this.heap_Size= heap_Size;
 		size=0;
-		heap= new HeapItem[maxSize+1];
-	}
-	
-	public HeapItem<P, T>[] getHeap() {
-		return heap;
+		heap= (P[]) new Object[heap_Size];
 	}
 
-	public void setHeap(HeapItem<P, T>[] heap) {
-		this.heap = heap;
+	@Override
+	public void buildMaxHeap() {
+		for (int i = heap_Size/2; i>= 1; i--) {
+			maxHeapify(i);
+		}
+	}
+
+	@Override
+	public void buildMinHeap() {
+		for (int i = heap_Size/2; i>= 1; i--) {
+			minHeapify(i);
+		}
 	}
 
 	public int getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public int getheap_Size() {
+		return heap_Size;
 	}
 
-	public int getMaxSize() {
-		return maxSize;
+	public void setheap_Size(int heap_Size) {
+		this.heap_Size = heap_Size;
 	}
 
-	public void setMaxSize(int maxSize) {
-		this.maxSize = maxSize;
-	}
-	
 	@Override
 	public int parent(int p) {
 		return (p/2);
@@ -57,127 +62,134 @@ public class BankHeap<P,T> implements IHeap<P, T>{
 	public int rightChild(int p) {
 		return (p*2)+1;
 	}
-	
+
 	@Override
 	public int leftChild(int p) {
 		return (p*2);
 	}
-	
+
 	@Override
 	public void minHeapify(int index) {
-		while(hasLeftChild(index)) {
-			int l= leftChild(index);
-			if(hasRightChild(index) && heap[leftChild(index)].getPriority()< heap[rightChild(index)].getPriority()) {
-				l= rightChild(index);			
-			}
-			if(heap[index].getPriority()< heap[l].getPriority()) {
-				swap(index, l);
-				minHeapify(l);
-			}else break;
+		int left= leftChild(index);
+		int right= rightChild(index);
+		int smallest;
+
+		if(left<=heap_Size && heap[left].compareTo(heap[index])<0) {
+			smallest= left;
+		}else smallest= index;
+		if(right<= heap_Size && heap[left].compareTo(heap[index])<0) {
+			smallest=right;
+		}
+		if(smallest!=index) {
+			P aux= heap[index];
+			heap[index]= heap[smallest];
+			heap[smallest]= aux;
+			minHeapify(smallest);
 		}
 	}
 
 	@Override
 	public void maxHeapify(int index) {
-		while(hasLeftChild(index)) {
-			int s= leftChild(index);
-			if(hasRightChild(index) && heap[leftChild(index)].getPriority() > heap[rightChild(index)].getPriority()) {
-				s= rightChild(index);			
-			}
-			if(heap[index].getPriority()> heap[s].getPriority()) {
-				swap(index, s);
-				maxHeapify(s);
-			}else break;
+		int left= leftChild(index);
+		int right= rightChild(index);
+		int largest;
+
+		if(left<=heap_Size && heap[left].compareTo(heap[index])<0) {
+			largest= left;
+		}else largest= index;
+		if(right<= heap_Size && heap[left].compareTo(heap[index])<0) {
+			largest=right;
+		}
+		if(largest!=index) {
+			P aux= heap[index];
+			heap[index]= heap[largest];
+			heap[largest]= aux;
+			maxHeapify(largest);
 		}
 	}
 
 	@Override
-	public void maxHeap() {
-		int index= maxSize;
-		while(parent(index)!=0 && heap[parent(index)].getPriority()< heap[index].getPriority()) {
-			swap(index, parent(index));
+	public void increaseMaxHeap(int index, P key) {
+		heap[index]= key;
+		while(index>1 && heap[parent(index)].compareTo(heap[index])<0) {
+			P aux= heap[index];
+			heap[index]= heap[parent(index)];
+			heap[parent(index)]= aux;
 			index= parent(index);
 		}
 	}
 
 	@Override
-	public void minHeap() {
-		int index= maxSize;
-		while(parent(index)!=0 && heap[parent(index)].getPriority()> heap[index].getPriority()) {
-			swap(index, parent(index));
+	public void decreaseMinHeap(int index, P key) {
+		heap[index]= key;
+		while(parent(index)!=0 && heap[parent(index)].compareTo(heap[index])>0) {
+			P aux= heap[index];
+			heap[index]= heap[parent(index)];
+			heap[parent(index)]= aux;
 			index= parent(index);
 		}
 	}
 
 	@Override
 	public void insertMax(P priority, T element) {
-		HeapItem<P, T> insert= new HeapItem<>(priority, element);
-		setMaxSize(maxSize+1);
-		heap[maxSize]= insert;
-		maxHeap();
+		//HeapItem<P> insert= new HeapItem<>(priority, element);
+		setheap_Size(heap_Size+1);
+		//heap[heap_Size]= insert;
+		increaseMaxHeap(heap_Size, priority);
 	}
 
 	@Override
 	public void insertMin(P priority, T element) {
-		HeapItem<P, T> insert= new HeapItem<>(priority, element);
-		setMaxSize(maxSize+1);
-		heap[maxSize]= insert;
-		minHeap();
+		//HeapItem<P> insert= new HeapItem<>(priority, element);
+		setheap_Size(heap_Size+1);
+		heap[heap_Size]= priority;
+		decreaseMinHeap(heap_Size, priority);
 	}
 
 	@Override
-	public T removeMax() {
+	public P extractMax() {
 		//se debe de tomar el primer valor, intercambiarlo con el ultimo.
 		//y luego ya borrarlo y llamar al metodo minHeap o maxHeap para volver a tener
 		//un heap balanceado.
-		HeapItem<P, T> aux= heap[ROOT];
-		heap[ROOT]= heap[maxSize];
-		heap[maxSize]= null;
-		setMaxSize(maxSize-1);
+		P aux= heap[ROOT];
+		heap[ROOT]= heap[heap_Size];
+		heap[heap_Size]= null;
+		setheap_Size(heap_Size-1);
 		maxHeapify(ROOT);
-		return aux.getElement();
-	}
-	
-	@Override
-	public T removeMin() {
-		HeapItem<P, T> aux= heap[ROOT];
-		heap[ROOT]= heap[maxSize];
-		heap[maxSize]= null;
-		setMaxSize(maxSize-1);
-		minHeapify(ROOT);
-		return aux.getElement();
+		return aux;
 	}
 
 	@Override
-	public T max() {
-		return heap[ROOT].getElement();
+	public P extractMin() {
+		P aux= heap[ROOT];
+		heap[ROOT]= heap[heap_Size];
+		heap[heap_Size]= null;
+		setheap_Size(heap_Size-1);
+		minHeapify(ROOT);
+		return aux;
+	}
+
+	@Override
+	public P max() {
+		return heap[ROOT];
 	}
 
 	@Override
 	public int size() {
 		return size;
 	}
-	
-	@Override
-	public boolean isLeaf(int p) {
-		if (p>= (size/2) && p<= size) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean hasLeftChild(int i) {
-		return leftChild(i) <= maxSize;
-	}
-	
-	private boolean hasRightChild(int i) {
-		return rightChild(i) <= maxSize;
-	}
 
 	@Override
 	public void swap(int p, int p2) {
-		HeapItem<P, T> aux= heap[p];
-		heap[p]= heap[p2];
-		heap[p2]= aux;
+		// TODO Auto-generated method stub
+		
 	}
+
+	/**public static void main(String[] args) {
+		BankHeap<Integer> prueba= new BankHeap<Integer>(10);
+		//prueba.buildMaxHeap();
+		prueba.buildMinHeap();
+		prueba.insertMin(1);
+		System.out.println(prueba);
+	}*/
 }

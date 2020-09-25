@@ -8,14 +8,15 @@ import java.time.LocalDate;
  *
  */
 
-public class Client {
+public class Client implements Comparable<Client> {
 	
 	public final String BLIND = "Blind";
 	public final String DISABLED = "Disabled";
 	public final String PREGNANT = "Pregnant";
 	public final String ELDER = "Elder";
+	public final String BABYINARMS = "Baby in arms";
 	public final String NORMAL = "Normal";
-	
+
 	private String name;
 	private String iD;
 	private String cardNumber;
@@ -86,26 +87,6 @@ public class Client {
 		this.account = account;
 	}
 	
-	public int getPriorityValue() {
-		
-		int priorityValue = 0;
-
-		switch(priority) {
-		
-		case BLIND: 
-			priorityValue = 1;
-		case DISABLED:
-			priorityValue = 2;
-		case PREGNANT:
-			priorityValue = 3;
-		case ELDER:
-			priorityValue = 4;
-		case NORMAL:
-			priorityValue = 5;
-		}
-		return priorityValue;
-	}
-	
 	public String getPriority() {
 		return priority;
 	}
@@ -121,14 +102,43 @@ public class Client {
 	public void setCardAmount(Double cardAmount) {
 		this.cardAmount = cardAmount;
 	}
-
+	
+	public String getClientData() {
+		return name+", "+iD+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
+		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount+", "+account.getCancelationDate()
+		+", "+account.getCancelationComments();
+	}
+	
 	@Override
 	public String toString() {
 		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
 	}
 	
-	public String getClientData() {
-		return name+", "+iD+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
-		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount;
+	@Override
+	public int compareTo(Client client) {
+		// TODO Auto-generated method stub
+		return this.getPriorityValue()-client.getPriorityValue();
+	}
+
+	private int getPriorityValue() {
+		
+		int priorityValue = 0;
+
+		switch(priority) {
+		
+		case BLIND: 
+			priorityValue = 6;
+		case DISABLED:
+			priorityValue = 5;
+		case PREGNANT:
+			priorityValue = 4;
+		case ELDER:
+			priorityValue = 3;
+		case BABYINARMS:
+			priorityValue = 2;
+		case NORMAL:
+			priorityValue = 1;
+		}
+		return priorityValue;
 	}
 }

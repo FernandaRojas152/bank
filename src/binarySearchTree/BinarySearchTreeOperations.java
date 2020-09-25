@@ -18,7 +18,7 @@ public interface BinarySearchTreeOperations<K extends Comparable<K>, V> {
 	 * @param v Value
 	 */
 	
-	public void addNode(K k, V v) throws Exception;
+	public void addNode(K k, V v);
 	
 	/**
 	 * Updates the Value v of the node with Key k

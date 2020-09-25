@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import binarySearchTree.BinarySearchTree;
 import hashtable.HashTable;
-import heap.BankHeap;
 import queue.IQueue;
 import stack.IStack;
 
@@ -31,7 +30,6 @@ public class Bank {
 	private BinarySearchTree<Double, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
-	private BankHeap<Integer, Client> priorityQueue;
 	
 	/**
 	 * Builds a bank
@@ -43,7 +41,6 @@ public class Bank {
 		clientTree = new BinarySearchTree<Double, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
-		priorityQueue = new BankHeap<Integer, Client>(10000);
 	}
 	
 	/**
@@ -104,7 +101,8 @@ public class Bank {
 	 * Cancels a client's savings account and deletes all his data from the database.
 	 * Also incorporates the client data into a different database with extra information
 	 * about his account<br>
-	 * <b>pre:</b> cliente!=null<br>
+	 * <b>pre:</b> client!=null<br>
+	 * <b>post:</b> client is no longer contained in the bank but in a exclusive database<br>
 	 * @param client
 	 * @param cancelationDate
 	 * @param cancelationComments
@@ -113,16 +111,62 @@ public class Bank {
 	
 	public void cancelAccount(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
 		
+		//Cancels a client's savings account as it adds values to cancelationDate and
+		//cancelationComments. Client is stored in a stack so that it can be retrieved
 		client.getAccount().setCancelationDate(cancelationDate);
 		client.getAccount().setCancelationComments(cancelationComments);
 		clientStack.Ipush(client);
 		
+		//Incorporates the client data into a different database with extra information and updates
+		//the main database as it overwrites it while excluding the given client
 		File tempFile = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\tempFile");
 		File file1 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\canceledAccounts");
 		File file2 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\database");
 		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file1, true));
 		BufferedReader br = new BufferedReader(new FileReader(file2));
+		updateDataBase(client, tempBw, bw, br);
+		Files.move(tempFile.toPath(), file2.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		
+		//Deletes the client from the data structures in the bank
+		clientList.remove(client);
+		clientTree.deleteNode(client.getAccount().getAmount());	
+		
+	}
+	
+	/**
+	 * Retrieves a client's savings account and adds all his data back into the database
+	 * Also deletes the client from the canceled clients database
+	 * <b>pre:</b> stack!=null<br>
+	 * <b>post:</b> client is now part of the bank<br>
+	 * @throws IOException
+	 */
+	
+	public void undo() throws IOException {
+		
+		//Retrieves a client's savings account as it adds null values to cancelationDate and
+		//cancelationComments. Client is removed from the stack
+		Client client = clientStack.pop();
+		client.getAccount().setCancelationDate(null);
+		client.getAccount().setCancelationComments(null);
+		
+		//Reincorporates the client data into the database and updates
+		//the canceled client database as it overwrites it while excluding the client
+		File tempFile = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\tempFile");
+		File file1 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\canceledAccounts");
+		File file2 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\database");
+		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file2, true));
+		BufferedReader br = new BufferedReader(new FileReader(file1));
+		updateDataBase(client, tempBw, bw, br);
+		Files.move(tempFile.toPath(), file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		
+		//Adds the client back into the data structures in the bank
+		clientList.add(client);
+		clientTree.addNode(client.getAccount().getAmount(), client);
+	}
+	
+	private void updateDataBase(Client client, BufferedWriter tempBw, BufferedWriter bw, BufferedReader br) throws IOException {
 		
 		String data = br.readLine();
 		
@@ -131,7 +175,7 @@ public class Bank {
 			String[] dataArray = data.split(", ");
 			
 			if(dataArray[1].equals(client.getiD())) {
-				data = client.getClientData()+", "+cancelationDate+", "+cancelationComments;
+				data = client.getClientData();
 				bw.write(data);
 				bw.newLine();
 			} else { 
@@ -143,8 +187,11 @@ public class Bank {
 		tempBw.close();
 		bw.close();
 		br.close();
-		Files.move(tempFile.toPath(), file2.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
+	
+	/**
+	 * Advances the queue<br>
+	 */
 	
 	public void next() {
 		clientQueue.dequeue();
@@ -172,16 +219,16 @@ public class Bank {
 		divide(0, clientList.size()-1);
     }
 	
-	private void divide(int startIndex,int endIndex){
+	private void divide(int start,int end){
         
         //Divide till you breakdown your list to single element
-        if(startIndex<endIndex && (endIndex-startIndex)>=1){
-            int mid = (endIndex + startIndex)/2;
-            divide(startIndex, mid);
-            divide(mid+1, endIndex);        
+        if(start<end && (end-start)>=1){
+            int mid = (end + start)/2;
+            divide(start, mid);
+            divide(mid+1, end);        
             
             //merging Sorted array produce above into one sorted array
-            merge(startIndex,mid,endIndex);            
+            merge(start,mid,end);            
         }       
     } 
 	
@@ -281,7 +328,7 @@ public class Bank {
 	}
 	
 	/**
-	 * Sorts the client list by amount using the treesort algorithm<br>
+	 * Sorts the client list by amount using the inorder traversal algorithm<br>
 	 * <b>pre:</b> client list is not empty<br>
 	 * <b>post:</b> client list is sorted by ID<br>
 	 */
@@ -297,5 +344,9 @@ public class Bank {
 
 	public IQueue<Client> getClientQueue() {
 		return clientQueue;
+	}
+
+	public IStack<Client> getClientStack() {
+		return clientStack;
 	}
 }

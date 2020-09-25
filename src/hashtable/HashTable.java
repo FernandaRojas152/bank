@@ -50,7 +50,7 @@ public class HashTable<K extends Comparable<K>, V> implements HashTableOperation
         genericArray.setE(index, hashTableNode); 
         size++; 
 	}
-	
+
 	@Override
 	public V get(K k) {
 		// TODO Auto-generated method stub  
@@ -58,7 +58,7 @@ public class HashTable<K extends Comparable<K>, V> implements HashTableOperation
         HashTableNode<K, V> head = genericArray.getE(index); 
   
         while (head != null) { 
-
+        	
             if (head.getK().equals(k)) 
                 return head.getV(); 
             head = head.next; 

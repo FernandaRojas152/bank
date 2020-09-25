@@ -1,6 +1,6 @@
 package hashtable;
 
-public interface HashTableOperations<K, V> {
+public interface HashTableOperations<K extends Comparable<K>, V> {
 	
 	 public int getSize();
 	 public GenericArray<HashTableNode<K, V>> getGenericArray();

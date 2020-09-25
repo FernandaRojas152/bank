@@ -11,7 +11,7 @@ public class HashTableNode<K extends Comparable<K>, V> {
 		this.k = k;
 		this.v = v;
 	}
-	
+
 	public K getK() {
 		return k;
 	}
