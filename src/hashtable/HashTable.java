@@ -65,4 +65,18 @@ public class HashTable<K extends Comparable<K>, V> implements HashTableOperation
         } 
         return null; 
 	} 
+	
+	@Override
+	public void delete(K k) {
+		// TODO Auto-generated method stub 
+		int index = hashFunction(k);
+		HashTableNode<K, V> head = genericArray.getE(index); 
+		
+		while(head != null) {
+			
+			if (head.getK().equals(k)) 
+				genericArray.setE(index, head.next);
+            head = head.next; 
+		}
+	}
 }

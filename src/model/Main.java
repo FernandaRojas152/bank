@@ -36,7 +36,8 @@ public class Main {
 				String[] dataArray = data2.split(", ");
 				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
 				bank.fillCanceledClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
-						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]));
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]), LocalDate.parse(dataArray[9]),
+						dataArray[10]);
 				data2 = br2.readLine();
 			}
 			br.close();
@@ -53,7 +54,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-//		List<Client> clients = bank.getClientList();
+		List<Client> clients = bank.getClientList();
 		
 //		//Sorting methods used over an arrayList
 //		
@@ -62,12 +63,12 @@ public class Main {
 //		bank.sortClientsByTime();
 //		bank.sortClientsByAmount();
 //		
-//		for (Client client : clients) {
+		for (Client client : clients) {
 //			System.out.println(client.getName());
 //			System.out.println(client.getiD());
 //			System.out.println(client.getMemberSinceDate().toString());
 //			System.out.println(client.getAccount().getAmount());
-//		}
+		}
 //		
 //		//Search function 
 //		
@@ -75,7 +76,8 @@ public class Main {
 		
 		//Deposit/Withdraw
 		
-		Client client = bank.getClientQueue().peek().getT();
+//		Client client = bank.getClientQueue().peek().getT();
+		
 //		bank.deposit(client, 1000.0);
 //		try {
 //			bank.withdraw(client, 1000.0);
@@ -85,15 +87,15 @@ public class Main {
 //		}
 		
 		//Cancel account/Undo cancel account
-		try {
+//		try {
 //			bank.cancelAccount(client, LocalDate.now(), "qewqe");
-			bank.undo();
-		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			bank.undo();
+//		} catch (NoSuchElementException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 }

@@ -30,7 +30,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements BinarySearc
 	 * @throws Exception
 	 */
 	
-	public void addNode(K k, V v) {
+	public void addNode(K k, V v) throws Exception {
 		
 		Node<K, V> node = new Node<>(k, v);
 		

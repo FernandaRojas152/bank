@@ -27,7 +27,7 @@ public class Bank {
 	
 	private HashTable<String, Client> clientHashTable;
 	private List<Client> clientList;
-	private BinarySearchTree<Double, Client> clientTree;
+	private BinarySearchTree<String, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
 	
@@ -38,7 +38,7 @@ public class Bank {
 	public Bank() {
 		clientHashTable = new HashTable<String, Client>();
 		clientList = new ArrayList<Client>();
-		clientTree = new BinarySearchTree<Double, Client>();
+		clientTree = new BinarySearchTree<String, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
 	}
@@ -59,7 +59,7 @@ public class Bank {
 		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority, cardAmount);
 		clientHashTable.insert(iD, client);
 		clientList.add(client);
-		clientTree.addNode(client.getAccount().getAmount(), client);
+		clientTree.addNode(client.getiD(), client);
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
 	}
@@ -74,10 +74,12 @@ public class Bank {
 	 * @throws Exception 
 	 */
 	
-	public void fillCanceledClientData(String name, String iD, String cardNumber, LocalDate paymentDueDate,
-							   LocalDate memberSinceDate, Account account, String priority, Double cardAmount) throws Exception {
+	public void fillCanceledClientData(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
+		Account account, String priority, Double cardAmount, LocalDate cancelationDate, String cancelationComments) throws Exception {
 		
 		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority, cardAmount);
+		client.getAccount().setCancelationDate(cancelationDate);
+		client.getAccount().setCancelationComments(cancelationComments);
 		clientStack.Ipush(client);
 	}
 	
@@ -147,8 +149,8 @@ public class Bank {
 		
 		//Deletes the client from the data structures in the bank
 		clientList.remove(client);
-		clientTree.deleteNode(client.getAccount().getAmount());	
-		
+		clientTree.deleteNode(client.getiD());	
+		clientHashTable.delete(client.getiD());
 	}
 	
 	/**
@@ -156,10 +158,10 @@ public class Bank {
 	 * Also deletes the client from the canceled clients database
 	 * <b>pre:</b> stack!=null<br>
 	 * <b>post:</b> client is now part of the bank<br>
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	
-	public void undo() throws IOException {
+	public void undo() throws Exception {
 		
 		//Retrieves a client's savings account as it adds null values to cancelationDate and
 		//cancelationComments. Client is removed from the stack
@@ -180,7 +182,8 @@ public class Bank {
 		
 		//Adds the client back into the data structures in the bank
 		clientList.add(client);
-		clientTree.addNode(client.getAccount().getAmount(), client);
+		clientTree.addNode(client.getiD(), client);
+		clientHashTable.delete(client.getiD());
 	}
 	
 	private void updateDataBase(Client client, BufferedWriter tempBw, BufferedWriter bw, BufferedReader br) throws IOException {
@@ -289,12 +292,12 @@ public class Bank {
 	
 	/**
 	 * Adapted from https://codereview.stackexchange.com/questions/181391/sorting-an-arraylist-of-vehicles-using-quick-sort<br>
-	 * Sorts the client list by ID using the quicksort algorithm<br>
+	 * Sorts the client list by amount using the quicksort algorithm<br>
 	 * <b>pre:</b> client list is not empty<br>
 	 * <b>post:</b> client list is sorted by ID<br>
 	 */
 	
-	public void sortClientsByID() {
+	public void sortClientsByAmount() {
 		quickSort(0, clientList.size()-1);
 	}
 
@@ -308,10 +311,11 @@ public class Bank {
 		    int right = b;
 	
 		    while (left < right) {
-		    	while(clientList.get(left).getiD().compareTo(pivot.getiD()) < 0)
+		    	
+		    	while(clientList.get(left).getAccount().getAmount() < pivot.getAccount().getAmount())
 		    		left++;
 	
-		        while(clientList.get(right).getiD().compareTo(pivot.getiD()) > 0)
+		        while(clientList.get(right).getAccount().getAmount() > pivot.getAccount().getAmount())
 		            right--;
 	
 		        if (right > left) {
@@ -345,12 +349,12 @@ public class Bank {
 	}
 	
 	/**
-	 * Sorts the client list by amount using the inorder traversal algorithm<br>
+	 * Sorts the client list by ID using the inorder traversal algorithm<br>
 	 * <b>pre:</b> client list is not empty<br>
 	 * <b>post:</b> client list is sorted by ID<br>
 	 */
 	
-	public void sortClientsByAmount() {
+	public void sortClientsByID() {
 		clientList.clear();
 		clientTree.inOrder(clientList);
 	}
