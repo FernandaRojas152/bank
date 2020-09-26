@@ -1,7 +1,6 @@
 package heap;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * @version September 22th 2020
@@ -205,17 +204,18 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 		return Arrays.copyOf(heap, n);
 	}
 
-	/**public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		int element;
-		Integer[]a= new Integer[8];
-		BankHeap<Integer> prueba= new BankHeap<>(a,3);
+	public static void main(String[] args) {
+
+		Integer[]a= new Integer[10];
+		IHeap<Integer> prueba= new IHeap<>(a,6);
 		
 		prueba.insertMax(2);
 		prueba.insertMax(9);
 		prueba.insertMax(12);
-		//prueba.extractMax();
-		System.out.println(prueba.getheap_Size());
+		prueba.insertMax(1);
+		prueba.insertMax(5);
+		prueba.insertMax(3);
+		prueba.extractMax();
 		System.out.println(prueba.max());
-	}*/
+	}
 }

@@ -36,7 +36,7 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public void Ipush(E element) {
+	public void push(E element) {
 		NodeStack<E> aux= new NodeStack<>(element);
 		if(first== null) {
 			first= aux;
@@ -56,7 +56,7 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public E Ipeek() {
+	public E peek() {
 		E aux= null;
 		if(first.getNext()== null) {
 			aux= first.getElement();
