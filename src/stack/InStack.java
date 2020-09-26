@@ -6,8 +6,8 @@ package stack;
  * @param <I>
  */
 public interface InStack<E> {
-	public void Ipush(E element);
-	public E Ipeek();
+	public void push(E element);
+	public E peek();
 	public E pop();
 	public boolean isEmpty();
 	public int Isize();

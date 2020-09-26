@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import binarySearchTree.BinarySearchTree;
 import hashtable.HashTable;
+import heap.IHeap;
 import queue.IQueue;
 import stack.IStack;
 
@@ -22,6 +23,7 @@ import stack.IStack;
  * @author usuario
  *
  */
+
 public class Bank {
 	
 	private HashTable<String, Client> clientHashTable;
@@ -29,6 +31,8 @@ public class Bank {
 	private BinarySearchTree<String, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
+	private Client[] clientArray;
+	private IHeap<Client> clientHeap;
 	
 	/**
 	 * Builds a bank
@@ -40,6 +44,8 @@ public class Bank {
 		clientTree = new BinarySearchTree<String, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
+		clientArray = new Client[100];
+		clientHeap = new IHeap<Client>(clientArray);
 	}
 	
 	/**
@@ -59,8 +65,11 @@ public class Bank {
 		clientHashTable.insert(iD, client);
 		clientList.add(client);
 		clientTree.addNode(client.getiD(), client);
+		
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
+		else 
+			clientHeap.insertMax(client);
 	}
 	
 	/**
@@ -79,7 +88,7 @@ public class Bank {
 		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority, cardAmount);
 		client.getAccount().setCancelationDate(cancelationDate);
 		client.getAccount().setCancelationComments(cancelationComments);
-		clientStack.Ipush(client);
+		clientStack.push(client);
 	}
 	
 	/**
@@ -91,28 +100,66 @@ public class Bank {
 	 */
 	
 	public void deposit(Client client, Double deposit) {
-		
 		Double amount = client.getAccount().getAmount()+deposit;
 		client.getAccount().setAmount(amount);
 	}
 	
 	/**
-	 * Decreases the amount of a cliente's savings account<br>
-	 * <b>pre:</b> deposit>0 y client!=null<br>
+	 * Decreases the amount of a client's savings account<br>
+	 * <b>pre:</b> deposit>0 y cliente!=null<br>
 	 * <b>post:</b> the amount of the client's savings account has decreased by the value of withdrawal<br>
 	 * @param client
 	 * @param withdraw
 	 * @throws Exception. If withdrawal is greater than the balance of the client's savings account
 	 */
 	
-	public void withdraw(Client client, Double withdrawal) throws Exception {
+	public void withdraw(Client client, Double withdrawal) throws RuntimeException {
 		
 		Double amount = client.getAccount().getAmount()-withdrawal;
 		
 		if(amount<0)
-			throw new Exception("Invalid operation: Cannot withdraw an amount greater than the account's balance");
+			throw new RuntimeException("Invalid operation: Cannot withdraw an amount greater than the account balance.");
 		else
 			client.getAccount().setAmount(amount);
+	}
+	
+	/**
+	 * Pays a client's credit card amount spent so far using cash<br>
+	 * <b>pre</b>: client!=null<br>
+	 * <b>post:</b> client's credit card amount has been modified<br>
+	 * @param client
+	 * @param amount
+	 * @return client's remaining cash
+	 */
+	
+	public double payCardAmount(Client client, Double amount) {
+		
+		Double cardAmount = client.getCardAmount()-amount;
+		
+		if(cardAmount>0)
+			throw new RuntimeException("Insufficient amount: Please insert the total amount spent using the credit card.");
+		else
+			client.setCardAmount(0.0);
+		return Math.abs(cardAmount);
+	}
+	
+	/**
+	 * Pays a client's credit card amount spent so far using his account balance<br>
+	 * <b>pre</b>: client!=null<br>
+	 * <b>post:</b> client's credit card amount and client's account balance have been modified<br>
+	 * @param client
+	 */
+	
+	public void payCardAmount(Client client) {
+		
+		Double cardAmount = client.getCardAmount()-client.getAccount().getAmount();
+		
+		if(cardAmount>0)
+			throw new RuntimeException("Insufficient amount: Your account's balance is not enough.");
+		else {
+			client.setCardAmount(0.0);
+			client.getAccount().setAmount(Math.abs(cardAmount));
+		}
 	}
 	
 	/**
@@ -133,7 +180,7 @@ public class Bank {
 		//cancelationComments. Client is stored in a stack so that it can be retrieved
 		client.getAccount().setCancelationDate(cancelationDate);
 		client.getAccount().setCancelationComments(cancelationComments);
-		clientStack.Ipush(client);
+		clientStack.push(client);
 		
 		//Incorporates the client data into a different database with extra information and updates
 		//the main database as it overwrites it while excluding the given client
@@ -209,11 +256,19 @@ public class Bank {
 	}
 	
 	/**
-	 * Advances the queue<br>
+	 * Advances the normal client queue<br>
 	 */
 	
 	public void next() {
 		clientQueue.dequeue();
+	}
+	
+	/**
+	 * Advances the priority client queue<br>
+	 */
+	
+	public void priorityNext() {
+		clientHeap.extractMax();
 	}
 
 	/**
@@ -368,5 +423,9 @@ public class Bank {
 
 	public IStack<Client> getClientStack() {
 		return clientStack;
+	}
+
+	public IHeap<Client> getClientHeap() {
+		return clientHeap;
 	}
 }

@@ -69,24 +69,24 @@ public class Main {
 //			System.out.println(client.getMemberSinceDate().toString());
 //			System.out.println(client.getAccount().getAmount());
 		}
-//		
-//		//Search function 
-//		
-//		System.out.println(bank.searchClient("5918260347"));
 		
-		//Deposit/Withdraw
+		//PayCardAmount/Deposit/Withdraw
 		
 //		Client client = bank.getClientQueue().peek().getT();
-		
+//		
+//		System.out.println(bank.payCardAmount(client, 74000.0));
+//		System.out.println(client.getCardAmount());
+//		System.out.println(client.getAccount().getAmount());
 //		bank.deposit(client, 1000.0);
 //		try {
-//			bank.withdraw(client, 1000.0);
-//		} catch (Exception e1) {
+//			bank.withdraw(client, 2000.0);
+//			System.out.println(client.getPriority()+" "+client.getAccount().getAmount());
+//		} catch (RuntimeException e1) {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
 		
-		//Cancel account/Undo cancel account
+//		Cancel account/Undo cancel account
 //		try {
 //			bank.cancelAccount(client, LocalDate.now(), "qewqe");
 //			bank.undo();
@@ -96,6 +96,13 @@ public class Main {
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
+		
+//		//Search function 
+		
+//		System.out.println(bank.searchClient("4710430425"));
 	}
 }
