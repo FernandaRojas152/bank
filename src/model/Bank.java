@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import binarySearchTree.BinarySearchTree;
 import hashtable.HashTable;
+import heap.IHeap;
 import queue.IQueue;
 import stack.IStack;
 
@@ -30,6 +31,8 @@ public class Bank {
 	private BinarySearchTree<String, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
+	private Client[] clientArray;
+	private IHeap<Client> clientHeap;
 	
 	/**
 	 * Builds a bank
@@ -41,6 +44,8 @@ public class Bank {
 		clientTree = new BinarySearchTree<String, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
+		clientArray = new Client[100];
+		clientHeap = new IHeap<Client>(clientArray);
 	}
 	
 	/**
@@ -60,8 +65,12 @@ public class Bank {
 		clientHashTable.insert(iD, client);
 		clientList.add(client);
 		clientTree.addNode(client.getiD(), client);
-		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
+		
+		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) {
 			clientQueue.enqueue(client);
+		}else {
+			clientHeap.insertMin(client);
+		}
 	}
 	
 	/**
@@ -106,12 +115,12 @@ public class Bank {
 	 * @throws Exception. If withdrawal is greater than the balance of the client's savings account
 	 */
 	
-	public void withdraw(Client client, Double withdrawal) throws Exception {
+	public void withdraw(Client client, Double withdrawal) throws RuntimeException {
 		
 		Double amount = client.getAccount().getAmount()-withdrawal;
 		
 		if(amount<0)
-			throw new Exception("Invalid operation: Cannot withdraw an amount greater than the account's balance");
+			throw new RuntimeException("Invalid operation: Cannot withdraw an amount greater than the account's balance");
 		else
 			client.getAccount().setAmount(amount);
 	}
@@ -369,5 +378,9 @@ public class Bank {
 
 	public IStack<Client> getClientStack() {
 		return clientStack;
+	}
+
+	public IHeap<Client> getClientHeap() {
+		return clientHeap;
 	}
 }
