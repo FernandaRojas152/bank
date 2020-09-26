@@ -3,8 +3,6 @@ package heap;
 import java.util.Arrays;
 import java.util.Scanner;
 
-//import hashtable.GenericArray;
-
 /**
  * @version September 22th 2020
  * @author 
@@ -12,7 +10,6 @@ import java.util.Scanner;
  * @param <P>
  * @param <T>
  * Code based on: https://java2blog.com/heap-sort-in-java/
- * and https://www.geeksforgeeks.org
  * and https://www.codesdope.com/blog/article/priority-queue-using-heap/
  */
 public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
@@ -35,7 +32,6 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 	public BankHeap(P[] a, int heap_Size) {
 		heap= a;
 		size= a.length;
-		this.heap_Size= this.heap_Size;
 	}
 	
 	@Override
@@ -117,21 +113,18 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 
 	@Override
 	public void increaseMaxHeap(int index, P key) {
-		if(key.compareTo(heap[index])<0) {
-			throw new IndexOutOfBoundsException();
-		}
 		heap[index]= key;
 		while(index>1 && heap[parent(index)].compareTo(heap[index])<0) {
-			P aux= heap[index];
-			heap[index]= heap[parent(index)];
-			heap[parent(index)]= aux;
+			P aux= heap[parent(index)];
+			heap[parent(index)]= heap[index];
+			heap[index]= aux;
 			index= parent(index);
 		}
 	}
 	
 	@Override
 	public void insertMax(P element)  {
-		resize(size*2);
+		/**resize(size*2);
 		heap_Size++;
 		heap[heap_Size-1]= element;
 		
@@ -140,6 +133,12 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 		}
 		
 		maxHeapify(parent(heap_Size));
+		*/
+		
+		heap_Size++;
+		heap[heap_Size-1]= element;
+		
+		increaseMaxHeap(heap_Size, element);
 	}
 
 	@Override
@@ -206,27 +205,17 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 		return Arrays.copyOf(heap, n);
 	}
 
-	public static void main(String[] args) {
+	/**public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int element;
 		Integer[]a= new Integer[8];
 		BankHeap<Integer> prueba= new BankHeap<>(a,3);
-		/**prueba.insertMax(2);
+		
+		prueba.insertMax(2);
 		prueba.insertMax(9);
 		prueba.insertMax(12);
 		//prueba.extractMax();
 		System.out.println(prueba.getheap_Size());
-		*/
-		int n=5;
-		for (int i = 0; i < n; i++) {
-			element= scanner.nextInt();
-			prueba.insertMax(element);
-			
-		}
-		
 		System.out.println(prueba.max());
-		
-		//size,heapsize funcionan, heapify funciona. POR FIN LPM
-		
-	}
+	}*/
 }
