@@ -19,6 +19,7 @@ public class Main extends Application {
 	public Main() {
 		principal= new PrincipalWindowController();
 	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		try {

@@ -1,15 +1,25 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class ActionsController {
 
     @FXML
     private Label clientName;
-
+    
+    @FXML
+    private ToggleGroup actions;
+    
     @FXML
     private RadioButton consignment;
 
@@ -21,10 +31,29 @@ public class ActionsController {
 
     @FXML
     private RadioButton cancellation;
-
+    
+    public void ActionsController() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    public void initialize() {
+    	consignment.setToggleGroup(actions);
+    	withdraw.setToggleGroup(actions);
+    	cardPayment.setToggleGroup(actions);
+    	cancellation.setToggleGroup(actions);
+    }
+    
     @FXML
-    void makeAction(ActionEvent event) {
-
+    void makeAction(ActionEvent event) throws IOException {
+    	if (cardPayment.isSelected()) {
+    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
+        	Scene scene= new Scene(fxmlLoader.load());
+        	Stage stage= new Stage();
+        	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
+    		stage.setTitle("Actions");
+    		stage.setScene(scene);
+    		stage.show();
+		}
     }
 
     @FXML

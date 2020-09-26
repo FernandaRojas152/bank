@@ -1,7 +1,5 @@
 package heap;
-
 import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * @version September 22th 2020
@@ -15,47 +13,35 @@ import java.util.Scanner;
 public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 	//Attributes
 	private final static int ROOT= 1;
-	public static int CAPACITY= 10;
+	public static int CAPACITY= 100;
 	private P[] heap;
 	private int size;
-	private int heap_Size;
+	//private int heap_Size;
 
 	//Methods
 	@SuppressWarnings("unchecked")
-	public BankHeap(P[] a){
-		size=10;
-		heap= (P[]) new Comparable[CAPACITY];
-		heap_Size=0;
-		
+	public BankHeap(int heap_Size){
+		size=0;
+		heap= (P[]) new Comparable[heap_Size];		
 	}
 	
-	public BankHeap(P[] a, int heap_Size) {
+	public BankHeap(P[] a) {
 		heap= a;
-		size= a.length;
+		size= a.length-1;
+		buildMaxHeap();
 	}
 	
 	@Override
 	public void buildMaxHeap() {
-		for (int i = heap_Size/2; i>= 1; i--) {
+		for (int i = size/2; i>= 1; i--) {
 			maxHeapify(i);
-		}
-	}
-
-	@Override
-	public void buildMinHeap() {
-		for (int i = heap_Size/2; i>= 1; i--) {
-			minHeapify(i);
 		}
 	}
 
 	public int getSize() {
 		return size;
 	}
-
-	public int getheap_Size() {
-		return heap_Size;
-	}
-
+	
 	@Override
 	public int parent(int p) {
 		return (p/2);
@@ -63,15 +49,167 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 
 	@Override
 	public int rightChild(int p) {
-		return (p*2)+1;
+		int right= (int) (Math.floor(p*2)+1)-1;
+		return right;
 	}
 
 	@Override
 	public int leftChild(int p) {
-		return (p*2);
+		int left= (int) Math.floor(p*2)-1;
+		
+		return left;
 	}
 
 	@Override
+	public void maxHeapify(int index) {
+		int left= leftChild(index);
+		int right= rightChild(index);
+		index--;
+		int largest;
+		if(left<= size && heap[left].compareTo(heap[index])>0) {
+			largest= left;
+		}else largest= index;
+		if(right<= size && heap[left].compareTo(heap[index])>0) {
+			largest=right;
+		}
+		if(largest!=index) {
+			P aux= heap[index];
+			heap[index]= heap[largest];
+			heap[largest]= aux;
+			maxHeapify(largest);
+		}
+	}
+
+	@Override
+	public void increaseMaxHeap(int index, P element) {
+		heap[index]= element;
+		while(hasParent(index) && heap[parent(index)].compareTo(heap[index])<0) {
+			swap(index, parent(index));
+			index= parent(index);
+		}
+	}
+	
+	@Override
+	public void insertMax(P element)  {
+		size++;
+		heap[size-1]= element;
+		
+		increaseMaxHeap(size, element);
+		
+		/**heap_Size++;
+		heap[heap_Size-1]= element;
+		
+		increaseMaxHeap(heap_Size, element);
+		*/
+	}
+
+	@Override
+	public P extractMax() {
+		//se debe de tomar el primer valor, intercambiarlo con el ultimo.
+		//y luego ya borrarlo y llamar al metodo minHeap o maxHeap para volver a tener
+		//un heap balanceado.
+		P aux= heap[ROOT];
+		heap[ROOT]= heap[size];
+		//heap[heap_Size]= null;
+		size--;
+		maxHeapify(ROOT);
+		return aux;
+	}
+
+	@Override
+	public P max() {
+		return heap[ROOT];
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
+	
+	private boolean hasParent(int i){
+		return i > 1;
+	}
+	
+	private boolean hasLeft(int i){
+		return leftChild(i) < size;
+	}
+	
+	private boolean hasRight(int i){
+		return rightChild(i) < size;
+	}
+	
+	private void swap(int index1, int index2)
+	{
+		P temp = heap[index1];
+		heap[index1] = heap[index2];
+		heap[index2] = temp;
+	}
+
+	public P[] resize() {
+		return Arrays.copyOf(heap, heap.length + CAPACITY);
+	}
+
+	public static void main(String[] args) {
+		BankHeap<Integer> prueba=new BankHeap<>(CAPACITY);
+		prueba.insertMax(11);
+		prueba.insertMax(4);
+		prueba.insertMax(18);
+		prueba.insertMax(10);
+		prueba.insertMax(5);
+		//prueba.insertMax(13);
+		//prueba.insertMax(50);
+		System.out.println(prueba.max());
+		System.out.println(prueba.extractMax());
+		//prueba.extractMax();
+		//System.out.println(prueba.extractMax());
+		System.out.println(prueba.max());
+	}
+	
+	/**@Override
+	public void buildMinHeap() {
+		for (int i = heap_Size/2; i>= 1; i--) {
+			minHeapify(i);
+		}
+	}*/
+	
+	/**@Override
+	public P extractMin() {
+		P aux= heap[ROOT];
+		heap[ROOT]= heap[heap_Size];
+		heap[heap_Size]= null;
+		heap_Size--;
+		minHeapify(ROOT);
+		return aux;
+	}
+	*/
+	
+	/**@Override
+	public void decreaseMinHeap() {
+		int index= heap_Size;
+		while(parent(index)!=0 && heap[parent(index)].compareTo(heap[index])>0) {
+			P aux= heap[index];
+			heap[index]= heap[parent(index)];
+			heap[parent(index)]= aux;
+			index= parent(index);
+		}
+	}
+	*/
+
+	/**@Override
+	public void insertMin(P element) {
+		resize();
+		heap_Size++;
+		heap[heap_Size]= element;
+		
+		for(int i= heap_Size-1; i>=1; i= parent(i)) {
+			minHeapify(parent(i));
+		}
+		
+		minHeapify(parent(heap_Size));
+	}
+	*/
+	
+	/**@Override
 	public void minHeapify(int index) {
 		int left= leftChild(index);
 		int right= rightChild(index);
@@ -90,132 +228,5 @@ public class BankHeap<P extends Comparable<P>> implements IHeap<P> {
 			minHeapify(smallest);
 		}
 	}
-
-	@Override
-	public void maxHeapify(int index) {
-		int left= leftChild(index);
-		int right= rightChild(index);
-		int largest;
-
-		if(left< heap_Size && heap[left].compareTo(heap[index])>0) {
-			largest= left;
-		}else largest= index;
-		if(right< heap_Size && heap[left].compareTo(heap[index])>0) {
-			largest=right;
-		}
-		if(largest!=index) {
-			P aux= heap[largest];
-			heap[largest]= heap[index];
-			heap[index]= aux;
-			maxHeapify(largest);
-		}
-	}
-
-	@Override
-	public void increaseMaxHeap(int index, P key) {
-		heap[index]= key;
-		while(index>1 && heap[parent(index)].compareTo(heap[index])<0) {
-			P aux= heap[parent(index)];
-			heap[parent(index)]= heap[index];
-			heap[index]= aux;
-			index= parent(index);
-		}
-	}
-	
-	@Override
-	public void insertMax(P element)  {
-		/**resize(size*2);
-		heap_Size++;
-		heap[heap_Size-1]= element;
-		
-		for(int i= heap_Size-1; i>=1; i= parent(i)) {
-			maxHeapify(parent(i));
-		}
-		
-		maxHeapify(parent(heap_Size));
-		*/
-		
-		heap_Size++;
-		heap[heap_Size-1]= element;
-		
-		increaseMaxHeap(heap_Size, element);
-	}
-
-	@Override
-	public void decreaseMinHeap(int index, P key) {
-		if(key.compareTo(heap[index])<0) {
-			throw new IndexOutOfBoundsException();
-		}
-		heap[index]= key;
-		while(parent(index)!=0 && heap[parent(index)].compareTo(heap[index])>0) {
-			P aux= heap[index];
-			heap[index]= heap[parent(index)];
-			heap[parent(index)]= aux;
-			index= parent(index);
-		}
-	}
-
-	@Override
-	public void insertMin(P element) {
-		resize(size*2);
-		heap_Size++;
-		heap[heap_Size-1]= element;
-		
-		for(int i= heap_Size-1; i>=1; i= parent(i)) {
-			minHeapify(parent(i));
-		}
-		
-		minHeapify(parent(heap_Size));
-	}
-
-	@Override
-	public P extractMax() {
-		//se debe de tomar el primer valor, intercambiarlo con el ultimo.
-		//y luego ya borrarlo y llamar al metodo minHeap o maxHeap para volver a tener
-		//un heap balanceado.
-		P aux= heap[ROOT];
-		heap[ROOT]= heap[heap_Size];
-		heap[heap_Size]= null;
-		heap_Size--;
-		maxHeapify(ROOT);
-		return aux;
-	}
-
-	@Override
-	public P extractMin() {
-		P aux= heap[ROOT];
-		heap[ROOT]= heap[heap_Size];
-		heap[heap_Size]= null;
-		heap_Size--;
-		minHeapify(ROOT);
-		return aux;
-	}
-
-	@Override
-	public P max() {
-		return heap[ROOT];
-	}
-
-	@Override
-	public int size() {
-		return size;
-	}
-	
-	public P[] resize(int n) {
-		return Arrays.copyOf(heap, n);
-	}
-
-	/**public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		int element;
-		Integer[]a= new Integer[8];
-		BankHeap<Integer> prueba= new BankHeap<>(a,3);
-		
-		prueba.insertMax(2);
-		prueba.insertMax(9);
-		prueba.insertMax(12);
-		//prueba.extractMax();
-		System.out.println(prueba.getheap_Size());
-		System.out.println(prueba.max());
-	}*/
+	*/
 }
