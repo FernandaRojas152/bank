@@ -1,6 +1,7 @@
 package ui;
 	
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -28,6 +29,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Bank S.A");
 			primaryStage.setResizable(false);
 			primaryStage.show();
+			primaryStage.setOnCloseRequest(e -> Platform.exit());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -23,7 +23,6 @@ import stack.IStack;
  * @author usuario
  *
  */
-
 public class Bank {
 	
 	private HashTable<String, Client> clientHashTable;
@@ -107,8 +106,8 @@ public class Bank {
 	}
 	
 	/**
-	 * Decreases the amount of a client's savings account<br>
-	 * <b>pre:</b> deposit>0 y cliente!=null<br>
+	 * Decreases the amount of a cliente's savings account<br>
+	 * <b>pre:</b> deposit>0 y client!=null<br>
 	 * <b>post:</b> the amount of the client's savings account has decreased by the value of withdrawal<br>
 	 * @param client
 	 * @param withdraw
