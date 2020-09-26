@@ -31,9 +31,13 @@ public class Node<K extends Comparable<K>, V> {
 	/**
 	 * Adds a new node to the node's subtree
 	 * @param Kode
+	 * @throws Exception
 	 */
 
-	public void addNode(Node<K, V> node) {
+	public void addNode(Node<K, V> node) throws Exception {
+		
+		if(k.compareTo(node.k)==0)
+			throw new Exception();
 		
 		if(k.compareTo(node.k)>0) {
 			
