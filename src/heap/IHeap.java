@@ -30,7 +30,6 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	public IHeap(P[] a) {
 		heap= a;
 		heap_Size= a.length-1;
-		buildMaxHeap();
 	}
 
 	@Override
@@ -160,8 +159,8 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 		return Arrays.copyOf(heap, heap.length + CAPACITY);
 	}
 
-	public static void main(String[] args) {
-		IHeap<Integer> prueba=new IHeap<>(CAPACITY,false);
+	/**public static void main(String[] args) {
+		IHeap<Integer> prueba=new IHeap<>(CAPACITY,true);
 		prueba.insert(15);
 		prueba.insert(7);
 		prueba.insert(18);
@@ -174,5 +173,5 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 		//prueba.extractMax();
 		//System.out.println(prueba.extractMax());
 		System.out.println(prueba.max());
-	}
+	}*/
 }

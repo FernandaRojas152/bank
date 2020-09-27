@@ -13,10 +13,10 @@ import javafx.stage.Stage;
 public class QueueController {
 
     @FXML
-    private ListView<?> priorityQueue;
+    private ListView<String> priorityQueue;
 
     @FXML
-    private ListView<?> normalQueue;
+    private ListView<String> normalQueue;
 
     @FXML
     void attendClient(ActionEvent event) throws IOException {

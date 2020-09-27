@@ -24,6 +24,7 @@ import stack.IStack;
  *
  */
 public class Bank {
+	private Client client;
 	private HashTable<String, Client> clientHashTable;
 	private List<Client> clientList;
 	private BinarySearchTree<String, Client> clientTree;
@@ -44,6 +45,10 @@ public class Bank {
 		clientStack = new IStack<Client>();
 		clientArray = new Client[100];
 		clientHeap = new IHeap<Client>(clientArray);
+	}
+	
+	public Client getClient() {
+		return client;
 	}
 	
 	/**
@@ -274,8 +279,8 @@ public class Bank {
 	 * @return client data 
 	 */
 	
-	public String searchClient(String iD) { 
-		return clientHashTable.get(iD).toString();
+	public Client searchClient(String iD) { 
+		return clientHashTable.get(iD);
 	}
 	
 	/**
