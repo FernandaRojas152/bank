@@ -264,7 +264,7 @@ public class Bank {
 	 */
 	
 	public void priorityNext() {
-		clientHeap.extractMax();
+		clientHeap.extract();
 	}
 
 	/**
