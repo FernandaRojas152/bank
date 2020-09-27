@@ -11,9 +11,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.Bank;
 
 public class ActionsController {
-
+	private Bank bank;
     @FXML
     private Label clientName;
     
@@ -32,8 +33,8 @@ public class ActionsController {
     @FXML
     private RadioButton cancellation;
     
-    public void ActionsController() {
-		// TODO Auto-generated constructor stub
+    public ActionsController() {
+		bank= new Bank();
 	}
     
     public void initialize() {
@@ -57,8 +58,8 @@ public class ActionsController {
     }
 
     @FXML
-    void undoAction(ActionEvent event) {
-
+    void undoAction(ActionEvent event) throws Exception {
+    	bank.undo();
     }
 
 }
