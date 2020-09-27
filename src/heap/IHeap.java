@@ -74,7 +74,7 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 			if(left<=heap_Size && heap[left].compareTo(heap[index])<0) {
 				smallest= left;
 			}else smallest= index;
-			if(right<= heap_Size && heap[left].compareTo(heap[index])<0) {
+			if(right<= heap_Size && heap[right].compareTo(heap[smallest])<0) {
 				smallest=right;
 			}
 			if(smallest!=index) {
