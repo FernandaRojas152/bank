@@ -17,6 +17,12 @@ public class CardPaymentController {
     @FXML
     private BorderPane mainPane;
     
+    @FXML
+    private TextField amountMoney;
+
+    @FXML
+    private Label total;
+    
     public void initialize() {
     	
     }
@@ -41,13 +47,6 @@ public class CardPaymentController {
     	mainPane.setCenter(root);
     	
     }
-    
-    @FXML
-    private TextField amountMoney;
-
-    @FXML
-    private Label total;
-    
 
     @FXML
     void payWithCash(ActionEvent event) {

@@ -23,9 +23,7 @@ import stack.IStack;
  * @author usuario
  *
  */
-
 public class Bank {
-	
 	private HashTable<String, Client> clientHashTable;
 	private List<Client> clientList;
 	private BinarySearchTree<String, Client> clientTree;
@@ -68,8 +66,8 @@ public class Bank {
 		
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
-		else 
-			clientHeap.insertMax(client);
+		/**else 
+			clientHeap.insertMax(client);*/
 	}
 	
 	/**
@@ -173,7 +171,6 @@ public class Bank {
 	 * @param cancelationComments
 	 * @throws IOException 
 	 */
-	
 	public void cancelAccount(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
 		
 		//Cancels a client's savings account as it adds values to cancelationDate and
@@ -184,9 +181,9 @@ public class Bank {
 		
 		//Incorporates the client data into a different database with extra information and updates
 		//the main database as it overwrites it while excluding the given client
-		File tempFile = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\tempFile");
-		File file1 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\canceledAccounts");
-		File file2 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\database");
+		File tempFile = new File("resources\\tempFile.txt");
+		File file1 = new File("resources\\canceledAccounts.txt");
+		File file2 = new File("resources\\database.txt");
 		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file1, true));
 		BufferedReader br = new BufferedReader(new FileReader(file2));
@@ -206,7 +203,6 @@ public class Bank {
 	 * <b>post:</b> client is now part of the bank<br>
 	 * @throws Exception 
 	 */
-	
 	public void undo() throws Exception {
 		
 		//Retrieves a client's savings account as it adds null values to cancelationDate and
@@ -217,9 +213,9 @@ public class Bank {
 		
 		//Reincorporates the client data into the database and updates
 		//the canceled client database as it overwrites it while excluding the client
-		File tempFile = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\tempFile");
-		File file1 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\canceledAccounts");
-		File file2 = new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\database");
+		File tempFile = new File("resources\\tempFile.txt");
+		File file1 = new File("resources\\canceledAccounts.txt");
+		File file2 = new File("resources\\database.txt");
 		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file2, true));
 		BufferedReader br = new BufferedReader(new FileReader(file1));

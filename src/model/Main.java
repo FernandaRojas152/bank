@@ -17,8 +17,8 @@ public class Main {
 		BufferedReader br;
 		BufferedReader br2;
 		try {
-			br = new BufferedReader(new FileReader(new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\database")));
-			br2 = new BufferedReader(new FileReader(new File("C:\\Users\\usuario\\eclipse-workspace\\bank\\resources\\canceledAccounts")));
+			br = new BufferedReader(new FileReader(new File("resources\\database.txt")));
+			br2 = new BufferedReader(new FileReader(new File("resources\\canceledAccounts.txt")));
 			
 			String data = br.readLine();
 			String data2 = br2.readLine();
@@ -54,7 +54,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		List<Client> clients = bank.getClientList();
+//		List<Client> clients = bank.getClientList();
 		
 //		//Sorting methods used over an arrayList
 //		
@@ -63,12 +63,12 @@ public class Main {
 //		bank.sortClientsByTime();
 //		bank.sortClientsByAmount();
 //		
-		for (Client client : clients) {
+//		for (Client client : clients) {
 //			System.out.println(client.getName());
 //			System.out.println(client.getiD());
 //			System.out.println(client.getMemberSinceDate().toString());
 //			System.out.println(client.getAccount().getAmount());
-		}
+//		}
 		
 		//PayCardAmount/Deposit/Withdraw
 		
@@ -103,6 +103,6 @@ public class Main {
 		
 //		//Search function 
 		
-//		System.out.println(bank.searchClient("4710430425"));
+		System.out.println(bank.searchClient("4710430425"));
 	}
 }
