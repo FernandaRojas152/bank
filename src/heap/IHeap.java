@@ -49,27 +49,23 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 
 	@Override
 	public int rightChild(int p) {
-		int right= (int) (Math.floor(p*2)+1)-1;
-		return right;
+		return 2*p;
 	}
 
 	@Override
 	public int leftChild(int p) {
-		int left= (int) Math.floor(p*2)-1;
-		
-		return left;
+		return 2*p+1;
 	}
 
 	@Override
 	public void maxHeapify(int index) {
 		int left= leftChild(index);
 		int right= rightChild(index);
-		index--;
 		int largest;
 		if(left<= size && heap[left].compareTo(heap[index])>0) {
 			largest= left;
 		}else largest= index;
-		if(right<= size && heap[left].compareTo(heap[index])>0) {
+		if(right<= size && heap[right].compareTo(heap[largest])>0) {
 			largest=right;
 		}
 		if(largest!=index) {
@@ -83,7 +79,7 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	@Override
 	public void increaseMaxHeap(int index, P element) {
 		heap[index]= element;
-		while(hasParent(index) && heap[parent(index)].compareTo(heap[index])<0) {
+		while(index>1 && heap[parent(index)].compareTo(heap[index])<0) {
 			swap(index, parent(index));
 			index= parent(index);
 		}
@@ -92,7 +88,7 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	@Override
 	public void insertMax(P element)  {
 		size++;
-		heap[size-1]= element;
+		heap[size]= element;
 		
 		increaseMaxHeap(size, element);
 		
@@ -151,8 +147,8 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 
 	public static void main(String[] args) {
 		IHeap<Integer> prueba=new IHeap<>(CAPACITY);
-		prueba.insertMax(11);
-		prueba.insertMax(4);
+		prueba.insertMax(15);
+		prueba.insertMax(7);
 		prueba.insertMax(18);
 		prueba.insertMax(10);
 		prueba.insertMax(5);
