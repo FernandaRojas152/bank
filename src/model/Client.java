@@ -120,25 +120,23 @@ public class Client implements Comparable<Client> {
 		return this.getPriorityValue()-client.getPriorityValue();
 	}
 
-	private int getPriorityValue() {
+	public int getPriorityValue() {
 		
-		int priorityValue = 0;
+		int priorityValue;
 
-		switch(priority) {
-		
-		case BLIND: 
+		if(priority.equalsIgnoreCase(BLIND))
 			priorityValue = 6;
-		case DISABLED:
+		else if(priority.equalsIgnoreCase(DISABLED))
 			priorityValue = 5;
-		case PREGNANT:
+		else if(priority.equalsIgnoreCase(PREGNANT))
 			priorityValue = 4;
-		case ELDER:
+		else if(priority.equalsIgnoreCase(ELDER))
 			priorityValue = 3;
-		case BABYINARMS:
+		else if(priority.equalsIgnoreCase(BABYINARMS))
 			priorityValue = 2;
-		case NORMAL:
+		else 
 			priorityValue = 1;
-		}
+		
 		return priorityValue;
 	}
 }

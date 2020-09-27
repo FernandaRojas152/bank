@@ -75,7 +75,7 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 			if(left<=heap_Size && heap[left].compareTo(heap[index])<0) {
 				smallest= left;
 			}else smallest= index;
-			if(right<= heap_Size && heap[left].compareTo(heap[index])<0) {
+			if(right<= heap_Size && heap[right].compareTo(heap[smallest])<0) {
 				smallest=right;
 			}
 			if(smallest!=index) {
@@ -159,20 +159,20 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	public P[] resize() {
 		return Arrays.copyOf(heap, heap.length + CAPACITY);
 	}
-
-	public static void main(String[] args) {
-		IHeap<Integer> prueba=new IHeap<>(CAPACITY,false);
-		prueba.insert(15);
-		prueba.insert(7);
-		prueba.insert(18);
-		prueba.insert(10);
-		prueba.insert(5);
-		//prueba.insertMax(13);
-		//prueba.insertMax(50);
-		System.out.println(prueba.max());
-		System.out.println(prueba.extract());
-		//prueba.extractMax();
-		//System.out.println(prueba.extractMax());
-		System.out.println(prueba.max());
-	}
+//
+//	public static void main(String[] args) {
+//		IHeap<Integer> prueba=new IHeap<>(CAPACITY,false);
+//		prueba.insert(1);
+//		prueba.insert(7);
+//		prueba.insert(18);
+//		prueba.insert(10);
+//		prueba.insert(15);
+//		//prueba.insertMax(13);
+//		//prueba.insertMax(50);
+//		System.out.println(prueba.max());
+//		System.out.println(prueba.extract());
+//		//prueba.extractMax();
+//		//System.out.println(prueba.extractMax());
+//		System.out.println(prueba.max());
+//	}
 }

@@ -29,7 +29,6 @@ public class Bank {
 	private BinarySearchTree<String, Client> clientTree;
 	private IQueue<Client> clientQueue;
 	private IStack<Client> clientStack;
-	private Client[] clientArray;
 	private IHeap<Client> clientHeap;
 	
 	/**
@@ -42,8 +41,7 @@ public class Bank {
 		clientTree = new BinarySearchTree<String, Client>();
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
-		clientArray = new Client[100];
-		clientHeap = new IHeap<Client>(clientArray);
+		clientHeap = new IHeap<Client>(100, true);
 	}
 	
 	/**
@@ -66,8 +64,8 @@ public class Bank {
 		
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
-		/**else 
-			clientHeap.insertMax(client);*/
+		else 
+			clientHeap.insert(client);
 	}
 	
 	/**
