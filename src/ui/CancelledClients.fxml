@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CanceledClientsController">
+   <children>
+      <TableView fx:id="table" layoutX="-2.0" layoutY="-1.0" prefHeight="408.0" prefWidth="615.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="131.0" text="Name" />
+          <TableColumn fx:id="id" prefWidth="107.0" text="Id" />
+            <TableColumn fx:id="cancelationDate" prefWidth="138.0" text="Cancelation date" />
+            <TableColumn fx:id="comments" prefWidth="214.0" text="Comments" />
+        </columns>
+      </TableView>
+      <Button layoutX="555.0" layoutY="410.0" mnemonicParsing="false" onAction="#undoAction" text="Undo" />
+   </children>
+</Pane>
