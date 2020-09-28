@@ -14,12 +14,6 @@ import javafx.scene.image.Image;
  *
  */
 public class Main extends Application {
-	@SuppressWarnings("unused")
-	private PrincipalWindowController principal;
-	public Main() {
-		principal= new PrincipalWindowController();
-	}
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		try {

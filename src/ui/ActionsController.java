@@ -36,7 +36,8 @@ public class ActionsController {
 	public ActionsController() {
 		bank= new Bank();
 	}
-
+	
+	@FXML
 	public void initialize() {
 		consignment.setToggleGroup(actions);
 		withdraw.setToggleGroup(actions);
@@ -62,11 +63,8 @@ public class ActionsController {
 			stage.show();
 		}
 	}
-
-	@FXML
-	void undoAction(ActionEvent event) throws Exception {
-		bank.undo();
-	}
+	
+	
 
 	@FXML
 	void back(ActionEvent event) {

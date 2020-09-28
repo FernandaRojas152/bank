@@ -49,5 +49,7 @@
             <Image url="@../../resources/223-2238148_banner-bank-transparent-background-bank-png.png" />
          </image>
       </ImageView>
+      <Button layoutX="14.0" layoutY="365.0" mnemonicParsing="false" onAction="#clientDatabase" text="Client's database" />
+      <Button layoutX="14.0" layoutY="398.0" mnemonicParsing="false" onAction="#canceledClients" text="Canceled clients" />
    </children>
 </Pane>

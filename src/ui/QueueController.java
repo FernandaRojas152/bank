@@ -27,6 +27,7 @@ public class QueueController {
     	bank= new Bank();
 	}
     
+    @FXML
     public void initialize() {
     	bank.data();
     	getPriorityQueue();
@@ -35,28 +36,30 @@ public class QueueController {
     
     @FXML
     void attendClient(ActionEvent event) throws IOException {
-    	priorityQueue.getSelectionModel().getSelectedIndex();
-    	//priorityQueue.setItems(bank.getClientHeap());
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
     	Scene scene= new Scene(fxmlLoader.load());
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 		stage.setTitle("Attend Client");
+		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();
     }
 
     @FXML
     void back(ActionEvent event) {
-
+    }
+    
+    public void getSelectedClient() {
+    	priorityQueue.getSelectionModel().getSelectedIndex();
+    	normalQueue.getSelectionModel().getSelectedIndex();	
+    	
     }
     
     public void getNormalQueue() {
-    	IQueue<Client> q = new IQueue<Client>();
-    	q= bank.getClientQueue();
-    	while(!bank.getClientQueue().isEmpty()) {	
-    		normalQueue.getItems().add(q.dequeue().getT().getName());
-    	}
+    	for (Client client : bank.getClientQueue()) {
+			normalQueue.getItems().add(client.getName());
+		}
     }
     
     public void getPriorityQueue() {

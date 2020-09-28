@@ -23,6 +23,7 @@ public class CardPaymentController {
     @FXML
     private Label total;
     
+    @FXML
     public void initialize() {
     	
     }
