@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @param <T>
  */
 
-public interface InQueue<T> {
+public interface InQueue<T> extends Iterable<T> {
 	
 	/**
 	 * Adds a new element to the queue.

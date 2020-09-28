@@ -87,22 +87,26 @@ public class Main {
 //		}
 		
 //		Cancel account/Undo cancel account
-		try {
+//		try {
 //			bank.cancelAccount(client, LocalDate.now(), "qewqe");
-			bank.undo();
-		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			bank.undo();
+//		} catch (NoSuchElementException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		for(Client client : bank.getClientQueue()) {
+			System.out.println(client.getName());
 		}
-//		
+		
 //		//Search function 
 		
-//		System.out.println(bank.searchClient("4710430425"));
+//		System.out.println(bank.searchClient("8395075352"));
 	}
 }

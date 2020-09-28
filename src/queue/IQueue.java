@@ -1,5 +1,6 @@
 package queue;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -105,5 +106,27 @@ public class IQueue<T> implements InQueue<T> {
 	public int size() {
 		// TODO Auto-generated method stub
 		return size;
-	}  
+	}
+
+	public QueueNode<T> getFront() {
+		return front;
+	}
+
+	public void setFront(QueueNode<T> front) {
+		this.front = front;
+	}
+
+	public QueueNode<T> getRear() {
+		return rear;
+	}
+
+	public void setRear(QueueNode<T> rear) {
+		this.rear = rear;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return new QueueIterator<T>(front);
+	}
 }    
