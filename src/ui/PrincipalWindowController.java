@@ -26,11 +26,10 @@ public class PrincipalWindowController {
 
 	@FXML
 	private RadioButton information;
-	
+
 	@FXML
 	public void initialize() {
 		bank= new Bank();
-		System.out.println("dfasd");
 		bank.data();
 	}	
 
@@ -45,10 +44,11 @@ public class PrincipalWindowController {
 			stage.setResizable(false);
 			stage.setScene(scene);
 			stage.show();
-		}else if(information.isSelected()) {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientInformation.fxml"));
-			Pane root= fxmlLoader.load();
-			cc= fxmlLoader.getController();
+		}else if(information.isSelected()) {	
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("ClientInformation.fxml"));
+			Pane root = fxmlLoader.load();		
+			cc = fxmlLoader.getController();
 			cc.setPrincipal(this);
 			Scene scene= new Scene(root);
 			Stage stage= new Stage();
@@ -63,7 +63,7 @@ public class PrincipalWindowController {
 	public Client getCurrentClient() {
 		return client;
 	}
-
+	
 	public void setCurrentClient(Client client) {
 		this.client= client;
 	}
@@ -95,5 +95,4 @@ public class PrincipalWindowController {
     public Client searchClient(String id) {
     	return bank.searchClient(id);
     }
-
 }

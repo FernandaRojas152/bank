@@ -30,13 +30,13 @@ public class ClientController {
 
 	@FXML
 	private Label bounding;
-	
+
 	@FXML
 	public void initialize() {
 	}
-	
+
 	@FXML
-	void back(ActionEvent event) {
+	public void back(ActionEvent event) {
 
 	}
 	
@@ -50,11 +50,7 @@ public class ClientController {
 		cardPayment.setText(client.getPaymentDueDate().toString());
 		bounding.setText(client.getMemberSinceDate().toString());
 	}
-
-	public PrincipalWindowController getPrincipal() {
-		return principal;
-	}
-
+	
 	public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
 	}
