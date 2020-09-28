@@ -15,51 +15,76 @@ import model.Bank;
 
 public class ActionsController {
 	private Bank bank;
-    @FXML
-    private Label clientName;
-    
-    @FXML
-    private ToggleGroup actions;
-    
-    @FXML
-    private RadioButton consignment;
+	@FXML
+	private Label clientName;
 
-    @FXML
-    private RadioButton withdraw;
+	@FXML
+	private ToggleGroup actions;
 
-    @FXML
-    private RadioButton cardPayment;
+	@FXML
+	private RadioButton consignment;
 
-    @FXML
-    private RadioButton cancellation;
-    
-    public ActionsController() {
+	@FXML
+	private RadioButton withdraw;
+
+	@FXML
+	private RadioButton cardPayment;
+
+	@FXML
+	private RadioButton cancellation;
+
+	public ActionsController() {
 		bank= new Bank();
 	}
-    
-    public void initialize() {
-    	consignment.setToggleGroup(actions);
-    	withdraw.setToggleGroup(actions);
-    	cardPayment.setToggleGroup(actions);
-    	cancellation.setToggleGroup(actions);
-    }
-    
-    @FXML
-    void makeAction(ActionEvent event) throws IOException {
-    	if (cardPayment.isSelected()) {
-    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
-        	Scene scene= new Scene(fxmlLoader.load());
-        	Stage stage= new Stage();
-        	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
-    		stage.setTitle("Actions");
-    		stage.setScene(scene);
-    		stage.show();
-		}
-    }
 
-    @FXML
-    void undoAction(ActionEvent event) throws Exception {
-    	bank.undo();
-    }
+	public void initialize() {
+		consignment.setToggleGroup(actions);
+		withdraw.setToggleGroup(actions);
+		cardPayment.setToggleGroup(actions);
+		cancellation.setToggleGroup(actions);
+	}
+
+	@FXML
+	void makeAction(ActionEvent event) throws IOException {
+		if(consignment.isSelected()) {
+			bank.deposit(null, null);
+		}else if(withdraw.isSelected()) {
+			bank.withdraw(null, null);
+		}else if(cancellation.isSelected()) {
+			bank.cancelAccount(null, null, null);
+		}else if (cardPayment.isSelected()) {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
+			Scene scene= new Scene(fxmlLoader.load());
+			Stage stage= new Stage();
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
+			stage.setTitle("Actions");
+			stage.setScene(scene);
+			stage.show();
+		}
+	}
+
+	@FXML
+	void undoAction(ActionEvent event) throws Exception {
+		bank.undo();
+	}
+
+	@FXML
+	void back(ActionEvent event) {
+
+	}
+
+	public void consignment() {
+
+	}
+
+	public void withdraw() {
+
+	}
+
+	public void cancelation() {
+
+	}
+
+
 
 }

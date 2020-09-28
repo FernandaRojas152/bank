@@ -158,6 +158,10 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	public P[] resize() {
 		return Arrays.copyOf(heap, heap.length + CAPACITY);
 	}
+	
+	public boolean isEmpty() {
+		return heap_Size==0;
+	}
 
 	/**public static void main(String[] args) {
 		IHeap<Integer> prueba=new IHeap<>(CAPACITY,true);

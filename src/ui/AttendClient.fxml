@@ -71,5 +71,6 @@
             <Font name="Lucida Bright" size="16.0" />
          </font>
       </RadioButton>
+      <Button layoutX="393.0" layoutY="398.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </Pane>

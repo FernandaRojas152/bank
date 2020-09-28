@@ -3,6 +3,7 @@ package model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -398,6 +399,48 @@ public class Bank {
 		        j--;
 		    }
 		    clientList.set(j+1, key);
+		}
+	}
+	
+	public void data() {
+		BufferedReader br;
+		BufferedReader br2;
+		try {
+			br = new BufferedReader(new FileReader(new File("resources\\database.txt")));
+			br2 = new BufferedReader(new FileReader(new File("resources\\canceledAccounts.txt")));
+
+			String data = br.readLine();
+			String data2 = br2.readLine();
+
+			while(data!=null) {
+
+				String[] dataArray = data.split(", ");
+				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
+				fillClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]));
+				data = br.readLine();
+			}
+
+			while(data2!=null) {
+				String[] dataArray = data2.split(", ");
+				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
+				fillCanceledClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]), LocalDate.parse(dataArray[9]),
+						dataArray[10]);
+				data2 = br2.readLine();
+			}
+			br.close();
+			br2.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
