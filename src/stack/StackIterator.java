@@ -1,19 +1,32 @@
 package stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class StackIterator<E> implements Iterator<E> {
 
+	private StackNode<E> stackNode;
+	
+	public StackIterator(StackNode<E> first) {
+		// TODO Auto-generated constructor stub
+		stackNode = first;
+	}
+	
 	@Override
 	public boolean hasNext() {
 		// TODO Auto-generated method stub
-		return false;
+		return stackNode!=null;
 	}
 
-	@Override
+	@Override	
 	public E next() {
-		System.out.println("we");
 		// TODO Auto-generated method stub
-		return null;
+		if (stackNode == null)
+			throw new NoSuchElementException();
+		else {
+			E e = stackNode.getElement();
+			stackNode = stackNode.getNext();
+			return e;
+		}
 	}
 }

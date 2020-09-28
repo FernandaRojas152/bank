@@ -3,8 +3,8 @@ package stack;
 import java.util.Iterator;
 
 public class IStack<E> implements InStack<E>{
-	private NodeStack<E> first;
-	private NodeStack<E> last;
+	private StackNode<E> first;
+	private StackNode<E> last;
 	private int size;
 
 	public IStack() {
@@ -13,19 +13,19 @@ public class IStack<E> implements InStack<E>{
 		size=0;
 	}
 
-	public NodeStack<E> getFirst() {
+	public StackNode<E> getFirst() {
 		return first;
 	}
 
-	public void setFirst(NodeStack<E> first) {
+	public void setFirst(StackNode<E> first) {
 		this.first = first;
 	}
 
-	public NodeStack<E> getLast() {
+	public StackNode<E> getLast() {
 		return last;
 	}
 
-	public void setLast(NodeStack<E> last) {
+	public void setLast(StackNode<E> last) {
 		this.last = last;
 	}
 
@@ -39,7 +39,7 @@ public class IStack<E> implements InStack<E>{
 
 	@Override
 	public void push(E element) {
-		NodeStack<E> aux= new NodeStack<>(element);
+		StackNode<E> aux= new StackNode<>(element);
 		if(first== null) {
 			first= aux;
 			last= aux;
@@ -92,5 +92,11 @@ public class IStack<E> implements InStack<E>{
 	@Override
 	public int Isize() {
 		return size;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return new StackIterator<E>(first);
 	}
 }

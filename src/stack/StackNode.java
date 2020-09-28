@@ -6,18 +6,18 @@ package stack;
  *
  * @param <E>
  */
-public class NodeStack<E> {
+public class StackNode<E> {
 	//Attributes
 	private E element;
-	private NodeStack<E> next;
-	private NodeStack<E> prev;
+	private StackNode<E> next;
+	private StackNode<E> prev;
 	
 	//Methods
 	/**
 	 * 
 	 * @param element
 	 */
-	public NodeStack(E element) {
+	public StackNode(E element) {
 		this.element = element;
 	}
 
@@ -29,19 +29,19 @@ public class NodeStack<E> {
 		this.element = element;
 	}
 
-	public NodeStack<E> getNext() {
+	public StackNode<E> getNext() {
 		return next;
 	}
 
-	public void setNext(NodeStack<E> next) {
+	public void setNext(StackNode<E> next) {
 		this.next = next;
 	}
 
-	public NodeStack<E> getPrev() {
+	public StackNode<E> getPrev() {
 		return prev;
 	}
 
-	public void setPrev(NodeStack<E> prev) {
+	public void setPrev(StackNode<E> prev) {
 		this.prev = prev;
 	}
 }

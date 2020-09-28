@@ -101,9 +101,9 @@ public class Main {
 //			e.printStackTrace();
 //		}
 		
-		for(Client client : bank.getClientQueue()) {
-			System.out.println(client.getName());
-		}
+//		for(Client client : bank.getClientHeap()) {
+//			System.out.println(client.getName());
+//		}
 		
 //		//Search function 
 		
