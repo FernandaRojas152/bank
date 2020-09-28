@@ -93,10 +93,13 @@ public class IStack<E> implements InStack<E>{
 	public int Isize() {
 		return size;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
 		return new StackIterator<E>();
 	}
+=======
+>>>>>>> 1bd4cbcbd1299b3c85cc1e4d7fd971f3c7fe30d0
 }
