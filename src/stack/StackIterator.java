@@ -12,6 +12,7 @@ public class StackIterator<E> implements Iterator<E> {
 
 	@Override
 	public E next() {
+		System.out.println("we");
 		// TODO Auto-generated method stub
 		return null;
 	}
