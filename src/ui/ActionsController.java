@@ -84,7 +84,7 @@ public class ActionsController {
 
 	public void consignment() {
 		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Please enter the consignment amount");
+		dialog.setTitle("Please enter the consignment amount.");
 		Optional<String> result = dialog.showAndWait();
 		Double consignment= Double.valueOf(result.get());
 		principal.getBank().deposit(q.getCurrentClient(), consignment);
@@ -92,15 +92,14 @@ public class ActionsController {
 
 	public void withdraw() {
 		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Please input the withdraw amount");
-		dialog.setHeaderText("You cannot input an amount bigger than your account amount");
+		dialog.setTitle("Please enter your withdrawal.");
+		dialog.setHeaderText("You cannot enter an amount greater than your account balance.");
 		Optional<String> result = dialog.showAndWait();
 		Double withdraw= Double.valueOf(result.get());
 		principal.getBank().withdraw(q.getCurrentClient(), withdraw);
 	}
 	
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
-		
 		if(!tfComments.getText().equals("")) {
 			principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
 			next();
