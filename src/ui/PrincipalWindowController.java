@@ -17,7 +17,6 @@ import model.Client;
 
 public class PrincipalWindowController {
 	private Bank bank;
-	private Client client;
 	private ClientController cc;
 	private CurrentClientsController current;
 

@@ -13,7 +13,7 @@ import model.Client;
 
 public class CurrentClientsController {
 	private Bank bank;
-	private Client client;
+	@SuppressWarnings("unused")
 	private PrincipalWindowController principal;
 	
 	@FXML
@@ -43,11 +43,10 @@ public class CurrentClientsController {
     public void initialize() {
     	bank= new Bank();
     	bank.data();
-    	System.out.println(bank.getClientList().get(0).getName());
     	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
     	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
-    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("cardAmount"));
+    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
     	table.setItems(getCurrentClients());
     }
     
