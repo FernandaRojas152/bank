@@ -19,6 +19,8 @@ public class PrincipalWindowController {
 	private Bank bank;
 	private ClientController cc;
 	private CurrentClientsController current;
+	private CanceledClientsController canceledClientsController;
+	private QueueController qc;
 
 	@FXML
 	private ToggleGroup options;
@@ -41,7 +43,10 @@ public class PrincipalWindowController {
 	void start(ActionEvent event) throws IOException {
 		if(queue.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientQueue.fxml"));
-			Scene scene= new Scene(fxmlLoader.load());
+			Pane root= fxmlLoader.load();
+			qc = fxmlLoader.getController();
+			qc.setPrincipal(this);
+			Scene scene= new Scene(root);
 			Stage stage= new Stage();
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 			stage.setTitle("Waiting line");
@@ -51,7 +56,7 @@ public class PrincipalWindowController {
 		}else if(information.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientInformation.fxml"));
 			Pane root= fxmlLoader.load();
-			cc= fxmlLoader.getController();
+			cc = fxmlLoader.getController();
 			cc.setPrincipal(this);
 			Scene scene= new Scene(root);
 			Stage stage= new Stage();
@@ -66,7 +71,10 @@ public class PrincipalWindowController {
     @FXML
     void canceledClients(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CancelledClients.fxml"));
-		Scene scene= new Scene(fxmlLoader.load());
+    	Pane root = fxmlLoader.load();
+    	canceledClientsController = fxmlLoader.getController();
+    	canceledClientsController.setPrincipal(this);
+		Scene scene= new Scene(root);
 		Stage stage= new Stage();
 		stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 		stage.setTitle("Client Information");
@@ -74,10 +82,6 @@ public class PrincipalWindowController {
 		stage.setScene(scene);
 		stage.show();
     }
-
-    public Bank getBank() {
-		return bank;
-	}
 
 	@FXML
     void clientDatabase(ActionEvent event) throws IOException {
@@ -101,4 +105,8 @@ public class PrincipalWindowController {
     public List<Client> getClients(){
     	return bank.getClientList();
     }
+
+    public Bank getBank() {
+		return bank;
+	}
 }

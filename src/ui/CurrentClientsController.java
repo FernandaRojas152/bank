@@ -8,12 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Bank;
 import model.Client;
 
 public class CurrentClientsController {
-	private Bank bank;
-	@SuppressWarnings("unused")
+
 	private PrincipalWindowController principal;
 	
 	@FXML
@@ -30,27 +28,25 @@ public class CurrentClientsController {
 
     @FXML
     private TableColumn<Client, String> amount;
+
+    @FXML
+    public void initialize() {
+    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
+    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
+    }
     
     public ObservableList<Client> getCurrentClients(){
     	ObservableList<Client> c= FXCollections.observableArrayList();
-    	for (Client clients : bank.getClientList()) {
+    	for (Client clients : principal.getBank().getClientList()) {
 			c.add(clients);	
 		}
     	return c;
     }
     
-    @FXML
-    public void initialize() {
-    	bank= new Bank();
-    	bank.data();
-    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
-    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
-    	table.setItems(getCurrentClients());
-    }
-    
     public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
+		table.setItems(getCurrentClients());
 	}
 }

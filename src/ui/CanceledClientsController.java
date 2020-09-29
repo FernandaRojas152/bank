@@ -9,13 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Bank;
 import model.Client;
 
 public class CanceledClientsController {
-	private Bank bank;
-	private PrincipalWindowController principal;
-	
+
 	@FXML
     private TableView<Client> table;
 	
@@ -31,28 +28,35 @@ public class CanceledClientsController {
     @FXML
     private TableColumn<Client, String> comments;
     
+    private PrincipalWindowController principal;
+    
     @FXML
     public void initialize() {
-    	bank= new Bank();
-    	bank.data();
     	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
     	cancelationDate.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("cancelation"));
     	comments.setCellValueFactory(new PropertyValueFactory<Client, String>("comments"));
-    	table.setItems(getClients());
-    }
-    @FXML
-    void undoAction(ActionEvent event) throws Exception {
-    	bank.undo();
     }
     
-    public ObservableList<Client> getClients(){
-    	ObservableList<Client> c = FXCollections.observableArrayList();
-    	for(Client cl: bank.getClientStack()) {
-    		System.out.println(bank.getClientStack().getFirst());
-    		c.add(cl);
-    	}
+    public void undoAction(ActionEvent event) {
+    	try {
+			principal.getBank().undo();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public ObservableList<Client> getCancelledClients() {
+    	ObservableList<Client> c= FXCollections.observableArrayList();
+    	for (Client clients : principal.getBank().getClientStack()) {
+			c.add(clients);	
+		}
     	return c;
     }
-
+    
+    public void setPrincipal(PrincipalWindowController principal) {
+		this.principal = principal;
+		table.setItems(getCancelledClients());
+	}
 }

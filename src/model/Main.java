@@ -72,7 +72,7 @@ public class Main {
 		
 		//PayCardAmount/Deposit/Withdraw
 		
-//		Client client = bank.getClientHeap().extract();
+//		Client client = bank.getClientQueue().peek().getT();
 //		
 //		System.out.println(bank.payCardAmount(client, 74000.0));
 //		System.out.println(client.getCardAmount());
@@ -99,10 +99,6 @@ public class Main {
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		}
-		
-//		for(Client client : bank.getClientHeap()) {
-//			System.out.println(client.getName());
 //		}
 		
 //		//Search function 

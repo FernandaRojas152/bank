@@ -11,12 +11,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.Bank;
 import model.Client;
-import queue.IQueue;
 
 public class QueueController {
-	private Bank bank;
 	private ActionsController actions;
 	
     @FXML
@@ -25,15 +22,10 @@ public class QueueController {
     @FXML
     private ListView<String> normalQueue;
     
-    public QueueController() {
-    	bank= new Bank();
-	}
-    
+    private PrincipalWindowController principal;
+
     @FXML
     public void initialize() {
-    	bank.data();
-    	getPriorityQueue();
-    	getNormalQueue();
     }
     
     @FXML
@@ -53,6 +45,7 @@ public class QueueController {
 
     @FXML
     void back(ActionEvent event) {
+    	
     }
     
     public void getNormalClientSelected() {
@@ -65,17 +58,22 @@ public class QueueController {
     }
     
     public void getNormalQueue() {
-    	for (Client client : bank.getClientQueue()) {
+    	for (Client client : principal.getBank().getClientQueue()) {
 			normalQueue.getItems().add(client.getName());
 		}
     }
     
     public void getPriorityQueue() {
     	IHeap<Client> h= new IHeap<Client>(100, true);
-    	h= bank.getClientHeap();
-    	while(!bank.getClientHeap().isEmpty()) {
+    	h= principal.getBank().getClientHeap();
+    	while(!h.isEmpty()) {
     		priorityQueue.getItems().add(h.extract().getName());
     	}
     }
-
+    
+    public void setPrincipal(PrincipalWindowController principal) {
+		this.principal = principal;
+	 	getPriorityQueue();
+    	getNormalQueue();
+	}
 }

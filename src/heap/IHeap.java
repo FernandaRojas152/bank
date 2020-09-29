@@ -49,6 +49,10 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	public int getHeap_Size() {
 		return heap_Size;
 	}
+	
+	public P[] getHeap() {
+		return heap;
+	}
 
 	@Override
 	public int parent(int p) {
