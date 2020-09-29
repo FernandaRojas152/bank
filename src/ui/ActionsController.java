@@ -68,9 +68,9 @@ public class ActionsController {
 				cancelation(client, LocalDate.now(), tfComments.getText());
 				
 				if(client.getPriority().equals(client.NORMAL))
-					principal.getBank().getClientQueue().dequeue();
+					principal.getBank().next();
 				else
-					principal.getBank().getClientHeap().extract();
+					principal.getBank().priorityNext();
 				
 				Stage stage = (Stage) btnBack.getScene().getWindow();
 				stage.close();
