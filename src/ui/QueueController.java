@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import model.Client;
 
 public class QueueController {
+	
 	private ActionsController actions;
 	
     @FXML
@@ -21,6 +23,9 @@ public class QueueController {
 
     @FXML
     private ListView<String> normalQueue;
+    
+    @FXML
+    private Button btnBack;
     
     private PrincipalWindowController principal;
 
@@ -43,10 +48,6 @@ public class QueueController {
 		stage.show();
     }
 
-    @FXML
-    void back(ActionEvent event) {
-    	
-    }
     
     public String getNormalClientSelected() {
     	return normalQueue.getSelectionModel().getSelectedItem();
@@ -56,6 +57,11 @@ public class QueueController {
     	return priorityQueue.getSelectionModel().getSelectedItem();
     }
     
+	public void back(ActionEvent event) {
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
+	}
+    
     public void getNormalQueue() {
     	for (Client client : principal.getBank().getClientQueue()) {
 			normalQueue.getItems().add(client.getName());
@@ -63,11 +69,13 @@ public class QueueController {
     }
     
     public void getPriorityQueue() {
-    	IHeap<Client> h= new IHeap<Client>(100, true);
-    	h= principal.getBank().getClientHeap();
-    	while(!h.isEmpty()) {
-    		priorityQueue.getItems().add(h.extract().getName());
+    	IHeap<Client> aux = principal.getBank().getClientHeap();
+    	IHeap<Client> clientHeap = new IHeap<Client>(100, true);
+    	while(!aux.isEmpty()) {
+    		clientHeap.insert(aux.max());
+    		priorityQueue.getItems().add(aux.extract().getName());
     	}
+    	principal.getBank().setHeap(clientHeap);
     }
     
     public void setPrincipal(PrincipalWindowController principal) {

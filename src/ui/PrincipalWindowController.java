@@ -1,6 +1,11 @@
 package ui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -12,16 +17,20 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Account;
 import model.Bank;
 import model.Client;
 
 public class PrincipalWindowController {
+	
 	private Bank bank;
-	private ClientController cc;
-	private CurrentClientsController current;
+	private ClientController clientController;
+	private CurrentClientsController currentClientsController;
 	private CanceledClientsController canceledClientsController;
 	private QueueController qc;
 	
+	private QueueController queueController;
+
 	@FXML
 	private ToggleGroup options;
 
@@ -34,7 +43,7 @@ public class PrincipalWindowController {
 	@FXML
 	public void initialize() {
 		bank = new Bank();
-		bank.data();
+		loadData();
 		queue.setToggleGroup(options);
 		information.setToggleGroup(options);
 	}
@@ -44,8 +53,8 @@ public class PrincipalWindowController {
 		if(queue.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientQueue.fxml"));
 			Pane root= fxmlLoader.load();
-			qc = fxmlLoader.getController();
-			qc.setPrincipal(this);
+			queueController = fxmlLoader.getController();
+			queueController.setPrincipal(this);
 			Scene scene= new Scene(root);
 			Stage stage= new Stage();
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -56,8 +65,8 @@ public class PrincipalWindowController {
 		}else if(information.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientInformation.fxml"));
 			Pane root= fxmlLoader.load();
-			cc = fxmlLoader.getController();
-			cc.setPrincipal(this);
+			clientController = fxmlLoader.getController();
+			clientController.setPrincipal(this);
 			Scene scene= new Scene(root);
 			Stage stage= new Stage();
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -87,8 +96,8 @@ public class PrincipalWindowController {
     void clientDatabase(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentClients.fxml"));
     	Pane root= fxmlLoader.load();
-		current= fxmlLoader.getController();
-		current.setPrincipal(this);
+		currentClientsController= fxmlLoader.getController();
+		currentClientsController.setPrincipal(this);
 		Scene scene= new Scene(root);
 		Stage stage= new Stage();
 		stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -108,5 +117,48 @@ public class PrincipalWindowController {
 
     public Bank getBank() {
 		return bank;
+	}
+    
+    public void loadData() {
+    	
+		BufferedReader br;
+		BufferedReader br2;
+		try {
+			br = new BufferedReader(new FileReader(new File("resources\\database.txt")));
+			br2 = new BufferedReader(new FileReader(new File("resources\\canceledAccounts.txt")));
+
+			String data = br.readLine();
+			String data2 = br2.readLine();
+
+			while(data!=null) {
+
+				String[] dataArray = data.split(", ");
+				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
+				bank.fillClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]));
+				data = br.readLine();
+			}
+
+			while(data2!=null) {
+				String[] dataArray = data2.split(", ");
+				Account a = new Account(Double.parseDouble(dataArray[6]), dataArray[5]);
+				bank.fillCanceledClientData(dataArray[0], dataArray[1], dataArray[2], LocalDate.parse(dataArray[3]), 
+						LocalDate.parse(dataArray[4]), a, dataArray[7], Double.parseDouble(dataArray[8]), LocalDate.parse(dataArray[9]),
+						dataArray[10]);
+				data2 = br2.readLine();
+			}
+			br.close();
+			br2.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
