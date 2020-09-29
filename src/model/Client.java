@@ -103,6 +103,18 @@ public class Client implements Comparable<Client> {
 		this.cardAmount = cardAmount;
 	}
 	
+	public double getAmount() {
+		return getAccount().getAmount();
+	}
+	
+	public LocalDate getCancelation() {
+		return getAccount().getCancelationDate();
+	}
+	
+	public String getComments() {
+		return getAccount().getCancelationComments();
+	}
+	
 	public String getClientData() {
 		return name+", "+id+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
 		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount+", "+account.getCancelationDate()

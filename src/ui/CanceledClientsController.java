@@ -9,11 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Bank;
 import model.Client;
 
 public class CanceledClientsController {
-	
+
 	@FXML
     private TableView<Client> table;
 	
@@ -39,7 +38,6 @@ public class CanceledClientsController {
     	comments.setCellValueFactory(new PropertyValueFactory<Client, String>("comments"));
     }
     
-    @FXML
     public void undoAction(ActionEvent event) {
     	try {
 			principal.getBank().undo();

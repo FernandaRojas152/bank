@@ -8,11 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Bank;
 import model.Client;
 
 public class CurrentClientsController {
-	
+
 	private PrincipalWindowController principal;
 	
 	@FXML
