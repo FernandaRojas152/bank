@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CurrentClientsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CurrentClientsController">
    <children>
       <TableView fx:id="table" layoutX="5.0" layoutY="3.0" prefHeight="394.0" prefWidth="591.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="139.0" text="Name" />
-          <TableColumn fx:id="id" prefWidth="117.0" text="id" />
+          <TableColumn fx:id="id" prefWidth="117.0" text="ID" />
             <TableColumn fx:id="boundingTime" prefWidth="162.0" text="Bounding time" />
             <TableColumn fx:id="amount" prefWidth="172.0" text="Amount" />
         </columns>
       </TableView>
+      <Button fx:id="btnSortByName" layoutX="14.0" layoutY="399.0" mnemonicParsing="false" onAction="#sort" text="sort by name" />
+      <Button fx:id="btnSortByID" layoutX="149.0" layoutY="399.0" mnemonicParsing="false" onAction="#sort" text="sort by ID" />
+      <Button fx:id="btnSortByDate" layoutX="307.0" layoutY="399.0" mnemonicParsing="false" onAction="#sort" text="sort by date" />
+      <Button fx:id="btnSortByAmount" layoutX="469.0" layoutY="399.0" mnemonicParsing="false" onAction="#sort" text="sort by amount" />
    </children>
 </Pane>

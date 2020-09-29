@@ -41,6 +41,7 @@ public class CanceledClientsController {
     public void undoAction(ActionEvent event) {
     	try {
 			principal.getBank().undo();
+			table.setItems(getCancelledClients());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

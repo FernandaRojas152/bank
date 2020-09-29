@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,13 +30,43 @@ public class CurrentClientsController {
 
     @FXML
     private TableColumn<Client, String> amount;
+    
+    @FXML
+    private Button btnSortByName; 
+    
+    @FXML
+    private Button btnSortByID;
+    
+    @FXML
+    private Button btnSortByDate;
+    
+    @FXML
+    private Button btnSortByAmount;
 
     @FXML
     public void initialize() {
     	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	name.setSortable(false);
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	id.setSortable(false);
     	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
+    	boundingTime.setSortable(false);
     	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
+    	amount.setSortable(false);
+    }
+    
+    @FXML
+    public void sort(ActionEvent event) {
+    	
+    	if(event.getSource().equals(btnSortByName))
+    		principal.getBank().sortClientsByName();
+    	else if(event.getSource().equals(btnSortByID))
+    		principal.getBank().sortClientsByID();
+    	else if(event.getSource().equals(btnSortByDate))
+    		principal.getBank().sortClientsByTime();
+    	else if(event.getSource().equals(btnSortByAmount))
+    		principal.getBank().sortClientsByAmount();
+    	table.setItems(getCurrentClients());
     }
     
     public ObservableList<Client> getCurrentClients(){
