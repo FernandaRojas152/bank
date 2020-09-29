@@ -1,5 +1,7 @@
 package ui;
 
+import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +13,9 @@ import model.Client;
 
 public class CurrentClientsController {
 	private Bank bank;
+	private Client client;
+	private PrincipalWindowController principal;
+	
 	@FXML
     private TableView<Client> table;
 	
@@ -21,38 +26,32 @@ public class CurrentClientsController {
     private TableColumn<Client, String> id;
 
     @FXML
-    private TableColumn<Client, String> boundingTime;
+    private TableColumn<Client, LocalDate> boundingTime;
 
     @FXML
     private TableColumn<Client, String> amount;
     
-    public CurrentClientsController() {
-		// TODO Auto-generated constructor stub
-	}
+    public ObservableList<Client> getCurrentClients(){
+    	ObservableList<Client> c= FXCollections.observableArrayList();
+    	for (Client clients : bank.getClientList()) {
+			c.add(clients);	
+		}
+    	return c;
+    }
     
     @FXML
     public void initialize() {
     	bank= new Bank();
     	bank.data();
-    }
-    
-    public void showTable() {
-    	configureTable();
+    	System.out.println(bank.getClientList().get(0).getName());
+    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
+    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("cardAmount"));
     	table.setItems(getCurrentClients());
     }
     
-    public void configureTable() {
-    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, String>("boundingTime"));
-    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
-    }
-    
-    public ObservableList<Client> getCurrentClients(){
-    	ObservableList<Client> c= FXCollections.observableArrayList();
-    	for (Client clients : bank.getClientList()) {
-			c.add(clients);
-		}
-    	return c;
-    }
+    public void setPrincipal(PrincipalWindowController principal) {
+		this.principal = principal;
+	}
 }

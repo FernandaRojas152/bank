@@ -44,7 +44,7 @@ public class ClientController {
 	void searchClient(ActionEvent event) {
 		client= principal.searchClient(clientSearched.getText());
 		name.setText(client.getName());
-		idClient.setText(client.getiD());
+		idClient.setText(client.getId());
 		account.setText(client.getAccount().getAccountNumber());
 		cardNumber.setText(client.getCardNumber());
 		cardPayment.setText(client.getPaymentDueDate().toString());

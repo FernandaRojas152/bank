@@ -66,7 +66,7 @@ public class Bank {
 		Client client = new Client(name, iD, cardNumber, paymentDueDate, memberSinceDate, account, priority, cardAmount);
 		clientHashTable.insert(iD, client);
 		clientList.add(client);
-		clientTree.addNode(client.getiD(), client);
+		clientTree.addNode(client.getId(), client);
 		
 		if(client.getPriority().equalsIgnoreCase(client.NORMAL)) 
 			clientQueue.enqueue(client);
@@ -196,8 +196,8 @@ public class Bank {
 		
 		//Deletes the client from the data structures in the bank
 		clientList.remove(client);
-		clientTree.deleteNode(client.getiD());	
-		clientHashTable.delete(client.getiD());
+		clientTree.deleteNode(client.getId());	
+		clientHashTable.delete(client.getId());
 	}
 	
 	/**
@@ -228,8 +228,8 @@ public class Bank {
 		
 		//Adds the client back into the data structures in the bank
 		clientList.add(client);
-		clientTree.addNode(client.getiD(), client);
-		clientHashTable.delete(client.getiD());
+		clientTree.addNode(client.getId(), client);
+		clientHashTable.delete(client.getId());
 	}
 	
 	private void updateDataBase(Client client, BufferedWriter tempBw, BufferedWriter bw, BufferedReader br) throws IOException {
@@ -240,7 +240,7 @@ public class Bank {
 			
 			String[] dataArray = data.split(", ");
 			
-			if(dataArray[1].equals(client.getiD())) {
+			if(dataArray[1].equals(client.getId())) {
 				data = client.getClientData();
 				bw.write(data);
 				bw.newLine();

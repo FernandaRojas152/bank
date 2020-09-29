@@ -18,7 +18,7 @@ public class Client implements Comparable<Client> {
 	public final String NORMAL = "Normal";
 
 	private String name;
-	private String iD;
+	private String id;
 	private String cardNumber;
 	private LocalDate paymentDueDate;
 	private LocalDate memberSinceDate;
@@ -26,11 +26,11 @@ public class Client implements Comparable<Client> {
 	private String priority;
 	private Double cardAmount;
 
-	public Client(String name, String iD, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
+	public Client(String name, String id, String cardNumber, LocalDate paymentDueDate, LocalDate memberSinceDate,
 			Account account, String priority, Double cardAmount) {
 		super();
 		this.name = name;
-		this.iD = iD;
+		this.id = id;
 		this.cardNumber = cardNumber;
 		this.paymentDueDate = paymentDueDate;
 		this.memberSinceDate = memberSinceDate;
@@ -47,12 +47,12 @@ public class Client implements Comparable<Client> {
 		this.name = name;
 	}
 
-	public String getiD() {
-		return iD;
+	public String getId() {
+		return id;
 	}
 
-	public void setiD(String iD) {
-		this.iD = iD;
+	public void setID(String id) {
+		this.id = id;
 	}
 
 	public String getCardNumber() {
@@ -104,14 +104,14 @@ public class Client implements Comparable<Client> {
 	}
 	
 	public String getClientData() {
-		return name+", "+iD+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
+		return name+", "+id+", "+cardNumber+", "+paymentDueDate.toString()+", "+memberSinceDate.toString()
 		+", "+account.getAccountNumber()+", "+account.getAmount()+", "+priority+", "+cardAmount+", "+account.getCancelationDate()
 		+", "+account.getCancelationComments();
 	}
 	
 	@Override
 	public String toString() {
-		return name+" "+iD+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
+		return name+" "+id+" "+account.getAccountNumber()+" "+cardNumber+" "+paymentDueDate.toString()+" "+memberSinceDate.toString();
 	}
 	
 	@Override

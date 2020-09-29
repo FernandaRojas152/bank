@@ -1,6 +1,8 @@
 package ui;
 
 import java.io.IOException;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ public class PrincipalWindowController {
 	private Bank bank;
 	private Client client;
 	private ClientController cc;
+	private CurrentClientsController current;
 
 	@FXML
 	private ToggleGroup options;
@@ -60,14 +63,6 @@ public class PrincipalWindowController {
 			stage.show();
 		}
 	}
-
-	public Client getCurrentClient() {
-		return client;
-	}
-	
-	public void setCurrentClient(Client client) {
-		this.client= client;
-	}
 	
     @FXML
     void canceledClients(ActionEvent event) throws IOException {
@@ -81,10 +76,17 @@ public class PrincipalWindowController {
 		stage.show();
     }
 
-    @FXML
+    public Bank getBank() {
+		return bank;
+	}
+
+	@FXML
     void clientDatabase(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentClients.fxml"));
-		Scene scene= new Scene(fxmlLoader.load());
+    	Pane root= fxmlLoader.load();
+		current= fxmlLoader.getController();
+		current.setPrincipal(this);
+		Scene scene= new Scene(root);
 		Stage stage= new Stage();
 		stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 		stage.setTitle("Client Information");
@@ -95,5 +97,9 @@ public class PrincipalWindowController {
     
     public Client searchClient(String id) {
     	return bank.searchClient(id);
+    }
+    
+    public List<Client> getClients(){
+    	return bank.getClientList();
     }
 }
