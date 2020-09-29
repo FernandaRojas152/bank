@@ -1,15 +1,21 @@
 package ui;
 
+import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Bank;
 import model.Client;
 
 public class CanceledClientsController {
-	private Bank bank;
+	
+	@FXML
+    private TableView<Client> table;
 	
     @FXML
     private TableColumn<Client, String> name;
@@ -18,32 +24,41 @@ public class CanceledClientsController {
     private TableColumn<Client, String> id;
 
     @FXML
-    private TableColumn<Client, String> cancelationDate;
+    private TableColumn<Client, LocalDate> cancelationDate;
 
     @FXML
     private TableColumn<Client, String> comments;
     
-    public CanceledClientsController() {
-		bank= new Bank();
-	}
+    private PrincipalWindowController principal;
     
     @FXML
     public void initialize() {
-    	bank.data();
-    	
+    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	cancelationDate.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("cancelationDate"));
+    	comments.setCellValueFactory(new PropertyValueFactory<Client, String>("comments"));
     }
+    
     @FXML
-    void undoAction(ActionEvent event) {
-
+    public void undoAction(ActionEvent event) {
+    	try {
+			principal.getBank().undo();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
-    public void configureTable() {
-    	
+    public ObservableList<Client> getCancelledClients() {
+    	ObservableList<Client> c= FXCollections.observableArrayList();
+    	for (Client clients : principal.getBank().getClientStack()) {
+			c.add(clients);	
+		}
+    	return c;
     }
     
-    public ObservableList<Client> getClients(){
-    	//ObservableList<Client> cli = FXCollections.observableArrayList();
-    	return null;
-    }
-
+    public void setPrincipal(PrincipalWindowController principal) {
+		this.principal = principal;
+		table.setItems(getCancelledClients());
+	}
 }

@@ -12,8 +12,7 @@ import model.Bank;
 import model.Client;
 
 public class CurrentClientsController {
-	private Bank bank;
-	private Client client;
+	
 	private PrincipalWindowController principal;
 	
 	@FXML
@@ -30,28 +29,25 @@ public class CurrentClientsController {
 
     @FXML
     private TableColumn<Client, String> amount;
+
+    @FXML
+    public void initialize() {
+    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
+    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("cardAmount"));
+    }
     
     public ObservableList<Client> getCurrentClients(){
     	ObservableList<Client> c= FXCollections.observableArrayList();
-    	for (Client clients : bank.getClientList()) {
+    	for (Client clients : principal.getBank().getClientList()) {
 			c.add(clients);	
 		}
     	return c;
     }
     
-    @FXML
-    public void initialize() {
-    	bank= new Bank();
-    	bank.data();
-    	System.out.println(bank.getClientList().get(0).getName());
-    	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-    	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-    	boundingTime.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("memberSinceDate"));
-    	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("cardAmount"));
-    	table.setItems(getCurrentClients());
-    }
-    
     public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
+		table.setItems(getCurrentClients());
 	}
 }
