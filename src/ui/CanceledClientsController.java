@@ -34,7 +34,7 @@ public class CanceledClientsController {
     public void initialize() {
     	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-    	cancelationDate.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("cancelationDate"));
+    	cancelationDate.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("cancelation"));
     	comments.setCellValueFactory(new PropertyValueFactory<Client, String>("comments"));
     }
     
