@@ -84,7 +84,7 @@ public class ActionsController {
 
 	public void consignment() {
 		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Please input the consignment amount");
+		dialog.setTitle("Please enter the consignment amount");
 		Optional<String> result = dialog.showAndWait();
 		Double consignment= Double.valueOf(result.get());
 		principal.getBank().deposit(q.getCurrentClient(), consignment);
@@ -102,19 +102,21 @@ public class ActionsController {
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
 		
 		if(!tfComments.getText().equals("")) {
-			
 			principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
-			if(client.getPriority().equals(client.NORMAL))
-				principal.getBank().next();
-			else
-				principal.getBank().priorityNext();
-			
-			Stage stage = (Stage) btnBack.getScene().getWindow();
-			stage.close();
-			q.updateQueues();
-			
+			next();
 		}else 
 			JOptionPane.showMessageDialog(null, "Please! State the reason why you are cancelling your account.");
+	}
+	
+	@FXML
+	public void next() {
+		if(client.getPriority().equals(client.NORMAL))
+			principal.getBank().next();
+		else
+			principal.getBank().priorityNext();
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
+		q.updateQueues();
 	}
 
 	public void setQ(QueueController q) {
