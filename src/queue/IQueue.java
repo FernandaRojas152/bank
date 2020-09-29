@@ -129,4 +129,5 @@ public class IQueue<T> implements InQueue<T> {
 		// TODO Auto-generated method stub
 		return new QueueIterator<T>(front);
 	}
+	
 }    

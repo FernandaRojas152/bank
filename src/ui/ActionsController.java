@@ -84,7 +84,6 @@ public class ActionsController {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Please input the withdraw amount");
 		dialog.setHeaderText("You cannot input an amount bigger than your account amount");
-
 		Optional<String> result = dialog.showAndWait();
 		Double withdraw= Double.valueOf(result.get());
 		principal.getBank().withdraw(getActualClient(), withdraw);
@@ -95,9 +94,7 @@ public class ActionsController {
 		dialog.setTitle("We're sad to see you go");
 		dialog.setHeaderText("In case you want to come back, we will bring you back!");
 		dialog.setContentText("Please input the comments:");
-
 		Optional<String> result = dialog.showAndWait();
-		
 		principal.getBank().cancelAccount(getActualClient(), local, result.get());
 	}
 
@@ -116,7 +113,6 @@ public class ActionsController {
 
 	public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
-		getActualClient();
 	}
 	
 }

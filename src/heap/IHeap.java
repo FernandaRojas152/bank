@@ -163,23 +163,8 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 		return Arrays.copyOf(heap, heap.length + CAPACITY);
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return heap_Size==0;
 	}
-
-	/**public static void main(String[] args) {
-		IHeap<Integer> prueba=new IHeap<>(CAPACITY,true);
-		prueba.insert(15);
-		prueba.insert(7);
-		prueba.insert(18);
-		prueba.insert(10);
-		prueba.insert(5);
-		//prueba.insertMax(13);
-		//prueba.insertMax(50);
-		System.out.println(prueba.max());
-		System.out.println(prueba.extract());
-		//prueba.extractMax();
-		//System.out.println(prueba.extractMax());
-		System.out.println(prueba.max());
-	}*/
 }

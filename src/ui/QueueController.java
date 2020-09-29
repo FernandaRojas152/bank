@@ -82,7 +82,5 @@ public class QueueController {
 		this.principal = principal;
 	 	getPriorityQueue();
     	getNormalQueue();
-    	getNormalClientSelected();
-    	getPriorityClientSelected();
 	}
 }

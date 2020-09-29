@@ -11,4 +11,5 @@ public interface InHeap<P> {
 	public void buildMaxHeap();
 	public void buildMinHeap();	
 	public void insert(P priority);
+	public boolean isEmpty();
 }
