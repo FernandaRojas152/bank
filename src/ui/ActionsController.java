@@ -3,7 +3,6 @@ package ui;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
-
 import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +47,6 @@ public class ActionsController {
 	private QueueController q;
 	private PrincipalWindowController principal;
 	private Client client;
-	public LocalDate local;
 	
 	@FXML
 	public void initialize() {
@@ -66,24 +64,7 @@ public class ActionsController {
 		}else if(withdraw.isSelected()) {
 			withdraw();
 		}else if(cancellation.isSelected()) {
-			
-			if(!tfComments.getText().equals("")) {
-				
-				cancelation(client, LocalDate.now(), tfComments.getText());
-				
-				if(client.getPriority().equals(client.NORMAL))
-					principal.getBank().next();
-				else
-					principal.getBank().priorityNext();
-				
-				Stage stage = (Stage) btnBack.getScene().getWindow();
-				stage.close();
-				q.updateQueues();
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "Please! State the reason why you are cancelling your account.");
-			}
-			
+			cancelation(client, LocalDate.now(), tfComments.getText());
 		}else if (cardPayment.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
 			Scene scene= new Scene(fxmlLoader.load());
@@ -117,19 +98,23 @@ public class ActionsController {
 		Double withdraw= Double.valueOf(result.get());
 		principal.getBank().withdraw(q.getCurrentClient(), withdraw);
 	}
-
-	public void cancelation() throws IOException {
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("We're sad to see you go");
-		dialog.setHeaderText("In case you want to come back, we will bring you back!");
-		dialog.setContentText("Please input the comments:");
-		Optional<String> result = dialog.showAndWait();
-		
-		principal.getBank().cancelAccount(q.getCurrentClient(), local, result.get());
-	}
 	
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
-		principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
+		
+		if(!tfComments.getText().equals("")) {
+			
+			principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
+			if(client.getPriority().equals(client.NORMAL))
+				principal.getBank().next();
+			else
+				principal.getBank().priorityNext();
+			
+			Stage stage = (Stage) btnBack.getScene().getWindow();
+			stage.close();
+			q.updateQueues();
+			
+		}else 
+			JOptionPane.showMessageDialog(null, "Please! State the reason why you are cancelling your account.");
 	}
 
 	public void setQ(QueueController q) {
@@ -138,10 +123,6 @@ public class ActionsController {
 	
 	public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
-	}
-	
-	public void setClientName(String clientName) {
-		
 	}
 	
 	public void setClient(Client client) {
