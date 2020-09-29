@@ -2,6 +2,8 @@ package ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
+
 import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -45,6 +48,7 @@ public class ActionsController {
 	private QueueController q;
 	private PrincipalWindowController principal;
 	private Client client;
+	public LocalDate local;
 	
 	@FXML
 	public void initialize() {
@@ -58,9 +62,9 @@ public class ActionsController {
 	void makeAction(ActionEvent event) throws IOException {
 		
 		if(consignment.isSelected()) {
-			
+			consignment();
 		}else if(withdraw.isSelected()) {
-			
+			withdraw();
 		}else if(cancellation.isSelected()) {
 			
 			if(!tfComments.getText().equals("")) {
@@ -98,13 +102,32 @@ public class ActionsController {
 	}
 
 	public void consignment() {
-
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Please input the consignment amount");
+		Optional<String> result = dialog.showAndWait();
+		Double consignment= Double.valueOf(result.get());
+		principal.getBank().deposit(q.getCurrentClient(), consignment);
 	}
 
 	public void withdraw() {
-
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Please input the withdraw amount");
+		dialog.setHeaderText("You cannot input an amount bigger than your account amount");
+		Optional<String> result = dialog.showAndWait();
+		Double withdraw= Double.valueOf(result.get());
+		principal.getBank().withdraw(q.getCurrentClient(), withdraw);
 	}
 
+	public void cancelation() throws IOException {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("We're sad to see you go");
+		dialog.setHeaderText("In case you want to come back, we will bring you back!");
+		dialog.setContentText("Please input the comments:");
+		Optional<String> result = dialog.showAndWait();
+		
+		principal.getBank().cancelAccount(q.getCurrentClient(), local, result.get());
+	}
+	
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
 		principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
 	}

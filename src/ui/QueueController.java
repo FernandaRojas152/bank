@@ -85,6 +85,8 @@ public class QueueController {
     
     public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
+	 	getPriorityQueue();
+    	getNormalQueue();
 	 	updateQueues();
 	}
     
