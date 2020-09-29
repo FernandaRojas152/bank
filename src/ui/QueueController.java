@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Bank;
 import model.Client;
@@ -16,6 +17,7 @@ import queue.IQueue;
 
 public class QueueController {
 	private Bank bank;
+	private ActionsController actions;
 	
     @FXML
     private ListView<String> priorityQueue;
@@ -37,7 +39,10 @@ public class QueueController {
     @FXML
     void attendClient(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
-    	Scene scene= new Scene(fxmlLoader.load());
+    	Pane root= fxmlLoader.load();
+		actions= fxmlLoader.getController();
+		actions.setQ(this);
+    	Scene scene= new Scene(root);
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 		stage.setTitle("Attend Client");
@@ -50,10 +55,13 @@ public class QueueController {
     void back(ActionEvent event) {
     }
     
-    public void getSelectedClient() {
-    	priorityQueue.getSelectionModel().getSelectedIndex();
-    	normalQueue.getSelectionModel().getSelectedIndex();	
+    public void getNormalClientSelected() {
     	
+    	normalQueue.getSelectionModel().getSelectedIndex();	
+    }
+    
+    public void getPriorityClientSelected() {
+    	priorityQueue.getSelectionModel().getSelectedIndex();
     }
     
     public void getNormalQueue() {

@@ -15,6 +15,8 @@ import model.Bank;
 
 public class ActionsController {
 	private Bank bank;
+	private QueueController q;
+	
 	@FXML
 	private Label clientName;
 
@@ -35,6 +37,7 @@ public class ActionsController {
 
 	public ActionsController() {
 		bank= new Bank();
+		clientName.setText("");
 	}
 	
 	@FXML
@@ -64,8 +67,6 @@ public class ActionsController {
 		}
 	}
 	
-	
-
 	@FXML
 	void back(ActionEvent event) {
 
@@ -83,6 +84,7 @@ public class ActionsController {
 
 	}
 
-
-
+	public void setQ(QueueController q) {
+		this.q = q;
+	}
 }
