@@ -28,6 +28,7 @@ public class CanceledClientsController {
     @FXML
     private TableColumn<Client, String> comments;
     
+    ObservableList<Client> observableList;
     private PrincipalWindowController principal;
     
     @FXML
@@ -36,6 +37,7 @@ public class CanceledClientsController {
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
     	cancelationDate.setCellValueFactory(new PropertyValueFactory<Client, LocalDate>("cancelation"));
     	comments.setCellValueFactory(new PropertyValueFactory<Client, String>("comments"));
+    	observableList = FXCollections.observableArrayList();
     }
     
     public void undoAction(ActionEvent event) {
@@ -49,11 +51,11 @@ public class CanceledClientsController {
     }
     
     public ObservableList<Client> getCancelledClients() {
-    	ObservableList<Client> c= FXCollections.observableArrayList();
-    	for (Client clients : principal.getBank().getClientStack()) {
-			c.add(clients);	
+    	observableList.clear();
+    	for (Client client : principal.getBank().getClientStack()) {
+			observableList.add(client);
 		}
-    	return c;
+    	return observableList;
     }
     
     public void setPrincipal(PrincipalWindowController principal) {

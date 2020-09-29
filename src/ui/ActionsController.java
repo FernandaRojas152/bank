@@ -4,28 +4,26 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.Bank;
 import model.Client;
 
 public class ActionsController {
-	private Client client;
-	private QueueController q;
-	private PrincipalWindowController principal;
-	private LocalDate local;
 	
 	@FXML
-	private Label clientName;
-
+	private Label clientName; 
+	
 	@FXML
 	private ToggleGroup actions;
 
@@ -40,35 +38,67 @@ public class ActionsController {
 
 	@FXML
 	private RadioButton cancellation;
-
+	
+    @FXML
+    private Button btnBack;
+    
+    @FXML
+    private TextField tfComments;
+	
+	private QueueController q;
+	private PrincipalWindowController principal;
+	private Client client;
+	public LocalDate local;
+	
 	@FXML
 	public void initialize() {
-		clientName.setText(getActualClient().getName());
-		
+		consignment.setToggleGroup(actions);
+		withdraw.setToggleGroup(actions);
+		cardPayment.setToggleGroup(actions);
+		cancellation.setToggleGroup(actions);
 	}
 
 	@FXML
 	void makeAction(ActionEvent event) throws IOException {
+		
 		if(consignment.isSelected()) {
 			consignment();
 		}else if(withdraw.isSelected()) {
 			withdraw();
 		}else if(cancellation.isSelected()) {
-			cancelation();
+			
+			if(!tfComments.getText().equals("")) {
+				
+				cancelation(client, LocalDate.now(), tfComments.getText());
+				
+				if(client.getPriority().equals(client.NORMAL))
+					principal.getBank().getClientQueue().dequeue();
+				else
+					principal.getBank().getClientHeap().extract();
+				
+				Stage stage = (Stage) btnBack.getScene().getWindow();
+				stage.close();
+				q.updateQueues();
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Please! State the reason why you are cancelling your account.");
+			}
+			
 		}else if (cardPayment.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
 			Scene scene= new Scene(fxmlLoader.load());
 			Stage stage= new Stage();
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
-			stage.setTitle("Card Payment");
+			stage.setTitle("Actions");
 			stage.setScene(scene);
 			stage.show();
 		}
 	}
-
+	
 	@FXML
-	void back(ActionEvent event) {
-
+	public void back(ActionEvent event) {
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
 	}
 
 	public void consignment() {
@@ -76,8 +106,7 @@ public class ActionsController {
 		dialog.setTitle("Please input the consignment amount");
 		Optional<String> result = dialog.showAndWait();
 		Double consignment= Double.valueOf(result.get());
-		principal.getBank().deposit(getActualClient(), consignment);
-
+		principal.getBank().deposit(q.getCurrentClient(), consignment);
 	}
 
 	public void withdraw() {
@@ -86,7 +115,7 @@ public class ActionsController {
 		dialog.setHeaderText("You cannot input an amount bigger than your account amount");
 		Optional<String> result = dialog.showAndWait();
 		Double withdraw= Double.valueOf(result.get());
-		principal.getBank().withdraw(getActualClient(), withdraw);
+		principal.getBank().withdraw(q.getCurrentClient(), withdraw);
 	}
 
 	public void cancelation() throws IOException {
@@ -95,24 +124,28 @@ public class ActionsController {
 		dialog.setHeaderText("In case you want to come back, we will bring you back!");
 		dialog.setContentText("Please input the comments:");
 		Optional<String> result = dialog.showAndWait();
-		principal.getBank().cancelAccount(getActualClient(), local, result.get());
+		
+		principal.getBank().cancelAccount(q.getCurrentClient(), local, result.get());
+	}
+	
+	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
+		principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
 	}
 
 	public void setQ(QueueController q) {
 		this.q = q;
 	}
 	
-	public Client getActualClient() {
-		if(q.getNormalClientSelected().equals(principal.getBank().getClientQueue().peek().getT().getName())) {
-			client= principal.getBank().getClientQueue().dequeue().getT();
-		}else if(q.getPriorityClientSelected().equals(principal.getBank().getClientHeap().max().getName())) {
-			client= principal.getBank().getClientHeap().extract();
-		}
-		return client;
-	}
-
 	public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
 	}
 	
+	public void setClientName(String clientName) {
+		
+	}
+	
+	public void setClient(Client client) {
+		this.client = client;
+		clientName.setText(client.getName());
+	}
 }

@@ -24,7 +24,7 @@ import stack.IStack;
  *
  */
 public class Bank {
-	private Client client;
+	
 	private HashTable<String, Client> clientHashTable;
 	private List<Client> clientList;
 	private BinarySearchTree<String, Client> clientTree;
@@ -43,10 +43,6 @@ public class Bank {
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
 		clientHeap = new IHeap<Client>(100, true);
-	}
-	
-	public Client getClient() {
-		return client;
 	}
 	
 	/**
@@ -115,6 +111,7 @@ public class Bank {
 	 */
 	
 	public void withdraw(Client client, Double withdrawal) throws RuntimeException {
+		
 		Double amount = client.getAccount().getAmount()-withdrawal;
 		
 		if(amount<0)
@@ -211,7 +208,6 @@ public class Bank {
 		//cancelationComments. Client is removed from the stack
 		Client client = clientStack.pop();
 		client.getAccount().setCancelationDate(null);
-		client.getAccount().setCancelationComments(null);
 		
 		//Reincorporates the client data into the database and updates
 		//the canceled client database as it overwrites it while excluding the client
