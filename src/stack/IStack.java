@@ -71,19 +71,21 @@ public class IStack<E> implements InStack<E>{
 	@Override
 	public E pop() {
 		E aux= null;
-		if(first.getNext()==null) {
-			aux= first.getElement();
-			first=null;
-			size--;
-		}else {
-			aux= last.getElement();
-			last.getPrev().setNext(null);
-			last= last.getPrev();
-			size--;
+		while(!isEmpty()) {
+			if(first.getNext()==null) {
+				aux= first.getElement();
+				first=null;
+				size--;
+			}else {
+				aux= last.getElement();
+				last.getPrev().setNext(null);
+				last= last.getPrev();
+				size--;
+			}
 		}
 		return aux;
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		return first==null;

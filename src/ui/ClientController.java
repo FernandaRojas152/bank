@@ -46,6 +46,7 @@ public class ClientController {
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
+		principal.getStage().show();
 	}
 	
 	@FXML

@@ -3,7 +3,6 @@ package model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import stack.IStack;
  *
  */
 public class Bank {
-	private Client client;
+	
 	private HashTable<String, Client> clientHashTable;
 	private List<Client> clientList;
 	private BinarySearchTree<String, Client> clientTree;
@@ -44,10 +43,6 @@ public class Bank {
 		clientQueue = new IQueue<Client>();
 		clientStack = new IStack<Client>();
 		clientHeap = new IHeap<Client>(100, true);
-	}
-	
-	public Client getClient() {
-		return client;
 	}
 	
 	/**
@@ -213,7 +208,6 @@ public class Bank {
 		//cancelationComments. Client is removed from the stack
 		Client client = clientStack.pop();
 		client.getAccount().setCancelationDate(null);
-		client.getAccount().setCancelationComments(null);
 		
 		//Reincorporates the client data into the database and updates
 		//the canceled client database as it overwrites it while excluding the client

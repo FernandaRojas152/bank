@@ -1,25 +1,26 @@
 package ui;
 
 import java.io.IOException;
-
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.Bank;
+import model.Client;
 
 public class ActionsController {
-	private Bank bank;
-	private QueueController q;
 	
 	@FXML
-	private Label clientName;
-
+	private Label clientName; 
+	
 	@FXML
 	private ToggleGroup actions;
 
@@ -34,11 +35,16 @@ public class ActionsController {
 
 	@FXML
 	private RadioButton cancellation;
-
-	public ActionsController() {
-		bank= new Bank();
-		clientName.setText("");
-	}
+	
+    @FXML
+    private Button btnBack;
+    
+    @FXML
+    private TextField tfComments;
+	
+	private QueueController q;
+	private PrincipalWindowController principal;
+	private Client client;
 	
 	@FXML
 	public void initialize() {
@@ -50,12 +56,30 @@ public class ActionsController {
 
 	@FXML
 	void makeAction(ActionEvent event) throws IOException {
+		
 		if(consignment.isSelected()) {
-			bank.deposit(null, null);
+			
 		}else if(withdraw.isSelected()) {
-			bank.withdraw(null, null);
+			
 		}else if(cancellation.isSelected()) {
-			bank.cancelAccount(null, null, null);
+			
+			if(!tfComments.getText().equals("")) {
+				
+				cancelation(client, LocalDate.now(), tfComments.getText());
+				
+				if(client.getPriority().equals(client.NORMAL))
+					principal.getBank().getClientQueue().dequeue();
+				else
+					principal.getBank().getClientHeap().extract();
+				
+				Stage stage = (Stage) btnBack.getScene().getWindow();
+				stage.close();
+				q.updateQueues();
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Please! State the reason why you are cancelling your account.");
+			}
+			
 		}else if (cardPayment.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
 			Scene scene= new Scene(fxmlLoader.load());
@@ -68,8 +92,9 @@ public class ActionsController {
 	}
 	
 	@FXML
-	void back(ActionEvent event) {
-
+	public void back(ActionEvent event) {
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
 	}
 
 	public void consignment() {
@@ -80,11 +105,24 @@ public class ActionsController {
 
 	}
 
-	public void cancelation() {
-
+	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
+		principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
 	}
 
 	public void setQ(QueueController q) {
 		this.q = q;
+	}
+	
+	public void setPrincipal(PrincipalWindowController principal) {
+		this.principal = principal;
+	}
+	
+	public void setClientName(String clientName) {
+		
+	}
+	
+	public void setClient(Client client) {
+		this.client = client;
+		clientName.setText(client.getName());
 	}
 }

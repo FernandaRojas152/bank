@@ -7,16 +7,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Account;
 import model.Bank;
 import model.Client;
@@ -37,6 +39,15 @@ public class PrincipalWindowController {
 
 	@FXML
 	private RadioButton information;
+	
+	@FXML
+	private Button btDatabase;
+	
+	@FXML
+	private Button btCanceledClients;
+	
+	@FXML
+	private Button btStart;
 	
 	@FXML
 	public void initialize() {
@@ -73,6 +84,8 @@ public class PrincipalWindowController {
 			stage.setScene(scene);
 			stage.show();
 		}
+		Stage stage = (Stage) information.getScene().getWindow();
+		stage.hide();
 	}
 	
     @FXML
@@ -88,6 +101,19 @@ public class PrincipalWindowController {
 		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();
+		btDatabase.setDisable(true);
+		btCanceledClients.setDisable(true);
+		btStart.setDisable(true);
+		stage.setOnHidden(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				btDatabase.setDisable(false);
+				btCanceledClients.setDisable(false);
+				btStart.setDisable(false);
+			}
+		});
     }
 
 	@FXML
@@ -103,6 +129,19 @@ public class PrincipalWindowController {
 		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();
+		btDatabase.setDisable(true);
+		btCanceledClients.setDisable(true);
+		btStart.setDisable(true);
+		stage.setOnHidden(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				btDatabase.setDisable(false);
+				btCanceledClients.setDisable(false);
+				btStart.setDisable(false);
+			}
+		});
     }
     
     public Client searchClient(String id) {
@@ -159,4 +198,8 @@ public class PrincipalWindowController {
 			e.printStackTrace();
 		}
 	}
+    
+    public Stage getStage() {
+    	return (Stage) information.getScene().getWindow();
+    }
 }

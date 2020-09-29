@@ -1,7 +1,7 @@
 package ui;
 
 import java.io.IOException;
-
+import java.util.NoSuchElementException;
 import heap.IHeap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,9 +36,11 @@ public class QueueController {
     @FXML
     void attendClient(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
-    	Pane root= fxmlLoader.load();
+    	Pane root = fxmlLoader.load();
 		actions= fxmlLoader.getController();
+		actions.setPrincipal(principal);
 		actions.setQ(this);
+		actions.setClient(getCurrentClient());
     	Scene scene= new Scene(root);
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -52,15 +54,18 @@ public class QueueController {
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
+		principal.getStage().show();
 	}
     
     public void getNormalQueue() {
+    	normalQueue.getItems().clear();
     	for (Client client : principal.getBank().getClientQueue()) {
 			normalQueue.getItems().add(client.getName());
 		}
     }
     
     public void getPriorityQueue() {
+    	priorityQueue.getItems().clear();
     	IHeap<Client> aux = principal.getBank().getClientHeap();
     	IHeap<Client> clientHeap = new IHeap<Client>(100, true);
     	while(!aux.isEmpty()) {
@@ -72,7 +77,21 @@ public class QueueController {
     
     public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
-	 	getPriorityQueue();
-    	getNormalQueue();
+	 	updateQueues();
 	}
+    
+    public void updateQueues() {
+    	getPriorityQueue();
+    	getNormalQueue();
+    }
+    
+    public Client getCurrentClient() {
+    	try {
+    		return principal.getBank().getClientHeap().max();
+    	}catch (NoSuchElementException e) {
+    		return principal.getBank().getClientQueue().peek().getT();
+    	}catch (NullPointerException e) {
+    		return principal.getBank().getClientQueue().peek().getT();
+    	}
+    }
 }

@@ -25,7 +25,10 @@ public class StackIterator<E> implements Iterator<E> {
 			throw new NoSuchElementException();
 		else {
 			E e = stackNode.getElement();
-			stackNode = stackNode.getNext();
+			if(stackNode.equals(stackNode.getNext()))
+				stackNode = null;
+			else
+				stackNode = stackNode.getNext();
 			return e;
 		}
 	}
