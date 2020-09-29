@@ -50,7 +50,15 @@ public class QueueController {
 		stage.show();
     }
 
-    @FXML
+    
+    public String getNormalClientSelected() {
+    	return normalQueue.getSelectionModel().getSelectedItem();
+    }
+    
+    public String getPriorityClientSelected() {
+    	return priorityQueue.getSelectionModel().getSelectedItem();
+    }
+    
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
@@ -86,12 +94,10 @@ public class QueueController {
     }
     
     public Client getCurrentClient() {
-    	try {
+    	
+    	if(principal.getBank().getClientHeap().max()!=null)
     		return principal.getBank().getClientHeap().max();
-    	}catch (NoSuchElementException e) {
+    	else
     		return principal.getBank().getClientQueue().peek().getT();
-    	}catch (NullPointerException e) {
-    		return principal.getBank().getClientQueue().peek().getT();
-    	}
     }
 }

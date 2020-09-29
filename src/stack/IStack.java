@@ -38,25 +38,22 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public void push(E element) {
-		StackNode<E> aux= new StackNode<>(element);
-		if(first== null) {
-			first= aux;
-			last= aux;
-			//aux.setNext(aux);
-			first.setNext(last);
-			//aux.setPrev(aux);
-			last.setPrev(first);
+	public void push(E e) {
+		// TODO Auto-generated method stub
+		StackNode<E> newNode = new StackNode<E>(e);
+		if (first == null) {
+			first = newNode;
+			last = newNode;
 			size++;
-		}else {
-			last.setNext(aux);
-			aux.setPrev(last);
-			aux.setNext(null);
-			last= aux;
+		} else {
+			last.setNext(newNode);
+			newNode.setPrev(last);
+			newNode.setNext(null);
+			last = newNode;
 			size++;
 		}
 	}
-
+	
 	@Override
 	public E peek() {
 		E aux= null;
@@ -71,17 +68,15 @@ public class IStack<E> implements InStack<E>{
 	@Override
 	public E pop() {
 		E aux= null;
-		while(!isEmpty()) {
-			if(first.getNext()==null) {
-				aux= first.getElement();
-				first=null;
-				size--;
-			}else {
-				aux= last.getElement();
-				last.getPrev().setNext(null);
-				last= last.getPrev();
-				size--;
-			}
+		if(first.getNext()==null) {
+			aux= first.getElement();
+			first=null;
+			size--;
+		}else {
+			aux= last.getElement();
+			last.getPrev().setNext(null);
+			last= last.getPrev();
+			size--;
 		}
 		return aux;
 	}
