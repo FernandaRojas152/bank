@@ -116,7 +116,6 @@ public class Bank {
 	 */
 	
 	public void withdraw(Client client, Double withdrawal) throws RuntimeException {
-		
 		Double amount = client.getAccount().getAmount()-withdrawal;
 		
 		if(amount<0)

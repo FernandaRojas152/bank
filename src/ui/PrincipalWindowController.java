@@ -21,7 +21,7 @@ public class PrincipalWindowController {
 	private CurrentClientsController current;
 	private CanceledClientsController canceledClientsController;
 	private QueueController qc;
-
+	
 	@FXML
 	private ToggleGroup options;
 

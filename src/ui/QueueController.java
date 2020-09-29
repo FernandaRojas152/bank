@@ -48,13 +48,12 @@ public class QueueController {
     	
     }
     
-    public void getNormalClientSelected() {
-    	
-    	normalQueue.getSelectionModel().getSelectedIndex();	
+    public String getNormalClientSelected() {
+    	return normalQueue.getSelectionModel().getSelectedItem();
     }
     
-    public void getPriorityClientSelected() {
-    	priorityQueue.getSelectionModel().getSelectedIndex();
+    public String getPriorityClientSelected() {
+    	return priorityQueue.getSelectionModel().getSelectedItem();
     }
     
     public void getNormalQueue() {
@@ -75,5 +74,7 @@ public class QueueController {
 		this.principal = principal;
 	 	getPriorityQueue();
     	getNormalQueue();
+    	getNormalClientSelected();
+    	getPriorityClientSelected();
 	}
 }
