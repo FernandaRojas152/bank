@@ -1,4 +1,7 @@
 package stack;
+
+import customExceptions.EmptyStackException;
+
 /**
  * 
  * @author 
@@ -7,7 +10,7 @@ package stack;
  */
 public interface InStack<E> extends Iterable<E> {
 	public void push(E element);
-	public E peek();
+	public E peek() throws EmptyStackException;
 	public E pop();
 	public boolean isEmpty();
 	public int Isize();

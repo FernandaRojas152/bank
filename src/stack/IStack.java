@@ -2,6 +2,8 @@ package stack;
 
 import java.util.Iterator;
 
+import customExceptions.EmptyStackException;
+
 public class IStack<E> implements InStack<E>{
 	private StackNode<E> first;
 	private StackNode<E> last;
@@ -38,7 +40,7 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public void push(E e) {
+	public void push(E e){
 		// TODO Auto-generated method stub
 		StackNode<E> newNode = new StackNode<E>(e);
 		if (first == null) {
@@ -55,7 +57,7 @@ public class IStack<E> implements InStack<E>{
 	}
 	
 	@Override
-	public E peek() {
+	public E peek() throws EmptyStackException{
 		E aux= null;
 		if(first.getNext()== null) {
 			aux= first.getElement();

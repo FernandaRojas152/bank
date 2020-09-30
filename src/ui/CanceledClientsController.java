@@ -1,13 +1,16 @@
 package ui;
 
 import java.time.LocalDate;
-
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Client;
 
@@ -40,13 +43,16 @@ public class CanceledClientsController {
     	observableList = FXCollections.observableArrayList();
     }
     
-    public void undoAction(ActionEvent event) {
+    public void undoAction(ActionEvent event) throws Exception {
     	try {
 			principal.getBank().undo();
 			table.setItems(getCancelledClients());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (NullPointerException e) {
+			Platform.runLater(() -> {
+				e.getMessage();
+				Alert dialog = new Alert(AlertType.ERROR, "There are not more more clients to return.", ButtonType.OK);
+				dialog.show();
+			});
 		}
     }
     
