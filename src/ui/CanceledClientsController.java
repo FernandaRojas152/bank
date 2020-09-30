@@ -1,6 +1,8 @@
 package ui;
 
 import java.time.LocalDate;
+
+import customException.EmptyStackException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,10 +49,10 @@ public class CanceledClientsController {
     	try {
 			principal.getBank().undo();
 			table.setItems(getCancelledClients());
-		} catch (NullPointerException e) {
+		} catch (EmptyStackException e) {
 			Platform.runLater(() -> {
 				e.getMessage();
-				Alert dialog = new Alert(AlertType.ERROR, "There are not more more clients to return.", ButtonType.OK);
+				Alert dialog = new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK);
 				dialog.show();
 			});
 		}

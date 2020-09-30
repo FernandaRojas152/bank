@@ -2,7 +2,7 @@ package stack;
 
 import java.util.Iterator;
 
-import customExceptions.EmptyStackException;
+import customException.EmptyStackException;
 
 public class IStack<E> implements InStack<E>{
 	private StackNode<E> first;
@@ -55,10 +55,11 @@ public class IStack<E> implements InStack<E>{
 			size++;
 		}
 	}
-	
+
 	@Override
-	public E peek() throws EmptyStackException{
+	public E peek() {
 		E aux= null;
+
 		if(first.getNext()== null) {
 			aux= first.getElement();
 		}else {
@@ -68,21 +69,24 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public E pop() {
+	public E pop() throws EmptyStackException{
 		E aux= null;
-			if(first.getNext()==null) {
-				aux= first.getElement();
-				first=null;
-				size--;
-			}else {
-				aux= last.getElement();
-				last.getPrev().setNext(null);
-				last= last.getPrev();
-				size--;
-			}
+		if(first==null) {
+			throw new customException.EmptyStackException();
+		}
+		if(first.getNext()==null) {
+			aux= first.getElement();
+			first=null;
+			size--;
+		}else {
+			aux= last.getElement();
+			last.getPrev().setNext(null);
+			last= last.getPrev();
+			size--;
+		}
 		return aux;
 	}
-	
+
 	@Override
 	public boolean isEmpty() {
 		return first==null;
