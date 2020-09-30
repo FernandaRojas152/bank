@@ -122,7 +122,7 @@ public class Bank {
 	 * @return client's remaining cash
 	 */
 	
-	public double payCardAmount(Client client, Double amount) {
+	public Double payCardAmount(Client client, Double amount) {
 		
 		Double cardAmount = client.getCardAmount()-amount;
 		
@@ -300,7 +300,7 @@ public class Bank {
 		quickSort(0, clientList.size()-1);
 	}
 
-	protected void quickSort(int a, int b) {
+	private void quickSort(int a, int b) {
 		
 		if(a<b) { 
 			
