@@ -1,13 +1,6 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,16 +153,17 @@ public class Bank {
 	}
 	
 	/**
-	 * Cancels a client's savings account and deletes all his data from the database.
-	 * Also incorporates the client data into a different database with extra information
+	 * Cancels a client's savings account and deletes all his data from the data structures.
+	 * Also incorporates the client data into a stack with extra information
 	 * about his account<br>
 	 * <b>pre:</b> client!=null<br>
-	 * <b>post:</b> client is no longer contained in the bank but in a exclusive database<br>
+	 * <b>post:</b> client is no longer contained in the bank list but in a exclusive stack<br>
 	 * @param client
 	 * @param cancelationDate
 	 * @param cancelationComments
 	 * @throws IOException 
 	 */
+	
 	public void cancelAccount(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
 		
 		//Cancels a client's savings account as it adds values to cancelationDate and
@@ -177,18 +171,7 @@ public class Bank {
 		client.getAccount().setCancelationDate(cancelationDate);
 		client.getAccount().setCancelationComments(cancelationComments);
 		clientStack.push(client);
-		
-		//Incorporates the client data into a different database with extra information and updates
-		//the main database as it overwrites it while excluding the given client
-		File tempFile = new File("resources\\tempFile.txt");
-		File file1 = new File("resources\\canceledAccounts.txt");
-		File file2 = new File("resources\\database.txt");
-		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file1, true));
-		BufferedReader br = new BufferedReader(new FileReader(file2));
-		updateDataBase(client, tempBw, bw, br);
-		Files.move(tempFile.toPath(), file2.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		
+
 		//Deletes the client from the data structures in the bank
 		clientList.remove(client);
 		clientTree.deleteNode(client.getId());	
@@ -196,57 +179,25 @@ public class Bank {
 	}
 	
 	/**
-	 * Retrieves a client's savings account and adds all his data back into the database
+	 * Retrieves a client's savings account and adds all his data back into the data structures
 	 * Also deletes the client from the canceled clients database
 	 * <b>pre:</b> stack!=null<br>
 	 * <b>post:</b> client is now part of the bank<br>
 	 * @throws Exception 
 	 */
+	
 	public void undo() throws Exception {
 		
 		//Retrieves a client's savings account as it adds null values to cancelationDate and
 		//cancelationComments. Client is removed from the stack
 		Client client = clientStack.pop();
 		client.getAccount().setCancelationDate(null);
-		
-		//Reincorporates the client data into the database and updates
-		//the canceled client database as it overwrites it while excluding the client
-		File tempFile = new File("resources\\tempFile.txt");
-		File file1 = new File("resources\\canceledAccounts.txt");
-		File file2 = new File("resources\\database.txt");
-		BufferedWriter tempBw = new BufferedWriter(new FileWriter(tempFile));
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file2, true));
-		BufferedReader br = new BufferedReader(new FileReader(file1));
-		updateDataBase(client, tempBw, bw, br);
-		Files.move(tempFile.toPath(), file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		client.getAccount().setCancelationComments(null);
 		
 		//Adds the client back into the data structures in the bank
 		clientList.add(client);
 		clientTree.addNode(client.getId(), client);
 		clientHashTable.delete(client.getId());
-	}
-	
-	private void updateDataBase(Client client, BufferedWriter tempBw, BufferedWriter bw, BufferedReader br) throws IOException {
-		
-		String data = br.readLine();
-		
-		while(data!=null) {
-			
-			String[] dataArray = data.split(", ");
-			
-			if(dataArray[1].equals(client.getId())) {
-				data = client.getClientData();
-				bw.write(data);
-				bw.newLine();
-			} else { 
-				tempBw.write(data);
-				tempBw.newLine();
-			}
-			data = br.readLine();
-		}
-		tempBw.close();
-		bw.close();
-		br.close();
 	}
 	
 	/**

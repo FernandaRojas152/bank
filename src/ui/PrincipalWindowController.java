@@ -1,10 +1,14 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -71,6 +75,8 @@ public class PrincipalWindowController {
 			stage.setResizable(false);
 			stage.setScene(scene);
 			stage.show();
+			stage = (Stage) information.getScene().getWindow();
+			stage.hide();
 		}else if(information.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientInformation.fxml"));
 			Pane root= fxmlLoader.load();
@@ -83,9 +89,9 @@ public class PrincipalWindowController {
 			stage.setResizable(false);
 			stage.setScene(scene);
 			stage.show();
+			stage = (Stage) information.getScene().getWindow();
+			stage.hide();
 		}
-		Stage stage = (Stage) information.getScene().getWindow();
-		stage.hide();
 	}
 	
     @FXML
@@ -156,6 +162,10 @@ public class PrincipalWindowController {
 		return bank;
 	}
     
+    public Stage getStage() {
+    	return (Stage) information.getScene().getWindow();
+    }
+    
     public void loadData() {
     	
 		BufferedReader br;
@@ -199,7 +209,27 @@ public class PrincipalWindowController {
 		}
 	}
     
-    public Stage getStage() {
-    	return (Stage) information.getScene().getWindow();
-    }
+    public void saveData() throws IOException {
+		
+    	File tempCanceledAccounts = new File("resources\\tempFile.txt");
+		File tempDataBase = new File("resources\\tempFile.txt");
+		File canceledAccounts = new File("resources\\canceledAccounts.txt");
+		File database = new File("resources\\database.txt");
+		BufferedWriter dataBaseBW = new BufferedWriter(new FileWriter(database));
+		BufferedWriter canceledAccountsBW = new BufferedWriter(new FileWriter(canceledAccounts));
+		
+		for (Client client : bank.getClientList()) {
+			dataBaseBW.write(client.getClientData());
+			dataBaseBW.newLine();
+		}
+		
+		for (Client client : bank.getClientStack()) {
+			canceledAccountsBW.write(client.getClientData());
+			canceledAccountsBW.newLine();
+		}
+		dataBaseBW.close();
+		canceledAccountsBW.close();
+		Files.move(tempCanceledAccounts.toPath(), canceledAccounts.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Files.move(tempDataBase.toPath(), database.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
 }
