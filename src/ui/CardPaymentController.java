@@ -8,9 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class CardPaymentController {
 	
@@ -24,8 +26,12 @@ public class CardPaymentController {
     private Label total;
     
     @FXML
+    private Button btnBack;
+    
+    public ActionsController actionsController;
+    
+    @FXML
     public void initialize() {
-    	
     }
     
     @FXML
@@ -60,9 +66,13 @@ public class CardPaymentController {
     }
     
     @FXML
-    void back(ActionEvent event) {
-
-    }
+	public void back(ActionEvent event) {
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
+		actionsController.getStage().show();
+	}
     
-
+    public void setActionsController(ActionsController actionsController) {
+    	this.actionsController = actionsController;
+    }
 }

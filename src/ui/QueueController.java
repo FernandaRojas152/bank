@@ -15,7 +15,7 @@ import model.Client;
 
 public class QueueController {
 	
-	private ActionsController actions;
+	private ActionsController actionsController;
 	
     @FXML
     private ListView<String> priorityQueue;
@@ -36,10 +36,10 @@ public class QueueController {
     void attendClient(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
     	Pane root = fxmlLoader.load();
-		actions= fxmlLoader.getController();
-		actions.setPrincipal(principal);
-		actions.setQ(this);
-		actions.setClient(principal.getBank().getClientQueue().peek().getT());
+		actionsController= fxmlLoader.getController();
+		actionsController.setPrincipal(principal);
+		actionsController.setQueueController(this);
+		actionsController.setClient(principal.getBank().getClientQueue().peek().getT());
     	Scene scene= new Scene(root);
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -55,12 +55,12 @@ public class QueueController {
     void attendPriorityClient(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
     	Pane root = fxmlLoader.load();
-		actions= fxmlLoader.getController();
-		actions.setPrincipal(principal);
-		actions.setQ(this);
-		actions.setClient(principal.getBank().getClientHeap().max());
-    	Scene scene= new Scene(root);
-    	Stage stage= new Stage();
+		actionsController= fxmlLoader.getController();
+		actionsController.setPrincipal(principal);
+		actionsController.setQueueController(this);
+		actionsController.setClient(principal.getBank().getClientHeap().max());
+    	Scene scene = new Scene(root);
+    	Stage stage = new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 		stage.setTitle("Attend Client");
 		stage.setResizable(false);
@@ -70,6 +70,7 @@ public class QueueController {
 		stage.hide();
     }
     
+    @FXML
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
@@ -96,8 +97,6 @@ public class QueueController {
     
     public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
-	 	getPriorityQueue();
-    	getNormalQueue();
 	 	updateQueues();
 	}
     
