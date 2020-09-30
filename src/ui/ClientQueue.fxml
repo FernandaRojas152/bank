@@ -35,5 +35,6 @@
       <ListView fx:id="normalQueue" layoutX="366.0" layoutY="133.0" prefHeight="200.0" prefWidth="158.0" />
       <Button fx:id="btnBack" layoutX="28.0" layoutY="355.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Button layoutX="512.0" layoutY="355.0" mnemonicParsing="false" onAction="#attendClient" text="Attend" />
+      <Button layoutX="409.0" layoutY="355.0" mnemonicParsing="false" onAction="#attendPriorityClient" text="Attend priority" />
    </children>
 </Pane>
