@@ -59,14 +59,14 @@ public class ActionsController {
 		cardPayment.setToggleGroup(actions);
 		cancellation.setToggleGroup(actions);
 	}
-
+	
 	@FXML
 	void makeAction(ActionEvent event) throws IOException {
 		if(consignment.isSelected()) {
 			consignment();
-		}else if(withdraw.isSelected()) {
+		}else if (withdraw.isSelected()) {
 			withdraw();
-		}else if(cancellation.isSelected()) {
+		}else if (cancellation.isSelected()) {
 			cancelation(client, LocalDate.now(), tfComments.getText());
 		}else if (cardPayment.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardPayment.fxml"));
@@ -74,6 +74,7 @@ public class ActionsController {
 			Stage stage= new Stage();
 			cardPaymentController = fxmlLoader.getController();
 			cardPaymentController.setActionsController(this);
+			cardPaymentController.setPrincipal(principal);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 			stage.setTitle("Actions");
 			stage.setScene(scene);
