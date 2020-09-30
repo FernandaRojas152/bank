@@ -39,7 +39,9 @@ public class QueueController {
 		actionsController= fxmlLoader.getController();
 		actionsController.setPrincipal(principal);
 		actionsController.setQueueController(this);
-		actionsController.setClient(principal.getBank().getClientQueue().peek().getT());
+		Client client = principal.getBank().getClientQueue().peek().getT();
+		actionsController.setClient(client);
+		actionsController.setAccountBalance(client.getAccount().getAmount());
     	Scene scene= new Scene(root);
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -58,7 +60,9 @@ public class QueueController {
 		actionsController= fxmlLoader.getController();
 		actionsController.setPrincipal(principal);
 		actionsController.setQueueController(this);
-		actionsController.setClient(principal.getBank().getClientHeap().max());
+		Client client = principal.getBank().getClientHeap().max();
+		actionsController.setClient(client);
+		actionsController.setAccountBalance(client.getAccount().getAmount());
     	Scene scene = new Scene(root);
     	Stage stage = new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));

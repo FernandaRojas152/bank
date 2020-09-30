@@ -37,7 +37,7 @@ public class Node<K extends Comparable<K>, V> {
 	public void addNode(Node<K, V> node) throws Exception {
 		
 		if(k.compareTo(node.k)==0)
-			throw new Exception();
+			throw new Exception("Element already inserted in the tree");
 		
 		if(k.compareTo(node.k)>0) {
 			

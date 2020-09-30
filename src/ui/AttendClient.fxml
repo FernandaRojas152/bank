@@ -27,7 +27,7 @@
             <Font name="Impact" size="29.0" />
          </font>
       </Label>
-      <Button layoutX="515.0" layoutY="463.0" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="93.0" text="Next" />
+      <Button layoutX="88.0" layoutY="462.0" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="93.0" text="Next" />
       <ImageView fitHeight="93.0" fitWidth="84.0" layoutX="25.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resources/atm-3632623_960_720.png" />
@@ -74,6 +74,8 @@
       <Button fx:id="btnBack" layoutX="5.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="84.0" text="Back" />
       <TextField fx:id="tfComments" layoutX="315.0" layoutY="389.0" prefHeight="55.0" prefWidth="256.0" />
       <Label layoutX="315.0" layoutY="372.0" prefHeight="17.0" prefWidth="154.0" text="Let us know the reason why:" />
-      <Button fx:id="btAccept" layoutX="423.0" layoutY="463.0" mnemonicParsing="false" onAction="#makeAction" prefHeight="25.0" prefWidth="93.0" text="Accept" />
+      <Button fx:id="btAccept" layoutX="510.0" layoutY="462.0" mnemonicParsing="false" onAction="#makeAction" prefHeight="25.0" prefWidth="93.0" text="Accept" />
+      <TextField fx:id="tfAccountBalance" editable="false" layoutX="369.0" layoutY="152.0" />
+      <Label layoutX="369.0" layoutY="135.0" text="Your account balance is:" />
    </children>
 </Pane>

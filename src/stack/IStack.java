@@ -69,7 +69,7 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public E pop() throws EmptyStackException{
+	public E pop() throws EmptyStackException {
 		E aux= null;
 		if(first==null) {
 			throw new customException.EmptyStackException();

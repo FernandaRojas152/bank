@@ -33,8 +33,8 @@
       </Text>
       <ListView fx:id="priorityQueue" layoutX="31.0" layoutY="133.0" prefHeight="200.0" prefWidth="158.0" />
       <ListView fx:id="normalQueue" layoutX="366.0" layoutY="133.0" prefHeight="200.0" prefWidth="158.0" />
-      <Button fx:id="btnBack" layoutX="34.0" layoutY="355.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Button layoutX="512.0" layoutY="355.0" mnemonicParsing="false" onAction="#attendClient" text="Attend" />
-      <Button layoutX="409.0" layoutY="355.0" mnemonicParsing="false" onAction="#attendPriorityClient" text="Attend priority" />
+      <Button fx:id="btnBack" layoutY="378.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button layoutX="419.0" layoutY="343.0" mnemonicParsing="false" onAction="#attendClient" text="Attend" />
+      <Button layoutX="84.0" layoutY="343.0" mnemonicParsing="false" onAction="#attendPriorityClient" text="Attend" />
    </children>
 </Pane>

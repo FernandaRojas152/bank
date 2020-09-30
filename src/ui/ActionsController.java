@@ -24,6 +24,9 @@ public class ActionsController {
 	private Label clientName; 
 	
 	@FXML
+	private TextField tfAccountBalance;
+	
+	@FXML
 	private ToggleGroup actions;
 
 	@FXML
@@ -92,22 +95,36 @@ public class ActionsController {
 		stage.close();
 		queueController.getStage().show();
 	}
-
+	
 	public void consignment() {
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Please enter the consignment amount.");
-		Optional<String> result = dialog.showAndWait();
-		Double consignment= Double.valueOf(result.get());
-		principal.getBank().deposit(client, consignment);
+		try {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Please enter the consignment amount.");
+			Optional<String> result = dialog.showAndWait();
+			Double consignment= Double.valueOf(result.get());
+			principal.getBank().deposit(client, consignment);
+			tfAccountBalance.setText(client.getAccount().getAmount()+"");
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Invalid Entry");
+		}catch (RuntimeException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 
 	public void withdraw() {
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Please enter your withdrawal.");
-		dialog.setHeaderText("You cannot enter an amount greater than your account balance.");
-		Optional<String> result = dialog.showAndWait();
-		Double withdraw= Double.valueOf(result.get());
-		principal.getBank().withdraw(client, withdraw);
+		try {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Please enter your withdrawal.");
+			dialog.setHeaderText("You cannot enter an amount greater than your account balance.");
+			Optional<String> result = dialog.showAndWait();
+			Double withdraw= Double.valueOf(result.get());
+			principal.getBank().withdraw(client, withdraw);
+			tfAccountBalance.setText(client.getAccount().getAmount()+"");
+		}catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Invalid Entry");
+		}catch (RuntimeException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 	
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
@@ -153,5 +170,9 @@ public class ActionsController {
 
 	public Stage getStage() {
 		return (Stage) btnBack.getScene().getWindow();
+	}
+
+	public void setAccountBalance(double amount) {
+		tfAccountBalance.setText(amount+"");
 	}
 }
