@@ -17,6 +17,7 @@ public class IHeap<P extends Comparable<P>> implements InHeap<P> {
 	private P[] heap;
 	private int heap_Size;
 	private boolean type; //false it's minHeap, true it's maxHeap
+	
 	//Methods
 	@SuppressWarnings("unchecked")
 	public IHeap(int size, boolean type){
