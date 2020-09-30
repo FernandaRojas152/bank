@@ -12,8 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-public class CardPaymentController {
-	
+public class CardPaymentController {	
     @FXML
     private BorderPane mainPane;
     
@@ -51,7 +50,7 @@ public class CardPaymentController {
 
     @FXML
     void payWithCash(ActionEvent event) {
-
+    	
     }
     
     @FXML

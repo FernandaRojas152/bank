@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 import javax.swing.JOptionPane;
