@@ -32,7 +32,7 @@ public class CardPaymentController {
 	@FXML
 	private Label totalAmount;
 
-	public PrincipalWindowController principalWindowController;
+	public PrincipalWindowController principal;
 	public ActionsController actionsController;
 
 	@FXML
@@ -40,9 +40,9 @@ public class CardPaymentController {
 	}
 	
 	@FXML
-	void payCash(ActionEvent event) {
+	public void payCash(ActionEvent event) {
 		try {
-			Double change = principalWindowController.getBank().payCardAmount(actionsController.client(), Double.parseDouble(cashAmount.getText()));
+			Double change = principal.getBank().payCardAmount(actionsController.getClient(), Double.parseDouble(cashAmount.getText()));
 			changeAmount.setText(change+"");
 			btnPayCash.setDisable(true);
 			btnPayAccountBalance.setDisable(true);	
@@ -53,10 +53,10 @@ public class CardPaymentController {
 	}
 
 	@FXML
-	void payAccountAmount(ActionEvent event) throws IOException {
+	public void payAccountAmount(ActionEvent event) throws IOException {
 		try {
-			principalWindowController.getBank().payCardAmount(actionsController.client());
-			accountAmount.setText(actionsController.client().getAccount().getAmount()+"");
+			principal.getBank().payCardAmount(actionsController.getClient());
+			accountAmount.setText(actionsController.getClient().getAccount().getAmount()+"");
 			btnPayCash.setDisable(true);
 			btnPayAccountBalance.setDisable(true);	
 			cashAmount.setDisable(true);
@@ -74,11 +74,11 @@ public class CardPaymentController {
 	}
 	
 	public void setCardAmount() {
-		totalAmount.setText(String.valueOf(actionsController.client().getCardAmount()));
+		totalAmount.setText(String.valueOf(actionsController.getClient().getCardAmount()));
 	}
 	
 	public void setAccountBalance() {
-		accountAmount.setText(String.valueOf(actionsController.client().getAccount().getAmount()));
+		accountAmount.setText(String.valueOf(actionsController.getClient().getAccount().getAmount()));
 	}
 
 	public void setActionsController(ActionsController actionsController) {
@@ -86,6 +86,6 @@ public class CardPaymentController {
 	}	
 
 	public void setPrincipal(PrincipalWindowController principalWindowController) {
-		this.principalWindowController = principalWindowController;
+		this.principal = principalWindowController;
 	}
 }

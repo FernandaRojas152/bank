@@ -33,7 +33,7 @@ public class CanceledClientsController {
     @FXML
     private TableColumn<Client, String> comments;
     
-    ObservableList<Client> observableList;
+    private ObservableList<Client> observableList;
     private PrincipalWindowController principal;
     
     @FXML

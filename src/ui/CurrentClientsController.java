@@ -41,6 +41,8 @@ public class CurrentClientsController {
     
     @FXML
     private Button btnSortByAmount;
+    
+    private ObservableList<Client> observableList;
 
     @FXML
     public void initialize() {
@@ -69,11 +71,11 @@ public class CurrentClientsController {
     }
     
     public ObservableList<Client> getCurrentClients(){
-    	ObservableList<Client> c= FXCollections.observableArrayList();
+    	observableList.clear();
     	for (Client clients : principal.getBank().getClientList()) {
-			c.add(clients);	
+    		observableList.add(clients);	
 		}
-    	return c;
+    	return observableList;
     }
     
     public void setPrincipal(PrincipalWindowController principal) {

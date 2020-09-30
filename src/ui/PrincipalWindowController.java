@@ -62,7 +62,7 @@ public class PrincipalWindowController {
 	}
 
 	@FXML
-	void start(ActionEvent event) throws IOException {
+	public void start(ActionEvent event) throws IOException {
 		if(queue.isSelected()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientQueue.fxml"));
 			Pane root= fxmlLoader.load();
@@ -95,7 +95,7 @@ public class PrincipalWindowController {
 	}
 	
     @FXML
-    void canceledClients(ActionEvent event) throws IOException {
+    public void canceledClients(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CancelledClients.fxml"));
     	Pane root = fxmlLoader.load();
     	canceledClientsController = fxmlLoader.getController();
@@ -123,7 +123,7 @@ public class PrincipalWindowController {
     }
 
 	@FXML
-    void clientDatabase(ActionEvent event) throws IOException {
+    public void clientDatabase(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentClients.fxml"));
     	Pane root= fxmlLoader.load();
 		currentClientsController= fxmlLoader.getController();

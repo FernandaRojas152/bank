@@ -50,7 +50,7 @@ public class ClientController {
 	}
 	
 	@FXML
-	void searchClient(ActionEvent event) {
+	public void searchClient(ActionEvent event) {
 		try {
 			Client client = principal.searchClient(clientSearched.getText());
 			name.setText(client.getName());

@@ -64,7 +64,7 @@ public class ActionsController {
 	}
 	
 	@FXML
-	void makeAction(ActionEvent event) throws IOException {
+	public void makeAction(ActionEvent event) throws IOException {
 		if(consignment.isSelected()) {
 			consignment();
 		}else if (withdraw.isSelected()) {
@@ -150,11 +150,7 @@ public class ActionsController {
 	public void setQueueController(QueueController q) {
 		this.queueController = q;
 	}
-	
-	public PrincipalWindowController getPrincipal() {
-		return principal;
-	}
-	
+
 	public void setPrincipal(PrincipalWindowController principal) {
 		this.principal = principal;
 	}
@@ -164,7 +160,7 @@ public class ActionsController {
 		clientName.setText(client.getName());
 	}
 	
-	public Client client() {
+	public Client getClient() {
 		return client;
 	}
 
