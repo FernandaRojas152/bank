@@ -1,27 +1,30 @@
 package ui;
 
 import java.io.IOException;
-import javafx.application.Platform;
+import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CardPaymentController {	
-	@FXML
-	private BorderPane mainPane;
-
+	
 	@FXML
 	private Button btnBack;
+	
+	@FXML
+	private Button btnPayCash;
+	
+	@FXML
+	private Button btnPayAccountBalance;
 
 	@FXML
-	private TextField amountMoney;
+	private TextField cashAmount;
+	
+	@FXML
+	private TextField changeAmount;
 
 	@FXML
 	private Label accountAmount;
@@ -35,49 +38,47 @@ public class CardPaymentController {
 	@FXML
 	public void initialize() {
 	}
-
+	
+	@FXML
+	void payCash(ActionEvent event) {
+		try {
+			Double change = principalWindowController.getBank().payCardAmount(actionsController.client(), Double.parseDouble(cashAmount.getText()));
+			changeAmount.setText(change+"");
+			btnPayCash.setDisable(true);
+			btnPayAccountBalance.setDisable(true);	
+			cashAmount.setDisable(true);
+		}catch (RuntimeException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
 
 	@FXML
-	void payAmount(ActionEvent event) throws IOException {
-		if(amountMoney.getText().compareTo(String.valueOf(actionsController.client().getCardAmount()))< 0) {
+	void payAccountAmount(ActionEvent event) throws IOException {
+		try {
 			principalWindowController.getBank().payCardAmount(actionsController.client());
-			Platform.runLater(() -> {
-				Alert dialog2 = new Alert(AlertType.INFORMATION, "You have pay successfully your cards", ButtonType.OK);
-				dialog2.show();
-			});
-		}else {
-			Platform.runLater(() -> {
-				Alert dialog2 = new Alert(AlertType.ERROR, "Your amount is lower than your debt", ButtonType.OK);
-				dialog2.show();
-			});
+			accountAmount.setText(actionsController.client().getAccount().getAmount()+"");
+			btnPayCash.setDisable(true);
+			btnPayAccountBalance.setDisable(true);	
+			cashAmount.setDisable(true);
+			changeAmount.setDisable(true);
+		}catch (RuntimeException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 
 	@FXML
-	void payCash(ActionEvent event) throws IOException {
-		if(amountMoney.getText().compareTo(String.valueOf(actionsController.client().getCardAmount()))< 0) {
-			principalWindowController.getBank().payCardAmount(actionsController.client(), Double.parseDouble(amountMoney.getText()));
-			Platform.runLater(() -> {
-				Alert dialog2 = new Alert(AlertType.INFORMATION, "You have pay successfully your cards", ButtonType.OK);
-				dialog2.show();
-			});
-		}else {
-			Platform.runLater(() -> {
-				Alert dialog2 = new Alert(AlertType.ERROR, "Your amount of cash is lower than your debt", ButtonType.OK);
-				dialog2.show();
-			});
-		}
-	}
-	
-	
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
 		actionsController.getStage().show();
 	}
 	
-	public void changeText() {
+	public void setCardAmount() {
 		totalAmount.setText(String.valueOf(actionsController.client().getCardAmount()));
+	}
+	
+	public void setAccountBalance() {
+		accountAmount.setText(String.valueOf(actionsController.client().getAccount().getAmount()));
 	}
 
 	public void setActionsController(ActionsController actionsController) {

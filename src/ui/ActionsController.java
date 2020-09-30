@@ -75,6 +75,8 @@ public class ActionsController {
 			cardPaymentController = fxmlLoader.getController();
 			cardPaymentController.setActionsController(this);
 			cardPaymentController.setPrincipal(principal);
+			cardPaymentController.setCardAmount();
+			cardPaymentController.setAccountBalance();
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
 			stage.setTitle("Actions");
 			stage.setScene(scene);

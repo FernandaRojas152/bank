@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CardPaymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CardPaymentController">
    <children>
       <ImageView fitHeight="487.0" fitWidth="633.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -21,22 +21,22 @@
             <Font name="Lucida Bright" size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="188.0" mnemonicParsing="false" onAction="#payCash" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Pay cash" textFill="WHITE">
+      <Button fx:id="btnPayCash" alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="188.0" mnemonicParsing="false" onAction="#payCash" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Pay cash" textFill="WHITE">
          <font>
             <Font name="Lucida Bright" size="14.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="333.0" mnemonicParsing="false" onAction="#payAmount" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Amount" textFill="WHITE">
+      <Button fx:id="btnPayAccountBalance" alignment="CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="332.0" mnemonicParsing="false" onAction="#payAccountAmount" prefHeight="40.0" prefWidth="199.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Pay with Acount balance" textFill="WHITE">
          <font>
             <Font name="Lucida Bright" size="14.0" />
          </font>
       </Button>
-      <Label layoutX="15.0" layoutY="110.0" text="Please input the exact amount of cash:">
+      <Label layoutX="15.0" layoutY="110.0" text="Please, enter your amount of cash:">
          <font>
             <Font name="Lucida Bright" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="amountMoney" layoutX="336.0" layoutY="108.0" />
+      <TextField fx:id="cashAmount" layoutX="336.0" layoutY="108.0" />
       <Line endX="500.144287109375" layoutX="108.0" layoutY="255.0" startX="-108.0" />
       <Label layoutX="18.0" layoutY="266.0" prefHeight="24.0" prefWidth="199.0" text="Your account amount is:">
          <font>
@@ -48,16 +48,22 @@
             <Font name="Lucida Bright" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="accountAmount" layoutX="226.0" layoutY="266.0" prefHeight="24.0" prefWidth="199.0" text="\$">
-         <font>
-            <Font name="Lucida Bright" size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="totalAmount" layoutX="230.0" layoutY="14.0" prefHeight="24.0" prefWidth="199.0" text="\$">
+      <Label fx:id="accountAmount" layoutX="217.0" layoutY="266.0" prefHeight="24.0" prefWidth="199.0">
          <font>
             <Font name="Lucida Bright" size="16.0" />
          </font>
       </Label>
       <Line endX="500.144287109375" layoutX="108.0" layoutY="57.0" startX="-108.0" />
+      <Label layoutX="161.0" layoutY="141.0" text="Your change is:">
+         <font>
+            <Font name="Lucida Bright" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="changeAmount" editable="false" layoutX="336.0" layoutY="138.0" />
+      <Label fx:id="totalAmount" layoutX="135.0" layoutY="14.0" prefHeight="24.0" prefWidth="199.0">
+         <font>
+            <Font name="Lucida Bright" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
