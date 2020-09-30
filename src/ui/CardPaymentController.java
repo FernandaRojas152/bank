@@ -28,6 +28,7 @@ public class CardPaymentController {
     @FXML
     private Button btnBack;
     
+    public PrincipalWindowController principalWindowController;
     public ActionsController actionsController;
     
     @FXML
@@ -62,7 +63,7 @@ public class CardPaymentController {
     
     @FXML
     void payWithAmount(ActionEvent event) {
-
+    	
     }
     
     @FXML
@@ -74,5 +75,9 @@ public class CardPaymentController {
     
     public void setActionsController(ActionsController actionsController) {
     	this.actionsController = actionsController;
+    }	
+    
+    public void setPrincipal(PrincipalWindowController principalWindowController) {
+    	this.principalWindowController = principalWindowController;
     }
 }
