@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CardPaymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CardPaymentController">
    <children>
       <ImageView fitHeight="487.0" fitWidth="633.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,7 +33,7 @@
                         <Font name="Lucida Bright" size="14.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Back" textFill="WHITE">
+                  <Button fx:id="btnBack" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #16234D; -fx-border-color: white;" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Lucida Bright" size="14.0" />
                      </font>

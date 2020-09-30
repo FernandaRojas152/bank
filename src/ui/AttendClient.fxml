@@ -74,6 +74,6 @@
       <Button fx:id="btnBack" layoutX="5.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="84.0" text="Back" />
       <TextField fx:id="tfComments" layoutX="315.0" layoutY="389.0" prefHeight="55.0" prefWidth="256.0" />
       <Label layoutX="315.0" layoutY="372.0" prefHeight="17.0" prefWidth="154.0" text="Let us know the reason why:" />
-      <Button layoutX="423.0" layoutY="463.0" mnemonicParsing="false" onAction="#makeAction" prefHeight="25.0" prefWidth="93.0" text="Accept" />
+      <Button fx:id="btAccept" layoutX="423.0" layoutY="463.0" mnemonicParsing="false" onAction="#makeAction" prefHeight="25.0" prefWidth="93.0" text="Accept" />
    </children>
 </Pane>
