@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import heap.IHeap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +39,7 @@ public class QueueController {
 		actions= fxmlLoader.getController();
 		actions.setPrincipal(principal);
 		actions.setQ(this);
-		actions.setClient(getCurrentClient());
+		actions.setClient(principal.getBank().getClientQueue().peek().getT());
     	Scene scene= new Scene(root);
     	Stage stage= new Stage();
     	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
@@ -48,15 +47,27 @@ public class QueueController {
 		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();
-    }
-
-    
-    public String getNormalClientSelected() {
-    	return normalQueue.getSelectionModel().getSelectedItem();
+		stage = (Stage) btnBack.getScene().getWindow();
+		stage.hide();
     }
     
-    public String getPriorityClientSelected() {
-    	return priorityQueue.getSelectionModel().getSelectedItem();
+    @FXML
+    void attendPriorityClient(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AttendClient.fxml"));
+    	Pane root = fxmlLoader.load();
+		actions= fxmlLoader.getController();
+		actions.setPrincipal(principal);
+		actions.setQ(this);
+		actions.setClient(principal.getBank().getClientHeap().max());
+    	Scene scene= new Scene(root);
+    	Stage stage= new Stage();
+    	stage.getIcons().add(new Image(Main.class.getResourceAsStream("bank-flat.png")));
+		stage.setTitle("Attend Client");
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.show();
+		stage = (Stage) btnBack.getScene().getWindow();
+		stage.hide();
     }
     
 	public void back(ActionEvent event) {
@@ -95,11 +106,7 @@ public class QueueController {
     	getNormalQueue();
     }
     
-    public Client getCurrentClient() {
-    	
-    	if(principal.getBank().getClientHeap().max()!=null)
-    		return principal.getBank().getClientHeap().max();
-    	else
-    		return principal.getBank().getClientQueue().peek().getT();
+    public Stage getStage() {
+    	return (Stage)btnBack.getScene().getWindow();
     }
 }

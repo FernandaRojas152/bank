@@ -44,7 +44,7 @@ public class ActionsController {
     @FXML
     private TextField tfComments;
 	
-	private QueueController q;
+	private QueueController queueController;
 	private PrincipalWindowController principal;
 	private Client client;
 	
@@ -74,12 +74,16 @@ public class ActionsController {
 			stage.setScene(scene);
 			stage.show();
 		}
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		stage.close();
+		queueController.getStage().show();
 	}
 	
 	@FXML
 	public void back(ActionEvent event) {
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
+		queueController.getStage().show();
 	}
 
 	public void consignment() {
@@ -87,7 +91,7 @@ public class ActionsController {
 		dialog.setTitle("Please enter the consignment amount.");
 		Optional<String> result = dialog.showAndWait();
 		Double consignment= Double.valueOf(result.get());
-		principal.getBank().deposit(q.getCurrentClient(), consignment);
+		principal.getBank().deposit(client, consignment);
 	}
 
 	public void withdraw() {
@@ -96,7 +100,7 @@ public class ActionsController {
 		dialog.setHeaderText("You cannot enter an amount greater than your account balance.");
 		Optional<String> result = dialog.showAndWait();
 		Double withdraw= Double.valueOf(result.get());
-		principal.getBank().withdraw(q.getCurrentClient(), withdraw);
+		principal.getBank().withdraw(client, withdraw);
 	}
 	
 	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
@@ -115,11 +119,12 @@ public class ActionsController {
 			principal.getBank().priorityNext();
 		Stage stage = (Stage) btnBack.getScene().getWindow();
 		stage.close();
-		q.updateQueues();
+		queueController.updateQueues();
+		queueController.getStage().show();
 	}
 
 	public void setQ(QueueController q) {
-		this.q = q;
+		this.queueController = q;
 	}
 	
 	public void setPrincipal(PrincipalWindowController principal) {
