@@ -229,7 +229,10 @@ public class PrincipalWindowController {
 		}
 		dataBaseBW.close();
 		canceledAccountsBW.close();
-		Files.move(tempCanceledAccounts.toPath(), canceledAccounts.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		Files.move(tempDataBase.toPath(), database.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		try {
+			Files.move(tempCanceledAccounts.toPath(), canceledAccounts.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Files.move(tempDataBase.toPath(), database.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		}catch (IOException E) {
+		}
 	}
 }
