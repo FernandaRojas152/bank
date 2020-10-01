@@ -73,11 +73,4 @@ class BSTTest {
 		setUpStage2();
 		assertEquals(3, b.getHeight(), "Should be 3");
 	}
-	
-	@Test
-	void testInOrder() throws Exception {
-		setUpStage2();
-		assertEquals("Poe", b.searchNode(3).getV(), "Should be Poe");
-	}
-	
 }
