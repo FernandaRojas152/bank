@@ -127,7 +127,7 @@ public class ActionsController {
 		}
 	}
 	
-	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
+	public void cancelation(Client client, LocalDate cancelationDate, String cancelationComments) {
 		if(!tfComments.getText().equals("")) {
 			principal.getBank().cancelAccount(client, cancelationDate, cancelationComments);
 			next();
