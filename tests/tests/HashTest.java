@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import hashtable.HashTable;
 
 class HashTest {
+	//association
 	HashTable<Integer, String> hash;
 	
 	/** STAGES **/	
