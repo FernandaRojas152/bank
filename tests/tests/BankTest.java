@@ -3,6 +3,8 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+
+import customException.EmptyStackException;
 import model.Bank;
 import model.Client;
 import model.Account;
@@ -135,14 +137,19 @@ class BankTest {
 		setUpStage();
 		Client client = bank.getClientQueue().peek().getT();
 		bank.cancelAccount(client, LocalDate.now(), "qwerty");
-		assertEquals(client, bank.getClientStack().peek());
+		try {
+			assertEquals(client, bank.getClientStack().peek());
+		} catch (EmptyStackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testUndo() {
 		setUpStage2();
-		Client client = bank.getClientStack().peek();
 		try {
+			Client client = bank.getClientStack().peek();
 			bank.undo();
 			assertEquals(client, bank.getClientList().get(0));
 		} catch (Exception e) {
