@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 /**
  * Queue data structure
  * @author usuario
- *
  * @param <T>
  */
 
