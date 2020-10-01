@@ -10,7 +10,7 @@ import customException.EmptyStackException;
  */
 public interface InStack<E> extends Iterable<E> {
 	public void push(E element);
-	public E peek();
+	public E peek() throws EmptyStackException;
 	public E pop() throws EmptyStackException;
 	public boolean isEmpty();
 	public int Isize();
