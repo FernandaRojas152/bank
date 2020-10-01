@@ -40,6 +40,12 @@ class HashTest {
 	}
 	
 	@Test
+	void testSize() {
+		setUpStage2();
+		assertTrue(hash.getSize()== 4);
+	}
+	
+	@Test
 	void testInsert() {
 		setUpStage1();
 		hash.insert(6, "Amanda");
