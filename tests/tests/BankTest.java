@@ -13,6 +13,8 @@ class BankTest {
 	
 	private Bank bank;
 	
+	//Stages
+	
 	public void setUpStage() {
 		bank = new Bank();
 		try {
@@ -21,7 +23,7 @@ class BankTest {
 					LocalDate.parse("2013-04-16"), account, "Normal", Double.parseDouble("1200000.0"));
 			
 			Account account2 = new Account(Double.parseDouble("12000.0"), "694759301080");
-			bank.fillClientData("Amie Mckenzie", "4394423910", "6011-7241-9420-8723", LocalDate.parse("2020-10-01"), 
+			bank.fillClientData("Amie Mckenzie", "4394423910", "2347-0110-3420-0815", LocalDate.parse("2020-10-01"), 
 					LocalDate.parse("2010-01-08"), account2, "Baby in arms", Double.parseDouble("40000.0"));
 			
 			Account account3 = new Account(Double.parseDouble("7129000.0"), "0991022");
@@ -40,7 +42,7 @@ class BankTest {
 			bank.fillCanceledClientData("Lester Sanders", "4710430425", "6011-7241-9420-8723", LocalDate.parse("2020-10-29"), 
 					LocalDate.parse("2013-04-16"), account, "Normal", Double.parseDouble("1200000.0"), LocalDate.now(), "qwerty");
 			
-			Account account2 = new Account(Double.parseDouble("120000.0"), "694759301080");
+			Account account2 = new Account(Double.parseDouble("12000.0"), "694759301080");
 			bank.fillCanceledClientData("Amie Mckenzie", "4394463910", "6011-7241-9420-8723", LocalDate.parse("2020-10-01"), 
 					LocalDate.parse("2010-01-08"), account2, "Baby in arms", Double.parseDouble("40000.0"), LocalDate.now(), "qwerty");
 			
@@ -52,7 +54,9 @@ class BankTest {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//Tests
+	
 	@Test
 	public void testFillClientData() {
 		setUpStage();
