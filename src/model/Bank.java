@@ -164,7 +164,7 @@ public class Bank {
 	 * @throws IOException 
 	 */
 	
-	public void cancelAccount(Client client, LocalDate cancelationDate, String cancelationComments) throws IOException {
+	public void cancelAccount(Client client, LocalDate cancelationDate, String cancelationComments) {
 		
 		//Cancels a client's savings account as it adds values to cancelationDate and
 		//cancelationComments. Client is stored in a stack so that it can be retrieved
