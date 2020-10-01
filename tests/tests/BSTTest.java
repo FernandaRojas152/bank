@@ -68,7 +68,6 @@ class BSTTest {
 	void testWeight() throws Exception {
 		setUpStage2();
 		assertEquals(4, b.getWeight(), "Should be 4");
-		
 	}
 	
 	@Test
