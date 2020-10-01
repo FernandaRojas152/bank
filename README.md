@@ -1,5 +1,5 @@
 # bank
 Integrantes:
 
-Juan David Pelaez
+Juan David Pelaez <br>
 Luisa Fernanda Quintero Fernández
