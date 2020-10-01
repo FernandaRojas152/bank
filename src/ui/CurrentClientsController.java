@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,6 +47,7 @@ public class CurrentClientsController {
 
     @FXML
     public void initialize() {
+    	observableList = FXCollections.observableArrayList();
     	name.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
     	name.setSortable(false);
     	id.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
