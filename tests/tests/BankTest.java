@@ -163,7 +163,7 @@ class BankTest {
 	}
 	
 	@Test
-	public void searchClient() {
+	public void testSearchClient() {
 		setUpStage();
 		Client client = bank.getClientList().get(0);
 		String ID = "4740430425";
@@ -172,7 +172,7 @@ class BankTest {
 	}
 	
 	@Test
-	public void sortClientsByName() {
+	public void testSortClientsByName() {
 		setUpStage();
 		bank.sortClientsByName();
 		for (int i = 0; i+1 < bank.getClientList().size(); i++) {
@@ -183,7 +183,7 @@ class BankTest {
 	}
 	
 	@Test
-	public void sortClientsByAmount() {
+	public void testSortClientsByAmount() {
 		setUpStage();
 		bank.sortClientsByAmount();
 		for (int i = 0; i+1 < bank.getClientList().size(); i++) {
@@ -194,7 +194,7 @@ class BankTest {
 	}
 	
 	@Test
-	public void sortClientsByTime() {
+	public void testSortClientsByTime() {
 		setUpStage();
 		bank.sortClientsByTime();
 		for (int i = 0; i+1 < bank.getClientList().size(); i++) {
@@ -205,7 +205,7 @@ class BankTest {
 	}
 	
 	@Test
-	public void sortClientsByID() {
+	public void testSortClientsByID() {
 		setUpStage();
 		bank.sortClientsByID();
 		for (int i = 0; i+1 < bank.getClientList().size(); i++) {
