@@ -1,11 +1,9 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import binarySearchTree.BinarySearchTree;
-import customException.EmptyStackException;
 
 class BSTTest {
 	BinarySearchTree<Integer,String> b;
