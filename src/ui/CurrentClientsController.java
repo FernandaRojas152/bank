@@ -1,6 +1,7 @@
 package ui;
 
 import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,6 +55,7 @@ public class CurrentClientsController {
     	boundingTime.setSortable(false);
     	amount.setCellValueFactory(new PropertyValueFactory<Client, String>("amount"));
     	amount.setSortable(false);
+    	observableList = FXCollections.observableArrayList();
     }
     
     @FXML
