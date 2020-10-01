@@ -57,9 +57,11 @@ public class IStack<E> implements InStack<E>{
 	}
 
 	@Override
-	public E peek() {
+	public E peek() throws EmptyStackException {
 		E aux= null;
-
+		if(first==null) {
+			throw new customException.EmptyStackException();
+		}
 		if(first.getNext()== null) {
 			aux= first.getElement();
 		}else {
