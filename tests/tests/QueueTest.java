@@ -48,13 +48,13 @@ class QueueTest {
 	}
 	
 	@Test
-	void testRear() {
+	void testFront() {
 		setUpStage2();
 		assertEquals(76, q.getFront().getT(), "Should be 76");
 	}
 	
 	@Test
-	void testFront() {
+	void testRear() {
 		setUpStage2();
 		assertEquals(32, q.getRear().getT(), "Should be 32");
 	}
